@@ -1,23 +1,32 @@
 ---
-title: The Emergency Department Contact Network Predicts Patient Acuity
-author:  
-  - name: Tommy Flynn
-    email: tjflynn@emory.edu
-    affiliation: Emory University
+title: Short Paper
+author:
+  - name: Alice Anonymous
+    email: alice@example.com
+    affiliation: Some Institute of Technology
     footnote: Corresponding Author
+  - name: Bob Security
+    email: bob@example.com
+    affiliation: Another University
 address:
-    code: Emory University
-    address: Emory University Nell Hodgson School of Nursing, 1520 Clifton Road NE, Atlanta, GA, 30322
+  - code: Some Institute of Technology
+    address: Department, Street, City, State, Zip
+  - code: Another University
+    address: Department, Street, City, State, Zip
 abstract: |
- Preventable patient deterioration in the Emergency Department (ED) is an unacceptable source of patient morbidity and mortality. Across the United States, the standards of practice in place that are meant to identify patients at risk for rapid deterioration are heavily reliant on human recognition and communication. A real-time patient acuity monitoring system could minimize preventable patient deterioration by automatically alerting necessary resources when a patient's condition worsens. This study presents the first step in the process of creating such a system by testing the relationship between patient acuity, changes in contact network position, and disposition. 
+  This is the abstract.
+
+  It consists of two paragraphs.
 
 bibliography: mybibfile.bib
 output: rticles::elsevier_article
 ---
 
+_Italicized text: Text based on elsarticle sample manuscript, see [http://www.elsevier.com/author-schemas/latex-instructions#elsarticle](http://www.elsevier.com/author-schemas/latex-instructions#elsarticle)_
 
-Background
-==========
+
+The Elsevier article class
+==========================
 
 #### Installation
 
@@ -55,8 +64,8 @@ features commands and options to format the
 
 -   citation style and labeling.
 
-Methods
-=======
+Front matter
+============
 
 The author names and affiliations could be formatted in two ways:
 
@@ -67,25 +76,8 @@ The author names and affiliations could be formatted in two ways:
 See the front matter of this document for examples. You are recommended
 to conform your choice to the journal you are submitting to.
 
-Results
-=======
-
-
-
-
-Discussion
-==========
-
-
-
-
-
-
-
-
-Conclusion
-==========
-
+Bibliography styles
+===================
 
 There are various bibliography styles available. You can select the
 style of your choice in the preamble of this document. These styles are
@@ -93,7 +85,7 @@ Elsevier styles based on standard styles like Harvard and Vancouver.
 Please use BibTeX to generate your bibliography and include DOIs
 whenever available.
 
-Here are two sample references: @Allaire2017 [@CRAN]
+Here are two sample references: @Feynman1963118 [@Dirac1953888].
 
-References {#references.unnumbered} 
+References {#references .unnumbered}
 ==========

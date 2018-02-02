@@ -55,7 +55,7 @@
 \hypersetup{breaklinks=true,
             bookmarks=true,
             pdfauthor={},
-            pdftitle={The Emergency Department Contact Network Predicts Patient Acuity},
+            pdftitle={Short Paper},
             colorlinks=true,
             urlcolor=blue,
             linkcolor=magenta,
@@ -75,29 +75,28 @@
 \begin{document}
 \begin{frontmatter}
 
-  \title{The Emergency Department Contact Network Predicts Patient Acuity}
-    \author[Emory University]{Tommy Flynn\corref{c1}}
-   \ead{tjflynn@emory.edu} 
+  \title{Short Paper}
+    \author[Some Institute of Technology]{Alice Anonymous\corref{c1}}
+   \ead{alice@example.com} 
    \cortext[c1]{Corresponding Author}
-      \address[Emory University]{Emory University Nell Hodgson School of Nursing, 1520 Clifton Road NE,
-Atlanta, GA, 30322}
+    \author[Another University]{Bob Security}
+   \ead{bob@example.com} 
+  
+      \address[Some Institute of Technology]{Department, Street, City, State, Zip}
+    \address[Another University]{Department, Street, City, State, Zip}
   
   \begin{abstract}
-  Preventable patient deterioration in the Emergency Department (ED) is an
-  unacceptable source of patient morbidity and mortality. Across the
-  United States, the standards of practice in place that are meant to
-  identify patients at risk for rapid deterioration are heavily reliant on
-  human recognition and communication. A real-time patient acuity
-  monitoring system could minimize preventable patient deterioration by
-  automatically alerting necessary resources when a patient's condition
-  worsens. This study presents the first step in the process of creating
-  such a system by testing the relationship between patient acuity,
-  changes in contact network position, and disposition.
+  This is the abstract.
+  
+  It consists of two paragraphs.
   \end{abstract}
   
  \end{frontmatter}
 
-\section{Background}\label{background}
+\emph{Text based on elsarticle sample manuscript, see
+\url{http://www.elsevier.com/author-schemas/latex-instructions\#elsarticle}}
+
+\section{The Elsevier article class}\label{the-elsevier-article-class}
 
 \paragraph{Installation}\label{installation}
 
@@ -139,7 +138,7 @@ features commands and options to format the
   citation style and labeling.
 \end{itemize}
 
-\section{Methods}\label{methods}
+\section{Front matter}\label{front-matter}
 
 The author names and affiliations could be formatted in two ways:
 
@@ -154,11 +153,7 @@ The author names and affiliations could be formatted in two ways:
 See the front matter of this document for examples. You are recommended
 to conform your choice to the journal you are submitting to.
 
-\section{Results}\label{results}
-
-\section{Discussion}\label{discussion}
-
-\section{Conclusion}\label{conclusion}
+\section{Bibliography styles}\label{bibliography-styles}
 
 There are various bibliography styles available. You can select the
 style of your choice in the preamble of this document. These styles are
@@ -166,22 +161,23 @@ Elsevier styles based on standard styles like Harvard and Vancouver.
 Please use BibTeX~to generate your bibliography and include DOIs
 whenever available.
 
-Here are two sample references: Allaire et al. (2017; R Core Team 2017)
+Here are two sample references: Feynman and Vernon Jr. (1963; Dirac
+1953).
 
-\section*{References}\label{references.unnumbered}
+\section*{References}\label{references}
 \addcontentsline{toc}{section}{References}
 
 \hypertarget{refs}{}
-\hypertarget{ref-Allaire2017}{}
-Allaire, JJ, R Foundation, Hadley Wickham, Journal of Statistical
-Software, Yihui Xie, Ramnath Vaidyanathan, Association for Computing
-Machinery, et al. 2017. \emph{Rticles: Article Formats for R Markdown}.
-\url{https://CRAN.R-project.org/package=rticles}.
+\hypertarget{ref-Dirac1953888}{}
+Dirac, P.A.M. 1953. ``The Lorentz Transformation and Absolute Time.''
+\emph{Physica} 19 (1---12): 888--96.
+doi:\href{https://doi.org/10.1016/S0031-8914(53)80099-6}{10.1016/S0031-8914(53)80099-6}.
 
-\hypertarget{ref-CRAN}{}
-R Core Team. 2017. \emph{R: A Language and Environment for Statistical
-Computing}. Vienna, Austria: R Foundation for Statistical Computing.
-\url{https://www.R-project.org/}.
+\hypertarget{ref-Feynman1963118}{}
+Feynman, R.P, and F.L Vernon Jr. 1963. ``The Theory of a General Quantum
+System Interacting with a Linear Dissipative System.'' \emph{Annals of
+Physics} 24: 118--73.
+doi:\href{https://doi.org/10.1016/0003-4916(63)90068-X}{10.1016/0003-4916(63)90068-X}.
 
 \end{document}
 
