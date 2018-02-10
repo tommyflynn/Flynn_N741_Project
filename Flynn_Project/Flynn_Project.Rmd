@@ -1,5 +1,5 @@
 ---
-title: The Emergency Department Contact Network Predicts Patient Acuity
+title: Milestone 1 Testing a Model for an Automated Real-Time Acuity Monitoring System in the Emergency Department
 author:  
   - name: Tommy Flynn
     email: tjflynn@emory.edu
@@ -8,64 +8,52 @@ author:
 address:
     code: Emory University
     address: Emory University Nell Hodgson School of Nursing, 1520 Clifton Road NE, Atlanta, GA, 30322
-abstract: |
- Preventable patient deterioration in the Emergency Department (ED) is an unacceptable source of patient morbidity and mortality. Across the United States, the standards of practice in place that are meant to identify patients at risk for rapid deterioration are heavily reliant on human recognition and communication. A real-time patient acuity monitoring system could minimize preventable patient deterioration by automatically alerting necessary resources when a patient's condition worsens. This study presents the first step in the process of creating such a system by testing the relationship between patient acuity, changes in contact network position, and disposition. 
+abstract: The purpose of this project is to determine if patient acuity in the ED is correlated to patient eigenvector centrality in the network of all face to face ED interactions. 
+  
 
 bibliography: mybibfile.bib
 output: rticles::elsevier_article
 ---
 
 
-Background
+Overview & Motivation
+=====================
+- Overview and Motivation: Why did you undertake this particular project? What inspired you, what are your background and research interests that may have influenced your decision? 
+
+
+
+
+
+
+
+
+As a ballpark, your proposal should be about 2-3 pages of text, along with shells of the tables and figures that you plan. You could even include some preliminary data acquisition / analysis steps.
+
+After we receive your proposals we will find a time to meet with you to discuss your proposal and also to help guide you through the rest of the analysis.
+
+
+Objectives
 ==========
+- Project Objectives: What is the primary focal question that you are trying to answer? What would you like to learn and accomplish?
+The purpose of this study is to test the accuracy of the Emergency Severity Index (ESI) as a metric used to predict patient needs. To test the accuracy of the ESI, this study uses radiofrequency identification (RFID) locating data that includes every interaction patients have with ED staff (nurses, techs, administrators, and providers) and the duration of each of those interactions. Using this data will require specific knowledge of the R statistical packages, network analysis, and data science. My learning objectives are to: 
+- Use Github, R Studio, R Markdown, to clean, describe, analyze, and publish results from the identified database.
+- Apply visualization tools to the data and results that create greater understanding of the research and significance.
+- 
 
-#### Installation
+Data
+====
+- Data: from where and how are you acquiring your data? **Provide a link to your data source.**
+- Data Wrangling: Do you anticipate that there will be extensive data cleaning / reshaping / extraction? Are there questions you will need to calculate in your data (e.g., perhaps you have height and weight, but not BMI)? How will you implement this particular data wrangling step?
 
-If the document class *elsarticle* is not available on your computer,
-you can download and install the system package *texlive-publishers*
-(Linux) or install the LaTeX package *elsarticle* using the package
-manager of your TeX installation, which is typically TeX Live or MikTeX.
 
-#### Usage
 
-Once the package is properly installed, you can use the document class
-*elsarticle* to create a manuscript. Please make sure that your
-manuscript follows the guidelines in the Guide for Authors of the
-relevant journal. It is not necessary to typeset your manuscript in
-exactly the same way as an article, unless you are submitting to a
-camera-ready copy (CRC) journal.
 
-#### Functionality
+Analysis Plan
+=============
+- Exploratory Analysis: Which methods / visualizations are you planning to use to explore your tidy dataset?
+- Analysis: How are you planning to analyze your data?
 
-The Elsevier article class is based on the standard article class and
-supports almost all of the functionality of that class. In addition, it
-features commands and options to format the
-
--   document style
-
--   baselineskip
-
--   front matter
-
--   keywords and MSC codes
-
--   theorems, definitions and proofs
-
--   lables of enumerations
-
--   citation style and labeling.
-
-Methods
-=======
-
-The author names and affiliations could be formatted in two ways:
-
-(1) Group the authors per affiliation.
-
-(2) Use footnotes to indicate the affiliations.
-
-See the front matter of this document for examples. You are recommended
-to conform your choice to the journal you are submitting to.
+- Schedule, keeping in mind the due dates listed above for the intermediate and final milestones, make a plan to meet these deadlines. Write these in terms of weekly tasks / goals.
 
 Results
 =======

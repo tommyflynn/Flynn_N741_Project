@@ -35,7 +35,7 @@ You will also create a website for your project using GitHub. This website shoul
 
 ## Project Milestone 1 - Proposal
 
-Your project proposal, Milestone 1, is due on Wednesday, 1 Februray 2017, by **5:00 pm EST**.You will submit a PDF file. This document will contain two links; 1. a link to the Rmd file that created it in your GitHub repo, and 2. a link to the source of your original data. Please put your name on the first page of the document. The document will include the following information:
+Your project proposal, Milestone 1, is due on Wednesday,14  Februray 2017, by **5:00 pm EST**.You will submit a PDF file. This document will contain two links; 1. a link to the Rmd file that created it in your GitHub repo, and 2. a link to the source of your original data. Please put your name on the first page of the document. The document will include the following information:
 
 - Basic information: Project title, your name, email address
 - Overview and Motivation: Why did you undertake this particular project? What inspired you, what are your background and research interests that may have influenced your decision? 
