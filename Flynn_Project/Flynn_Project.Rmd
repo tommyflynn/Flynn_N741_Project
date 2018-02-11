@@ -23,37 +23,49 @@ Overview & Motivation
 
 
 
-
-
-
-
 As a ballpark, your proposal should be about 2-3 pages of text, along with shells of the tables and figures that you plan. You could even include some preliminary data acquisition / analysis steps.
-
-After we receive your proposals we will find a time to meet with you to discuss your proposal and also to help guide you through the rest of the analysis.
 
 
 Objectives
 ==========
 - Project Objectives: What is the primary focal question that you are trying to answer? What would you like to learn and accomplish?
+
 The purpose of this study is to test the accuracy of the Emergency Severity Index (ESI) as a metric used to predict patient needs. To test the accuracy of the ESI, this study uses radiofrequency identification (RFID) locating data that includes every interaction patients have with ED staff (nurses, techs, administrators, and providers) and the duration of each of those interactions. Using this data will require specific knowledge of the R statistical packages, network analysis, and data science. My learning objectives are to: 
-- Use Github, R Studio, R Markdown, to clean, describe, analyze, and publish results from the identified database.
+```{r, echo=FALSE}
+column_names <- c("Demonstrate effective use of GitHub Version Control", "Demonstrate working knowledge of R Studio & R Markdown", "Create useful visualizations of data", "Apply appropriate statistical methods", "Interpret statistical results")
+row_names <- c("Action Items", "Timeline", "Outcome")
+github <- c("Use GitHub version control throughout project development", "Ongoing", "Complete record of data management & analysis")
+rstudio <- ("All data wrangling & analysis in R Studio and all milestones completed in R Markdown", "Ongoing", "Final Project, Presentation, and Website Completed in R Markdown")
+visualize <- c("Apply appropriate packages for informative visualizations in R")
+
+```
+- Demonstrate proficiency with CRAN network analysis and visualization packages in R Studio
+- Apply version control to version control with GitHub, and publication with R Markdown.
 - Apply visualization tools to the data and results that create greater understanding of the research and significance.
 - 
 
 Data
 ====
+
 - Data: from where and how are you acquiring your data? **Provide a link to your data source.**
+##Data:
+
 - Data Wrangling: Do you anticipate that there will be extensive data cleaning / reshaping / extraction? Are there questions you will need to calculate in your data (e.g., perhaps you have height and weight, but not BMI)? How will you implement this particular data wrangling step?
-
-
-
+##Data Wrangling:
 
 Analysis Plan
 =============
 - Exploratory Analysis: Which methods / visualizations are you planning to use to explore your tidy dataset?
+##Exploratory Analysis
+
+
 - Analysis: How are you planning to analyze your data?
+##Analysis
+
 
 - Schedule, keeping in mind the due dates listed above for the intermediate and final milestones, make a plan to meet these deadlines. Write these in terms of weekly tasks / goals.
+##Schedule
+
 
 Results
 =======
@@ -63,11 +75,7 @@ Results
 
 Discussion
 ==========
-
-
-
-
-
+Allocating staff resources in an Emergency Department is an ongoing challenge. 
 
 
 
@@ -75,13 +83,13 @@ Conclusion
 ==========
 
 
-There are various bibliography styles available. You can select the
-style of your choice in the preamble of this document. These styles are
-Elsevier styles based on standard styles like Harvard and Vancouver.
-Please use BibTeX to generate your bibliography and include DOIs
-whenever available.
 
-Here are two sample references: @Allaire2017 [@CRAN]
+
 
 References {#references.unnumbered} 
 ==========
+
+@Allaire2017
+
+@CRAN
+
