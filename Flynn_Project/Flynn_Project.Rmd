@@ -8,7 +8,7 @@ author:
 address:
     code: Emory University
     address: Emory University Nell Hodgson School of Nursing, 1520 Clifton Road NE, Atlanta, GA, 30322
-abstract: The purpose of this project is to determine if patient acuity in the ED is correlated to patient eigenvector centrality in the network of all face to face ED interactions. 
+abstract: Can patient acuity be continuously measured with an objective scale based on network variables? Acuity has historically been measured at irregular intervals? The purpose of this project is to determine if patient acuity in the ED is correlated to patient eigenvector centrality in the network of all face to face ED interactions. A strong correlation between network position and acuity is likely, and a change in network position will likely represent a change in acuity.
   
 
 bibliography: mybibfile.bib
