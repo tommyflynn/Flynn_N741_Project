@@ -45,6 +45,17 @@
 \fi
 % use microtype if available
 \IfFileExists{microtype.sty}{\usepackage{microtype}}{}
+\usepackage{longtable}
+\usepackage{graphicx}
+% We will generate all images so they have a width \maxwidth. This means
+% that they will get their normal width if they fit onto the page, but
+% are scaled down if they would overflow the margins.
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+\else\Gin@nat@width\fi}
+\makeatother
+\let\Oldincludegraphics\includegraphics
+\renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=\maxwidth]{#1}}
 \ifxetex
   \usepackage[setpagesize=false, % page size defined by xetex
               unicode=false, % unicode breaks when used with xetex
@@ -55,7 +66,7 @@
 \hypersetup{breaklinks=true,
             bookmarks=true,
             pdfauthor={},
-            pdftitle={Milestone 1 Testing a Model for an Automated Real-Time Acuity Monitoring System in the Emergency Department},
+            pdftitle={Milestone One Testing a Model for an Automated Real-Time Acuity Monitoring System in the Emergency Department},
             colorlinks=true,
             urlcolor=blue,
             linkcolor=magenta,
@@ -75,8 +86,8 @@
 \begin{document}
 \begin{frontmatter}
 
-  \title{Milestone 1 Testing a Model for an Automated Real-Time Acuity Monitoring
-System in the Emergency Department}
+  \title{Milestone One Testing a Model for an Automated Real-Time Acuity
+Monitoring System in the Emergency Department}
     \author[Emory University]{Tommy Flynn\corref{c1}}
    \ead{tjflynn@emory.edu} 
    \cortext[c1]{Corresponding Author}
@@ -99,104 +110,315 @@ Atlanta, GA, 30322}
   Overview and Motivation: Why did you undertake this particular
   project? What inspired you, what are your background and research
   interests that may have influenced your decision?
-\item
-  Project Objectives: What is the primary focal question that you are
-  trying to answer? What would you like to learn and accomplish?
-\item
-  Data: from where and how are you acquiring your data? \textbf{Provide
-  a link to your data source.}
-\item
-  Data Wrangling: Do you anticipate that there will be extensive data
-  cleaning / reshaping / extraction? Are there questions you will need
-  to calculate in your data (e.g., perhaps you have height and weight,
-  but not BMI)? How will you implement this particular data wrangling
-  step?
-\item
-  Exploratory Analysis: Which methods / visualizations are you planning
-  to use to explore your tidy dataset?
-\item
-  Analysis: How are you planning to analyze your data? \_ Schedule,
-  keeping in mind the due dates listed above for the intermediate and
-  final milestones, make a plan to meet these deadlines. Write these in
-  terms of weekly tasks / goals.
 \end{itemize}
 
 As a ballpark, your proposal should be about 2-3 pages of text, along
 with shells of the tables and figures that you plan. You could even
 include some preliminary data acquisition / analysis steps.
 
-After we receive your proposals we will find a time to meet with you to
-discuss your proposal and also to help guide you through the rest of the
-analysis.
-
-\paragraph{Objectives}\label{objectives}
-
-The purpose of this study is to test the accuracy of the Emergency
-Severity Index (ESI) as a metric used to predict patient needs. To test
-the accuracy of the ESI, this study uses radiofrequency identification
-(RFID) locating data that includes every interaction patients have with
-ED staff (nurses, techs, administrators, and providers) and the duration
-of each of those interactions. Using this data will require specific
-knowledge of the R statistical packages, network analysis, and data
-science. My learning objectives are to: - Use Github, R Studio, R
-Markdown, to clean, describe, analyze, and publish results from the
-identified database. - Apply visualization tools to the data and results
-that create greater understanding of the research and significance. -
-
-\paragraph{Functionality}\label{functionality}
-
-The Elsevier article class is based on the standard article class and
-supports almost all of the functionality of that class. In addition, it
-features commands and options to format the
+\section{Objectives}\label{objectives}
 
 \begin{itemize}
+\tightlist
 \item
-  document style
+  Project Objectives: What is the primary focal question that you are
+  trying to answer? What would you like to learn and accomplish? In an
+  Emergency Deparmtent (ED), care is delivered over a network of face to
+  face human interactions. Patients interact with registration staff,
+  then a triage nurse who may decide to discuss the patient with a
+  provider, the provider may then interact directly with the patient,
+  and so on. In this way, the network grows over time, creating a web of
+  care that may correlate with the amount and quality of care delivered
+  to individual patients.
 \item
-  baselineskip
-\item
-  front matter
-\item
-  keywords and MSC codes
-\item
-  theorems, definitions and proofs
-\item
-  lables of enumerations
-\item
-  citation style and labeling.
+  The purpose of this study is to explore associations between the
+  network of interactions that take place in the Emergency Department
+  and individual patient acuity. To study this relationship, I will
+  analyze the following; 1) the frequency and duration of all
+  interactions (patients, providers, nurses, technicians, \&
+  administrators) that occur in the ED, and 2) individual patients'
+  medical and demographic characteristics. The network structural
+  characteristics will be assessed in relation to the industry standard
+  acuity measure, the Emergency Severity Index (ESI), and potential
+  confounding variables. Using this data will require specific knowledge
+  of the R statistical packages, network analysis, and data science. See
+  Tables 1-4 for my learning goals with respective action items,
+  timeline, and outcomes.
 \end{itemize}
 
-\section{Methods}\label{methods}
+\begin{longtable}[]{@{}cc@{}}
+\caption{Table continues below}\tabularnewline
+\toprule
+\begin{minipage}[b]{0.25\columnwidth}\centering\strut
+~\strut
+\end{minipage} & \begin{minipage}[b]{0.42\columnwidth}\centering\strut
+Demonstrate effective use of GitHub Version Control\strut
+\end{minipage}\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+\begin{minipage}[b]{0.25\columnwidth}\centering\strut
+~\strut
+\end{minipage} & \begin{minipage}[b]{0.42\columnwidth}\centering\strut
+Demonstrate effective use of GitHub Version Control\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.25\columnwidth}\centering\strut
+\textbf{Action Items}\strut
+\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
+Use GitHub version control throughout project development\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.25\columnwidth}\centering\strut
+\textbf{Timeline}\strut
+\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
+Ongoing\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.25\columnwidth}\centering\strut
+\textbf{Outcome}\strut
+\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
+Complete record of data management \& analysis\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
 
-The author names and affiliations could be formatted in two ways:
+\begin{longtable}[]{@{}cc@{}}
+\caption{Table continues below}\tabularnewline
+\toprule
+\begin{minipage}[b]{0.25\columnwidth}\centering\strut
+~\strut
+\end{minipage} & \begin{minipage}[b]{0.42\columnwidth}\centering\strut
+Demonstrate working knowledge of R Studio \& R Markdown\strut
+\end{minipage}\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+\begin{minipage}[b]{0.25\columnwidth}\centering\strut
+~\strut
+\end{minipage} & \begin{minipage}[b]{0.42\columnwidth}\centering\strut
+Demonstrate working knowledge of R Studio \& R Markdown\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.25\columnwidth}\centering\strut
+\textbf{Action Items}\strut
+\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
+All data wrangling \& analysis in R Studio and all milestones completed
+in R Markdown\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.25\columnwidth}\centering\strut
+\textbf{Timeline}\strut
+\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
+Ongoing\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.25\columnwidth}\centering\strut
+\textbf{Outcome}\strut
+\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
+Final Project, Presentation, and Website Completed in R Markdown\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
 
-\begin{enumerate}
-\def\labelenumi{(\arabic{enumi})}
+\begin{longtable}[]{@{}cc@{}}
+\caption{Table continues below}\tabularnewline
+\toprule
+\begin{minipage}[b]{0.25\columnwidth}\centering\strut
+~\strut
+\end{minipage} & \begin{minipage}[b]{0.41\columnwidth}\centering\strut
+Create useful visualizations of data\strut
+\end{minipage}\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+\begin{minipage}[b]{0.25\columnwidth}\centering\strut
+~\strut
+\end{minipage} & \begin{minipage}[b]{0.41\columnwidth}\centering\strut
+Create useful visualizations of data\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.25\columnwidth}\centering\strut
+\textbf{Action Items}\strut
+\end{minipage} & \begin{minipage}[t]{0.41\columnwidth}\centering\strut
+Apply appropriate visualization tools to analysis results\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.25\columnwidth}\centering\strut
+\textbf{Timeline}\strut
+\end{minipage} & \begin{minipage}[t]{0.41\columnwidth}\centering\strut
+April 26 2018\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.25\columnwidth}\centering\strut
+\textbf{Outcome}\strut
+\end{minipage} & \begin{minipage}[t]{0.41\columnwidth}\centering\strut
+Appropriate Tables and Graphs in final presentation and manuscript\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[]{@{}cc@{}}
+\caption{Table continues below}\tabularnewline
+\toprule
+\begin{minipage}[b]{0.25\columnwidth}\centering\strut
+~\strut
+\end{minipage} & \begin{minipage}[b]{0.41\columnwidth}\centering\strut
+Apply appropriate statistical methods\strut
+\end{minipage}\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+\begin{minipage}[b]{0.25\columnwidth}\centering\strut
+~\strut
+\end{minipage} & \begin{minipage}[b]{0.41\columnwidth}\centering\strut
+Apply appropriate statistical methods\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.25\columnwidth}\centering\strut
+\textbf{Action Items}\strut
+\end{minipage} & \begin{minipage}[t]{0.41\columnwidth}\centering\strut
+Execute rigorous statistical analysis of the data\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.25\columnwidth}\centering\strut
+\textbf{Timeline}\strut
+\end{minipage} & \begin{minipage}[t]{0.41\columnwidth}\centering\strut
+Apeil 26 2018\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.25\columnwidth}\centering\strut
+\textbf{Outcome}\strut
+\end{minipage} & \begin{minipage}[t]{0.41\columnwidth}\centering\strut
+Statistical tests are appropriate to the data and research purpose and
+error is adequately minimized\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[]{@{}cc@{}}
+\toprule
+\begin{minipage}[b]{0.25\columnwidth}\centering\strut
+~\strut
+\end{minipage} & \begin{minipage}[b]{0.42\columnwidth}\centering\strut
+Interpret and communicate results\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.25\columnwidth}\centering\strut
+\textbf{Action Items}\strut
+\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
+Recognize and communicate important results\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.25\columnwidth}\centering\strut
+\textbf{Timeline}\strut
+\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
+April 26 2018\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.25\columnwidth}\centering\strut
+\textbf{Outcome}\strut
+\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
+Results discussed in the final project speak to the research question
+and bridge a gap in the literature\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+\section{Data}\label{data}
+
+\subsection{Data:}\label{data-1}
+
+For this project, I have chosen to use, with permission from Vicki
+Hertzberg, the same data that I am using for my dissertation research.
+Data were collected using a prospective longitudinal observational study
+design with a random sampling of two shifts per week, one day and one
+night, over the course of a year, from July 2009 to June 2010, for a
+total of 104 shifts.({\textbf{???}}) This strategy was chosen to
+minimize sampling bias related to seasonal or weekly fluctuations in
+census, acuity, and ED staffing changes. The purpose of the original
+study was to describe contact characteristics between patients and staff
+in the ED of a busy urban hospital to inform cross-infection control
+measures. Data were collected using a radio-frequency identification
+system that triangulated patient and staff (nurses, providers,
+administrators, and clinical support staff) locations with the ED at
+Emory University Hospital Midtwon.
+
+Do you anticipate that there will be extensive data cleaning / reshaping
+/ extraction? Are there questions you will need to calculate in your
+data (e.g., perhaps you have height and weight, but not BMI)? How will
+you implement this particular data wrangling step? \#\#Data Wrangling: I
+have requested the original/raw data, which will require cleaning and
+organizing to meet the needs of my research aims. Data will be
+maintained in private repositories in the GitHub version control
+platform. Patient characteristic data will be evaluated for missing or
+implausible data with discriptive analyses, and RFID generated networks
+will be included for statistical analysis if variables of network
+density, centrality, and a network diversity scale are distributed
+normally across networks.
+
+\section{Analysis Plan}\label{analysis-plan}
+
+\begin{itemize}
+\tightlist
 \item
-  Group the authors per affiliation.
-\item
-  Use footnotes to indicate the affiliations.
-\end{enumerate}
+  Exploratory Analysis: Which methods / visualizations are you planning
+  to use to explore your tidy data set? \#\#Exploratory Analysis
+\end{itemize}
 
-See the front matter of this document for examples. You are recommended
-to conform your choice to the journal you are submitting to.
+Descriptive statistics of the network data as well as patient
+demographic data will be evaluated for asssumptions of normality. The
+data will be skewed in certain predictable ways due to the observed
+patient populations. The distribution of study subject demographics will
+be described in tabular format, noting irregularities and potential
+sources of error. \#\#Variables needed for final analysis: - Network
+Variables - \emph{Patient eigenvector centrality} (dependant varialbe of
+interest) - Network density - Network clustering coefficient - Network
+diversity scale?? - Staff variables - Title (nurse, provider,
+technician, administrator) - Patient variables - \emph{Acuity} (ESI,
+independant variable of interest) - Commorbidities (index) - Gender -
+Age - Race - Ethnicity - Arrival mode (ambulance v. walk-in) - Education
+(if available) - Disposition (admission v. discharge) - Length of stay
+(common measure of quality in the literature used for comparison) - Time
+before first provider contact (common measure of quality in the
+literature used for comparison))
+
+\subsection{Analysis}\label{analysis}
+
+Muliple linear regression will be used for the final analysis to assess
+the correlation between patient acuity and patient centrality.
+Relationships will be evaluated visually (see below) as well as
+statistically to an alpha of 0.05.
+\includegraphics{Flynn_Project_files/figure-latex/unnamed-chunk-2-1.pdf}
+- Analysis: How are you planning to analyze your data?
+
+\begin{itemize}
+\tightlist
+\item
+  Schedule, keeping in mind the due dates listed above for the
+  intermediate and final milestones, make a plan to meet these
+  deadlines. Write these in terms of weekly tasks / goals. \#\#Schedule
+\end{itemize}
 
 \section{Results}\label{results}
 
+Results will be discussed with the visual supplementation of network
+graphs. This allows the reader to understand concepts that may be
+difficult to grasp through text alone.
+
 \section{Discussion}\label{discussion}
+
+Allocating staff resources in an Emergency Department is an ongoing
+challenge. How can these results begin to offer solutions to ED staff
+and patient management?
+
+What were my primary limitation (both expected and unexpected)?
 
 \section{Conclusion}\label{conclusion}
 
-There are various bibliography styles available. You can select the
-style of your choice in the preamble of this document. These styles are
-Elsevier styles based on standard styles like Harvard and Vancouver.
-Please use BibTeX~to generate your bibliography and include DOIs
-whenever available.
+Did I meet my learning objectives? How would I design a better study
+next time?
 
-Here are two sample references: Allaire et al. (2017; R Core Team 2017)
+\section{References}\label{references.unnumbered}
 
-\section*{References}\label{references.unnumbered}
-\addcontentsline{toc}{section}{References}
+Allaire et al. (2017)
+
+R Core Team (2017)
 
 \hypertarget{refs}{}
 \hypertarget{ref-Allaire2017}{}

@@ -1,5 +1,5 @@
 ---
-title: Milestone 1 Testing a Model for an Automated Real-Time Acuity Monitoring System in the Emergency Department
+title: Milestone One Testing a Model for an Automated Real-Time Acuity Monitoring System in the Emergency Department
 author:  
   - name: Tommy Flynn
     email: tjflynn@emory.edu
@@ -14,6 +14,16 @@ abstract: The purpose of this project is to determine if patient acuity in the E
 bibliography: mybibfile.bib
 output: rticles::elsevier_article
 ---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE)
+library(ggplot2)
+library(dplyr)
+library(knitr)
+library(Hmisc)
+library(pander)
+library(gapminder)
+
+```
 
 
 Overview & Motivation
@@ -26,62 +36,97 @@ Overview & Motivation
 As a ballpark, your proposal should be about 2-3 pages of text, along with shells of the tables and figures that you plan. You could even include some preliminary data acquisition / analysis steps.
 
 
-Objectives
-==========
-- Project Objectives: What is the primary focal question that you are trying to answer? What would you like to learn and accomplish?
+Backgroun & Objectives
+======================
 
-The purpose of this study is to test the accuracy of the Emergency Severity Index (ESI) as a metric used to predict patient needs. To test the accuracy of the ESI, this study uses radiofrequency identification (RFID) locating data that includes every interaction patients have with ED staff (nurses, techs, administrators, and providers) and the duration of each of those interactions. Using this data will require specific knowledge of the R statistical packages, network analysis, and data science. My learning objectives are to: 
+In an Emergency Deparmtent (ED), care is delivered over a network of face to face human interactions. Patients interact with registration staff, then a triage nurse who may decide to discuss the patient with a provider, the provider may then interact directly with the patient, and so on. In this way, the network grows over time, creating a web of care that may correlate with the amount and quality of care delivered to individual patients. 
+- The purpose of this study is to explore associations between the network of interactions that take place in the Emergency Department and individual patient acuity. To study this relationship, I will analyze the following; 1) the frequency and duration of all interactions (patients, providers, nurses, technicians, & administrators) that occur in the ED, and 2) individual patients' medical and demographic characteristics. The network structural characteristics will be assessed in relation to the industry standard acuity measure, the Emergency Severity Index (ESI), and potential confounding variables. Using this data will require specific knowledge of the R statistical packages, network analysis, and data science. See Tables 1-4 for my learning goals with respective action items, timeline, and outcomes. 
+
 ```{r, echo=FALSE}
-column_names <- c("Demonstrate effective use of GitHub Version Control", "Demonstrate working knowledge of R Studio & R Markdown", "Create useful visualizations of data", "Apply appropriate statistical methods", "Interpret statistical results")
-row_names <- c("Action Items", "Timeline", "Outcome")
+column_names <- c("Demonstrate effective use of GitHub Version Control", "Demonstrate working knowledge of R Studio & R Markdown", "Create useful visualizations of data", "Apply appropriate statistical methods", "Interpret and communicate results")
+row_names <- c( "Action Items", "Timeline", "Outcome")
 github <- c("Use GitHub version control throughout project development", "Ongoing", "Complete record of data management & analysis")
-rstudio <- ("All data wrangling & analysis in R Studio and all milestones completed in R Markdown", "Ongoing", "Final Project, Presentation, and Website Completed in R Markdown")
-visualize <- c("Apply appropriate packages for informative visualizations in R")
-
+rstudio <- c("All data wrangling & analysis in R Studio and all milestones completed in R Markdown", "Ongoing", "Final Project, Presentation, and Website Completed in R Markdown")
+visualize <- c("Apply appropriate visualization tools to analysis results", "April 26 2018", "Appropriate Tables and Graphs in final presentation and manuscript")
+statistics <- c("Execute rigorous statistical analysis of the data", "Apeil 26 2018", "Statistical tests are appropriate to the data and research purpose and error is adequately minimized")
+results <- c("Recognize and communicate important results", "April 26 2018", "Results discussed in the final project speak to the research question and bridge a gap in the literature")
+mygoals <- data.frame(github, rstudio, visualize, statistics, results, row.names = row_names)
+pander(mygoals, col.names = column_names, align = 'l')
 ```
-- Demonstrate proficiency with CRAN network analysis and visualization packages in R Studio
-- Apply version control to version control with GitHub, and publication with R Markdown.
-- Apply visualization tools to the data and results that create greater understanding of the research and significance.
-- 
 
 Data
 ====
+For this project, I have chosen to use, with permission from Vicki Hertzberg, the same data that I am using for my dissertation research. Data were collected using a prospective longitudinal observational study design with a random sampling of two shifts per week, one day and one night, over the course of a year, from July 2009 to June 2010, for a total of 104 shifts.[@lowery2013] This strategy was chosen to minimize sampling bias related to seasonal or weekly fluctuations in census, acuity, and ED staffing changes. The purpose of the original study was to describe contact characteristics between patients and staff in the ED of a busy urban hospital to inform cross-infection control measures. Data were collected using a radio-frequency identification system that triangulated patient and staff (nurses, providers, administrators, and clinical support staff) locations with the ED at Emory University Hospital Midtwon. 
 
-- Data: from where and how are you acquiring your data? **Provide a link to your data source.**
-##Data:
-
-- Data Wrangling: Do you anticipate that there will be extensive data cleaning / reshaping / extraction? Are there questions you will need to calculate in your data (e.g., perhaps you have height and weight, but not BMI)? How will you implement this particular data wrangling step?
 ##Data Wrangling:
+I have requested the original/raw data, which will require cleaning and organizing to meet the needs of my research aims. Data will be maintained in private repositories in the GitHub version control platform. Patient characteristic data will be evaluated for missing or implausible data with discriptive analyses, and RFID generated networks will be included for statistical analysis if variables of network density, centrality, and a network diversity scale are distributed normally across networks. 
 
 Analysis Plan
 =============
-- Exploratory Analysis: Which methods / visualizations are you planning to use to explore your tidy dataset?
+
 ##Exploratory Analysis
 
+Descriptive statistics of the network data as well as patient demographic data will be evaluated for asssumptions of normality. The data will be skewed in certain predictable ways due to the observed patient populations. The distribution of study subject demographics will be described in tabular format, noting irregularities and potential sources of error.
 
-- Analysis: How are you planning to analyze your data?
+##Variables needed for final analysis:
+- Network Variables
+  - *Patient eigenvector centrality* (dependant varialbe of interest)
+  - Network density
+  - Network clustering coefficient
+  - Network diversity scale??
+- Staff variables
+  - Title (nurse, provider, technician, administrator)
+- Patient variables
+  - *Acuity* (ESI, independant variable of interest)
+  - Commorbidities (index)
+  - Gender
+  - Age
+  - Race
+  - Ethnicity
+  - Arrival mode (ambulance v. walk-in)
+  - Education (if available)
+  - Disposition (admission v. discharge)
+  - Length of stay (common measure of quality in the literature used for comparison)
+  - Time before first provider contact (common measure of quality in the literature used for comparison))
+  
 ##Analysis
 
+Muliple linear regression will be used for the final analysis to assess the correlation between patient acuity and patient centrality. Relationships will be evaluated visually (see below) as well as statistically to an alpha of 0.05.
+```{r, echo=FALSE}
+library(gapminder)
+#create a SHELL scatter plot with gapminder data to display research output
+example_data <- gapminder %>% 
+  filter(year > 1997, year <=2007) %>% 
+  group_by(continent) %>% 
+  summarise(centrality = mean(lifeExp), acuity = median(gdpPercap), mean_pop = mean(pop))
+#print(example_data)
 
-- Schedule, keeping in mind the due dates listed above for the intermediate and final milestones, make a plan to meet these deadlines. Write these in terms of weekly tasks / goals.
+ggplot(example_data, aes(x = acuity, y = centrality, color = continent, size = mean_pop)) + geom_point() + scale_x_log10() + scale_y_log10()
+```
+
 ##Schedule
-
+Milestone 1: February 14th, 2018
+-Objectives 
+Milestone 2: March 15th, 2018
+Final Proposal: April 26th, 2018
 
 Results
 =======
-
+Results will be discussed with the visual supplementation of network graphs. This allows the reader to understand concepts that may be difficult to grasp through text alone. 
 
 
 
 Discussion
 ==========
-Allocating staff resources in an Emergency Department is an ongoing challenge. 
+Allocating staff resources in an Emergency Department is an ongoing challenge. How can these results begin to offer solutions to ED staff and patient management? 
+
+What were my primary limitation (both expected and unexpected)?
 
 
 
 Conclusion
 ==========
-
+Did I meet my learning objectives? How would I design a better study next time? 
 
 
 
@@ -92,4 +137,6 @@ References {#references.unnumbered}
 @Allaire2017
 
 @CRAN
+
+
 
