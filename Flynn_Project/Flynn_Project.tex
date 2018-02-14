@@ -95,56 +95,41 @@ Monitoring System in the Emergency Department}
 Atlanta, GA, 30322}
   
   \begin{abstract}
-  The purpose of this project is to determine if patient acuity in the ED
-  is correlated to patient eigenvector centrality in the network of all
-  face to face ED interactions.
+  Can patient acuity be continuously measured with an objective scale
+  based on network variables? Acuity has historically been measured at
+  irregular intervals? The purpose of this project is to determine if
+  patient acuity in the ED is correlated to patient eigenvector centrality
+  in the network of all face to face ED interactions. A strong correlation
+  between network position and acuity is likely, and a change in network
+  position will likely represent a change in acuity.
   \end{abstract}
   
  \end{frontmatter}
 
-\section{Overview \& Motivation}\label{overview-motivation}
+Find the GitHub repository
+\href{https://github.com/tommyflynn/Project-Milestone-1.git}{here}
 
-\begin{itemize}
-\tightlist
-\item
-  Overview and Motivation: Why did you undertake this particular
-  project? What inspired you, what are your background and research
-  interests that may have influenced your decision?
-\end{itemize}
+\section{Backgroun \& Objectives}\label{backgroun-objectives}
 
-As a ballpark, your proposal should be about 2-3 pages of text, along
-with shells of the tables and figures that you plan. You could even
-include some preliminary data acquisition / analysis steps.
-
-\section{Objectives}\label{objectives}
-
-\begin{itemize}
-\tightlist
-\item
-  Project Objectives: What is the primary focal question that you are
-  trying to answer? What would you like to learn and accomplish? In an
-  Emergency Deparmtent (ED), care is delivered over a network of face to
-  face human interactions. Patients interact with registration staff,
-  then a triage nurse who may decide to discuss the patient with a
-  provider, the provider may then interact directly with the patient,
-  and so on. In this way, the network grows over time, creating a web of
-  care that may correlate with the amount and quality of care delivered
-  to individual patients.
-\item
-  The purpose of this study is to explore associations between the
-  network of interactions that take place in the Emergency Department
-  and individual patient acuity. To study this relationship, I will
-  analyze the following; 1) the frequency and duration of all
-  interactions (patients, providers, nurses, technicians, \&
-  administrators) that occur in the ED, and 2) individual patients'
-  medical and demographic characteristics. The network structural
-  characteristics will be assessed in relation to the industry standard
-  acuity measure, the Emergency Severity Index (ESI), and potential
-  confounding variables. Using this data will require specific knowledge
-  of the R statistical packages, network analysis, and data science. See
-  Tables 1-4 for my learning goals with respective action items,
-  timeline, and outcomes.
-\end{itemize}
+In an Emergency Deparmtent (ED), care is delivered over a network of
+face to face human interactions. Patients interact with registration
+staff, then a triage nurse who may decide to discuss the patient with a
+provider, the provider may then interact directly with the patient, and
+so on. In this way, the network grows over time, creating a web of care
+that may correlate with the amount and quality of care delivered to
+individual patients. - The purpose of this study is to explore
+associations between the network of interactions that take place in the
+Emergency Department and individual patient acuity. To study this
+relationship, I will analyze the following; 1) the frequency and
+duration of all interactions (patients, providers, nurses, technicians,
+\& administrators) that occur in the ED, and 2) individual patients'
+medical and demographic characteristics. The network structural
+characteristics will be assessed in relation to the industry standard
+acuity measure, the Emergency Severity Index (ESI), and potential
+confounding variables. Using this data will require specific knowledge
+of the R statistical packages, network analysis, and data science. See
+Tables 1-4 for my learning goals with respective action items, timeline,
+and outcomes.
 
 \begin{longtable}[]{@{}cc@{}}
 \caption{Table continues below}\tabularnewline
@@ -322,8 +307,6 @@ and bridge a gap in the literature\strut
 
 \section{Data}\label{data}
 
-\subsection{Data:}\label{data-1}
-
 For this project, I have chosen to use, with permission from Vicki
 Hertzberg, the same data that I am using for my dissertation research.
 Data were collected using a prospective longitudinal observational study
@@ -339,11 +322,9 @@ system that triangulated patient and staff (nurses, providers,
 administrators, and clinical support staff) locations with the ED at
 Emory University Hospital Midtwon.
 
-Do you anticipate that there will be extensive data cleaning / reshaping
-/ extraction? Are there questions you will need to calculate in your
-data (e.g., perhaps you have height and weight, but not BMI)? How will
-you implement this particular data wrangling step? \#\#Data Wrangling: I
-have requested the original/raw data, which will require cleaning and
+\subsection{Data Wrangling:}\label{data-wrangling}
+
+I have requested the original/raw data, which will require cleaning and
 organizing to meet the needs of my research aims. Data will be
 maintained in private repositories in the GitHub version control
 platform. Patient characteristic data will be evaluated for missing or
@@ -354,29 +335,61 @@ normally across networks.
 
 \section{Analysis Plan}\label{analysis-plan}
 
-\begin{itemize}
-\tightlist
-\item
-  Exploratory Analysis: Which methods / visualizations are you planning
-  to use to explore your tidy data set? \#\#Exploratory Analysis
-\end{itemize}
+\subsection{Exploratory Analysis}\label{exploratory-analysis}
 
 Descriptive statistics of the network data as well as patient
 demographic data will be evaluated for asssumptions of normality. The
 data will be skewed in certain predictable ways due to the observed
 patient populations. The distribution of study subject demographics will
 be described in tabular format, noting irregularities and potential
-sources of error. \#\#Variables needed for final analysis: - Network
-Variables - \emph{Patient eigenvector centrality} (dependant varialbe of
-interest) - Network density - Network clustering coefficient - Network
-diversity scale?? - Staff variables - Title (nurse, provider,
-technician, administrator) - Patient variables - \emph{Acuity} (ESI,
-independant variable of interest) - Commorbidities (index) - Gender -
-Age - Race - Ethnicity - Arrival mode (ambulance v. walk-in) - Education
-(if available) - Disposition (admission v. discharge) - Length of stay
-(common measure of quality in the literature used for comparison) - Time
-before first provider contact (common measure of quality in the
-literature used for comparison))
+sources of error.
+
+\subsection{Variables needed for final
+analysis:}\label{variables-needed-for-final-analysis}
+
+\begin{itemize}
+\tightlist
+\item
+  Network Variables
+\item
+  \emph{Patient eigenvector centrality} (dependant varialbe of interest)
+\item
+  Network density
+\item
+  Network clustering coefficient
+\item
+  Network diversity scale??
+\item
+  Staff variables
+\item
+  Title (nurse, provider, technician, administrator)
+\item
+  Patient variables
+\item
+  \emph{Acuity} (ESI, independant variable of interest)
+\item
+  Commorbidities (index)
+\item
+  Gender
+\item
+  Age
+\item
+  Race
+\item
+  Ethnicity
+\item
+  Arrival mode (ambulance v. walk-in)
+\item
+  Education (if available)
+\item
+  Disposition (admission v. discharge)
+\item
+  Length of stay (common measure of quality in the literature used for
+  comparison)
+\item
+  Time before first provider contact (common measure of quality in the
+  literature used for comparison))
+\end{itemize}
 
 \subsection{Analysis}\label{analysis}
 
@@ -385,15 +398,11 @@ the correlation between patient acuity and patient centrality.
 Relationships will be evaluated visually (see below) as well as
 statistically to an alpha of 0.05.
 \includegraphics{Flynn_Project_files/figure-latex/unnamed-chunk-2-1.pdf}
-- Analysis: How are you planning to analyze your data?
 
-\begin{itemize}
-\tightlist
-\item
-  Schedule, keeping in mind the due dates listed above for the
-  intermediate and final milestones, make a plan to meet these
-  deadlines. Write these in terms of weekly tasks / goals. \#\#Schedule
-\end{itemize}
+\subsection{Schedule}\label{schedule}
+
+Milestone 1: February 14th, 2018 -Objectives Milestone 2: March 15th,
+2018 Final Proposal: April 26th, 2018
 
 \section{Results}\label{results}
 
@@ -415,22 +424,6 @@ Did I meet my learning objectives? How would I design a better study
 next time?
 
 \section{References}\label{references.unnumbered}
-
-Allaire et al. (2017)
-
-R Core Team (2017)
-
-\hypertarget{refs}{}
-\hypertarget{ref-Allaire2017}{}
-Allaire, JJ, R Foundation, Hadley Wickham, Journal of Statistical
-Software, Yihui Xie, Ramnath Vaidyanathan, Association for Computing
-Machinery, et al. 2017. \emph{Rticles: Article Formats for R Markdown}.
-\url{https://CRAN.R-project.org/package=rticles}.
-
-\hypertarget{ref-CRAN}{}
-R Core Team. 2017. \emph{R: A Language and Environment for Statistical
-Computing}. Vienna, Austria: R Foundation for Statistical Computing.
-\url{https://www.R-project.org/}.
 
 \end{document}
 

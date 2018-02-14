@@ -22,16 +22,7 @@ library(pander)
 library(gapminder)
 
 ```
-
-
-Overview & Motivation
-=====================
-- Overview and Motivation: Why did you undertake this particular project? What inspired you, what are your background and research interests that may have influenced your decision? 
-
-
-
-
-As a ballpark, your proposal should be about 2-3 pages of text, along with shells of the tables and figures that you plan. You could even include some preliminary data acquisition / analysis steps.
+Find the GitHub repository [here](https://github.com/tommyflynn/Project-Milestone-1.git) 
 
 
 Backgroun & Objectives
@@ -132,9 +123,6 @@ Did I meet my learning objectives? How would I design a better study next time?
 References {#references.unnumbered} 
 ==========
 
-@Allaire2017
-
-@CRAN
 
 
 
