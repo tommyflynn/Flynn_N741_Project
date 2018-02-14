@@ -16,10 +16,8 @@ output: rticles::elsevier_article
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo=FALSE)
-library(ggplot2)
-library(dplyr)
+library(tidyverse)
 library(knitr)
-library(Hmisc)
 library(pander)
 library(gapminder)
 
