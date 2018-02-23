@@ -19,7 +19,8 @@ knitr::opts_chunk$set(echo=FALSE)
 library(tidyverse)
 library(knitr)
 library(pander)
-
+library(ggplot2)
+library(dplyr)
 ```
 
 
@@ -43,7 +44,7 @@ pander(mygoals, col.names = column_names, align = 'l')
 
 Data
 ====
-For this project, I have chosen to use, with permission from Vicki Hertzberg, the same data that I am using for my dissertation research. Data were collected using a prospective longitudinal observational study design with a random sampling of two shifts per week, one day and one night, over the course of a year, from July 2009 to June 2010, for a total of 104 shifts.[@lowery2013] This strategy was chosen to minimize sampling bias related to seasonal or weekly fluctuations in census, acuity, and ED staffing changes. The purpose of the original study was to describe contact characteristics between patients and staff in the ED of a busy urban hospital to inform cross-infection control measures. Data were collected using a radio-frequency identification system that triangulated patient and staff (nurses, providers, administrators, and clinical support staff) locations with the ED at Emory University Hospital Midtwon. 
+For this project, I have chosen to use, with permission from Vicki Hertzberg, the same data that I am using for my dissertation research. Data were collected using a prospective longitudinal observational study design with a random sampling of two shifts per week, one day and one night, over the course of a year, from July 2009 to June 2010, for a total of 104 shifts.[@RN1] This strategy was chosen to minimize sampling bias related to seasonal or weekly fluctuations in census, acuity, and ED staffing changes. The purpose of the original study was to describe contact characteristics between patients and staff in the ED of a busy urban hospital to inform cross-infection control measures. Data were collected using a radio-frequency identification system that triangulated patient and staff (nurses, providers, administrators, and clinical support staff) locations with the ED at Emory University Hospital Midtwon. 
 
 ##Data Wrangling:
 I have requested the original/raw data, which will require cleaning and organizing to meet the needs of my research aims. Data will be maintained in private repositories in the GitHub version control platform. Patient characteristic data will be evaluated for missing or implausible data with discriptive analyses, and RFID generated networks will be included for statistical analysis if variables of network density, centrality, and a network diversity scale are distributed normally across networks. 
@@ -54,7 +55,15 @@ Analysis Plan
 ##Exploratory Analysis
 
 Descriptive statistics of the network data as well as patient demographic data will be evaluated for asssumptions of normality. The data will be skewed in certain predictable ways due to the observed patient populations. The distribution of study subject demographics will be described in tabular format, noting irregularities and potential sources of error.
-
+```{r acuity}
+patients <- patients %>%
+  filter(Acuity != "Not Recorded")
+ggplot(patients, aes(Acuity)) + geom_bar(aes(fill = Acuity))
+```
+```{r demographics} 
+participants <- c("Patient", "MD", "RN", "Other Staff")
+ggplot(nodes, aes(participant_type)) + geom_bar(aes(fill = participant_type), colnames(participants))
+```
 ##Variables needed for final analysis:
 - Network Variables
   - *Patient eigenvector centrality* (dependant varialbe of interest)
