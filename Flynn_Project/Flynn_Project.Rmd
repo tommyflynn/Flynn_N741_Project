@@ -8,10 +8,10 @@ author:
 address:
     code: Emory University
     address: Emory University Nell Hodgson School of Nursing, 1520 Clifton Road NE, Atlanta, GA, 30322
-abstract: Can patient acuity be continuously measured with an objective scale based on network variables? Acuity has historically been measured at irregular intervals? The purpose of this project is to determine if patient acuity in the ED is correlated to patient eigenvector centrality in the network of all face to face ED interactions. A strong correlation between network position and acuity is likely, and a change in network position will likely represent a change in acuity.
+abstract: Patient acuity in the Emergency Department is triaged at the beginning of the care process using the Emergency Severity Index (ESI). Although the ESI is widely used and accepted as the most valid predictor of ED resource consumption in US hospital EDs, its predictive power has limitations that can negatively impact patient flow and safety. An objective measurement of individual resource consumption, taken in the context of all ED care, would allow nurses and administrators to make better decisions with staffing and assignemnts. The question remains, can patient acuity be continuously measured with an objective scale based? I hypothesize that patient acuity in the context of direct interactions. The purpose of this project is to determine if patient acuity in the ED is correlated to patient eigenvector centrality in the network of all face to face ED interactions. A strong correlation between network position and acuity is likely, and a change in network position will likely represent a change in acuity.
   
 
-bibliography: mybibfile.bib
+bibliography: rfid_bib.bib
 output: rticles::elsevier_article
 ---
 ```{r setup, include=FALSE}
