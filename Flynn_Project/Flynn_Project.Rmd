@@ -30,7 +30,7 @@ Backgroun & Objectives
 In an Emergency Deparmtent (ED), care is delivered over a network of face to face human interactions. Patients interact with registration staff, then a triage nurse who may decide to discuss the patient with a provider, the provider may then interact directly with the patient, and so on. In this way, the network grows over time, creating a web of care that may correlate with the amount and quality of care delivered to individual patients. 
 - The purpose of this study is to explore associations between the network of interactions that take place in the Emergency Department and individual patient acuity. To study this relationship, I will analyze the following; 1) the frequency and duration of all interactions (patients, providers, nurses, technicians, & administrators) that occur in the ED, and 2) individual patients' medical and demographic characteristics. The network structural characteristics will be assessed in relation to the industry standard acuity measure, the Emergency Severity Index (ESI), and potential confounding variables. Using this data will require specific knowledge of the R statistical packages, network analysis, and data science. See Tables 1-4 for my learning goals with respective action items, timeline, and outcomes. 
 
-```{r, echo=FALSE}
+```{r objectives tables needing reformatting, echo=FALSE}
 column_names <- c("Demonstrate effective use of GitHub Version Control", "Demonstrate working knowledge of R Studio & R Markdown", "Create useful visualizations of data", "Apply appropriate statistical methods", "Interpret and communicate results")
 row_names <- c( "Action Items", "Timeline", "Outcome")
 github <- c("Use GitHub version control throughout project development", "Ongoing", "Complete record of data management & analysis")
@@ -55,49 +55,53 @@ Analysis Plan
 ##Exploratory Analysis
 
 Descriptive statistics of the network data as well as patient demographic data will be evaluated for asssumptions of normality. The data will be skewed in certain predictable ways due to the observed patient populations. The distribution of study subject demographics will be described in tabular format, noting irregularities and potential sources of error.
-```{r acuity}
+```{r acuity histogram}
 patients <- patients %>%
   filter(Acuity != "Not Recorded")
 ggplot(patients, aes(Acuity)) + geom_bar(aes(fill = Acuity))
 ```
-```{r demographics} 
-participants <- c("Patient", "MD", "RN", "Other Staff")
-ggplot(nodes, aes(participant_type)) + geom_bar(aes(fill = participant_type), colnames(participants))
+```{r participant type histogram} 
+#???????????????????????????????????????????????????????????????????????????????????????????????????
+#try to add race as a stack to patients bar??
+colors <- c("blue","red","lightskyblue","pink")
+ggplot(nodes, aes(participant_type, color = participant_type)) + geom_bar(aes(fill = colors)) + scale_fill_identity("Color legend", guide = "participant_type", labels = c("Patient","RN","MD","Staff")) + scale_color_identity("Color legend", guide = "participant_type", labels = c("Patient","RN","MD","Staff")) + labs(title = "Participant Type Distribution", x = "Participant Type", y = "Count") + sec_axis(race?)
+#???????????????????????????????????????????????????????????????????????????????????????????????????
 ```
-##Variables needed for final analysis:
-- Network Variables
-  - *Patient eigenvector centrality* (dependant varialbe of interest)
-  - Network density
-  - Network clustering coefficient
-  - Network diversity scale??
-- Staff variables
-  - Title (nurse, provider, technician, administrator)
-- Patient variables
-  - *Acuity* (ESI, independant variable of interest)
-  - Commorbidities (index)
-  - Gender
-  - Age
-  - Race
-  - Ethnicity
-  - Arrival mode (ambulance v. walk-in)
-  - Education (if available)
-  - Disposition (admission v. discharge)
-  - Length of stay (common measure of quality in the literature used for comparison)
-  - Time before first provider contact (common measure of quality in the literature used for comparison))
+
+##Variables used for final analysis:
+__Network Variables__
+>  - *Patient eigenvector centrality* (dependant varialbe of interest)
+>  - Network density
+>  - Network clustering coefficient
+>  - Network diversity scale??
+
+__Staff variables__
+>  - Title (RN, MD, staff)
+
+__Patient variables__
+>  - *Acuity* (ESI, independant variable of interest)
+>  - Commorbidities (index)
+>  - Gender
+>  - Age
+>  - Race
+>  - Ethnicity
+>  - Arrival mode (ambulance v. walk-in)
+>  - Education (if available)
+>  - Disposition (admission v. discharge)
+>  - Length of stay (common measure of quality in the literature used for comparison)
+>  - Time before first provider contact (common measure of quality in the literature used for comparison))
   
 ##Analysis
 
 Muliple linear regression will be used for the final analysis to assess the correlation between patient acuity and patient centrality. Relationships will be evaluated visually (see below) as well as statistically to an alpha of 0.05.
-```{r, echo=FALSE}
-library(gapminder)
-#create a SHELL scatter plot with gapminder data to display research output
-example_data <- gapminder %>% 
-  filter(year > 1997, year <=2007) %>% 
-  group_by(continent) %>% 
-  summarise(centrality = mean(lifeExp), acuity = median(gdpPercap), mean_pop = mean(pop))
-#print(example_data)
+```{r boxplot centrality by acuity, echo=FALSE}
+#Set the dataframe up for a scatter of pt acuity/eigenvector centrality
+eigen <- Nodes1019 %>% 
+  filter(participant_type == "_PAT") %>% 
+  select(Eigenvector_Centrality, Acuity, acuitycat)
+#scatterplot of eigenvector centrality by acuity
 
-ggplot(example_data, aes(x = acuity, y = centrality, color = continent, size = mean_pop)) + geom_point() + scale_x_log10() + scale_y_log10()
+ggplot(eigen, aes(x = Acuity, y = Eigenvector_Centrality, color = acuitycat)) + geom_boxplot() + labs(title = "Boxplot of patient acuity by eigenvector centrality", x = "Patient Acuity", y = "Eigenvector Centrality")
 ```
 
 ##Schedule
