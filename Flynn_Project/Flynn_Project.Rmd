@@ -94,16 +94,19 @@ __Patient variables__
 ##Analysis
 
 Muliple linear regression will be used for the final analysis to assess the correlation between patient acuity and patient centrality. Relationships will be evaluated visually (see below) as well as statistically to an alpha of 0.05.
-```{r boxplot centrality by acuity, echo=FALSE}
+```{r boxplot of mydata, echo=FALSE}
 #Set the dataframe up for a scatter of pt acuity/eigenvector centrality
-eigen <- Nodes1019 %>% 
+mydata <- Nodes1019 %>% 
   filter(participant_type == "_PAT") %>% 
-  select(Eigenvector_Centrality, Acuity, acuitycat)
+  select(sid, d8, ID, i, LNLN_WTDEGREE, AGE, Race, arrival_mode, Chief_Complaint, ED_Disposition, Arr_Mode, Sex, MinutesInED, Acuity, acuitycat, BLACKyn, wdegree, Eigenvector_Centrality, Betweenness_Centrality, degree, degree_ps, RELATIVE_DEGREE, Authority)
 #scatterplot of eigenvector centrality by acuity
 
-ggplot(eigen, aes(x = Acuity, y = Eigenvector_Centrality, color = acuitycat)) + geom_boxplot() + labs(title = "Boxplot of patient acuity by eigenvector centrality", x = "Patient Acuity", y = "Eigenvector Centrality")
+#ggplot(mydata, aes(x = Race, y = MinutesInED, color = Acuity)) + geom_boxplot() + labs(title = "Boxplot of Minutes in the ED by Race, grouped by Acuity", x = "Race", y = "Minutes in ED")
 ```
 
+```{r boxplot minutes by race w acuity}
+ggplot(mydata, aes(y = Eigenvector_Centrality, x = MinutesInED, color = Acuity)) + geom_point() + labs(title = "Boxplot Play", x = "Acuity", y = "Minutes")
+```
 ##Schedule
 Milestone 1: February 14th, 2018
 -Objectives 
