@@ -1,5 +1,5 @@
 ---
-title: Milestone TWO; Testing a Model for an Automated Real-Time Acuity Monitoring System in the Emergency Department
+title: _Milestone TWO_  Exploratory Network Analysis of Clinical Interactions in the ED
 author:  
   - name: Tommy Flynn
     email: tjflynn@emory.edu
@@ -21,14 +21,24 @@ library(knitr)
 library(pander)
 library(ggplot2)
 library(dplyr)
+library(haven)
+library(lubridate)
+library(igraph)
 ```
 
+Research Question & Specific Aims
+=================================
+Can network analysis of clinical interactions between patients and staff provide insight into the complex Emergency Department patient care process? 
 
-Backgroun & Objectives
-======================
+Aim 1: Explore the network of clinical interactions in the ED between patients and staff to determine whether predictable patterns emerge in terms of centrality, density, and change over time. 
+
+Aim 2: Test the assocaition between patient acuity and network position measure of eigenvector centrality of patient composite network, compared to the centrality of teh dynamic patient network (measure TBD).
+
+Background & Objectives
+=======================
 
 In an Emergency Deparmtent (ED), care is delivered over a network of face to face human interactions. Patients interact with registration staff, then a triage nurse who may decide to discuss the patient with a provider, the provider may then interact directly with the patient, and so on. In this way, the network grows over time, creating a web of care that may correlate with the amount and quality of care delivered to individual patients. 
-- The purpose of this study is to explore associations between the network of interactions that take place in the Emergency Department and individual patient acuity. To study this relationship, I will analyze the following; 1) the frequency and duration of all interactions (patients, providers, nurses, technicians, & administrators) that occur in the ED, and 2) individual patients' medical and demographic characteristics. The network structural characteristics will be assessed in relation to the industry standard acuity measure, the Emergency Severity Index (ESI), and potential confounding variables. Using this data will require specific knowledge of the R statistical packages, network analysis, and data science. See Tables 1-4 for my learning goals with respective action items, timeline, and outcomes. 
+- __The purpose of this study is to explore the network of clinical interactions that take place in the Emergency Department.__ To study this relationship, I will analyze the following; 1) the frequency and duration of all interactions (patients, providers, nurses, technicians, & administrators) that occur in the ED, and 2) individual patients' medical and demographic characteristics. The network structural characteristics will be assessed in relation to the industry standard acuity measure, the Emergency Severity Index (ESI), and potential confounding variables. Using this data will require specific knowledge of the R statistical packages, network analysis, and data science. See Tables 1-4 for my learning goals with respective action items, timeline, and outcomes. 
 
 ```{r objectives tables needing reformatting, echo=FALSE}
 column_names <- c("Demonstrate effective use of GitHub Version Control", "Demonstrate working knowledge of R Studio & R Markdown", "Create useful visualizations of data", "Apply appropriate statistical methods", "Interpret and communicate results")
@@ -44,10 +54,13 @@ pander(mygoals, col.names = column_names, align = 'l')
 
 Data
 ====
-For this project, I have chosen to use, with permission from Vicki Hertzberg, the same data that I am using for my dissertation research. Data were collected using a prospective longitudinal observational study design with a random sampling of two shifts per week, one day and one night, over the course of a year, from July 2009 to June 2010, for a total of 104 shifts.[@RN1] This strategy was chosen to minimize sampling bias related to seasonal or weekly fluctuations in census, acuity, and ED staffing changes. The purpose of the original study was to describe contact characteristics between patients and staff in the ED of a busy urban hospital to inform cross-infection control measures. Data were collected using a radio-frequency identification system that triangulated patient and staff (nurses, providers, administrators, and clinical support staff) locations with the ED at Emory University Hospital Midtwon. 
+This study applies a secondary data analysis design due to the exploritory nature of the research aims. Data was made available with permissions from the originating research team. The purpose of the original study was to describe contact characteristics between patients and staff in the ED of a busy urban hospital to inform cross-infection control measures. Data were collected using a radio-frequency identification system that triangulated patient and staff (nurses, providers, and ancillary staff) locations within the ED at Emory University Hospital Midtwon. Data for this secondary analysis were collected using a prospective, longitudinal, observational design with a random sampling of one day shift and one night shift per week for one year, July 1, 2009 to June 30, 2010. This strategy was chosen to minimize sampling bias related to seasonal or weekly fluctuations in census, acuity, and ED staffing changes. Although a total of 104 shifts were observed, the original research team retained only 81 shifts for reasons related to issues with the RFID system and study staff sick leave.[@RN1X] 
 
 ##Data Wrangling:
 I have requested the original/raw data, which will require cleaning and organizing to meet the needs of my research aims. Data will be maintained in private repositories in the GitHub version control platform. Patient characteristic data will be evaluated for missing or implausible data with discriptive analyses, and RFID generated networks will be included for statistical analysis if variables of network density, centrality, and a network diversity scale are distributed normally across networks. 
+```{r data cleaning}
+
+```
 
 Analysis Plan
 =============
