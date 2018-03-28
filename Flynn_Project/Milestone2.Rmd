@@ -1,0 +1,159 @@
+---
+title: _Milestone TWO_  Exploratory Network Analysis of Clinical Interactions in the ED
+author:  
+  - name: Tommy Flynn
+    email: tjflynn@emory.edu
+    affiliation: Emory University
+    footnote: Corresponding Author
+address:
+    code: Emory University
+    address: Find the GitHub repository at [https://github.com/tommyflynn/Project-Milestone-1.git](https://github.com/tommyflynn/Project-Milestone-1.git)
+abstract: Patient acuity in the Emergency Department is triaged at the beginning of the care process using the Emergency Severity Index (ESI). Although the ESI is widely used and accepted as a validated predictor of ED resource consumption, its predictive power has limitations that can negatively impact patient flow and safety. An objective measurement of individual resource consumption, that passively observes and calulates relative patient needs, would allow nurses and administrators to make better decisions with staffing and patient assignemnts. This study proposes an approach to continuous passive patient acuity monitoring using radio-frequency identifaction (RFID) technology and network analysis algorithms to define and potentially predict changes in patient acuity. The first step in this process is to determine how acuity, as it is currently measured, correlates to the network position of patients in the clinical interaction network. A strong correlation between network position and acuity is expected, and a change in network position is presumed to reflect a change in patient condition. 
+  
+
+bibliography: rfid_bib.bib
+output: rticles::elsevier_article
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE)
+library(tidyverse)
+library(knitr)
+library(pander)
+library(ggplot2)
+library(dplyr)
+library(haven)
+library(lubridate)
+library(igraph)
+```
+
+Research Question & Specific Aims
+=================================
+Can network analysis of clinical interactions between patients and staff provide insight into the complex Emergency Department patient care process? 
+
+Aim 1: Explore the network of clinical interactions in the ED between patients and staff to determine whether predictable patterns emerge in terms of centrality, density, and change over time. 
+
+Aim 2: Test the assocaition between patient acuity and network position measure of eigenvector centrality of patient composite network, compared to the centrality of teh dynamic patient network (measure TBD).
+
+Background & Objectives
+=======================
+
+In an Emergency Deparmtent (ED), care is delivered over a network of face to face human interactions. Patients interact with registration staff, then a triage nurse who may decide to discuss the patient with a provider, the provider may then interact directly with the patient, and so on. In this way, the network grows over time, creating a web of care that may correlate with the amount and quality of care delivered to individual patients. 
+- __The purpose of this study is to explore the network of clinical interactions that take place in the Emergency Department and describe the raltionship between those network variables and patient acuity.__ To study this relationship, received permission to analyse existing data that includes the following; the frequency and duration of all face-to-face interactions (patients, providers, nurses, technicians, & administrators) that occured in the ED for 81 12hr shifts, the location of those interactions, and individual patients' medical and demographic characteristics including acuity, chief complaint, gender, age, arrival mode, and disposition. The network structural characteristics will be assessed in relation to the industry standard acuity measure, the Emergency Severity Index (ESI), and potential confounding variables. Using this data will require specific knowledge of the R statistical packages, network analysis, and data science. See Tables 1-4 for my learning goals with respective action items, timeline, and outcomes. 
+
+```{r objectives tables needing reformatting, echo=FALSE}
+column_names <- c("Demonstrate effective use of GitHub Version Control", "Demonstrate working knowledge of R Studio & R Markdown", "Create useful visualizations of data", "Apply appropriate statistical methods", "Interpret and communicate results")
+row_names <- c( "Action Items", "Timeline", "Outcome")
+github <- c("Use GitHub version control throughout project development", "Ongoing", "Complete record of data management & analysis")
+rstudio <- c("All data wrangling & analysis in R Studio and all milestones completed in R Markdown", "Ongoing", "Final Project, Presentation, and Website Completed in R Markdown")
+visualize <- c("Apply appropriate visualization tools to analysis results", "April 26 2018", "Appropriate Tables and Graphs in final presentation and manuscript")
+statistics <- c("Execute rigorous statistical analysis of the data", "Apeil 26 2018", "Statistical tests are appropriate to the data and research purpose and error is adequately minimized")
+results <- c("Recognize and communicate important results", "April 26 2018", "Results discussed in the final project speak to the research question and bridge a gap in the literature")
+mygoals <- data.frame(github, rstudio, visualize, statistics, results, row.names = row_names)
+pander(mygoals, col.names = column_names, align = 'l')
+```
+
+Data
+====
+This study applies a secondary data analysis design due to the exploritory nature of the research aims. Data was made available with permissions from the originating research team. The purpose of the original study was to describe contact characteristics between patients and staff in the ED of a busy urban hospital to inform cross-infection control measures. Data were collected using a radio-frequency identification system that triangulated patient and staff (nurses, providers, and ancillary staff) locations within the ED at Emory University Hospital Midtwon. Data for this secondary analysis were collected using a prospective, longitudinal, observational design with a random sampling of one day shift and one night shift per week for one year, July 1, 2009 to June 30, 2010. This strategy was chosen to minimize sampling bias related to seasonal or weekly fluctuations in census, acuity, and ED staffing changes. Although a total of 104 shifts were observed, the original research team retained only 81 shifts for reasons related to issues with the RFID system and study staff sick leave.[@RN1X] 
+```{r load data}
+##this didn't work... too big! Ugh...
+```
+##Data Wrangling:
+I have requested the original/raw data, which will require cleaning and organizing to meet the needs of my research aims. Data will be maintained in private repositories in the GitHub version control platform. Patient characteristic data will be evaluated for missing or implausible data with discriptive analyses, and RFID generated networks will be included for statistical analysis if variables of network density, centrality, and a network diversity scale are distributed normally across networks. 
+```{r data cleaning}
+
+```
+#I have received the data, but it is too large for my computer... must troubleshoot this before I can move forward...
+Analysis Plan
+=============
+
+##Exploratory Analysis
+
+Descriptive statistics of the network data as well as patient demographic data will be evaluated for asssumptions of normality. The data will be skewed in certain predictable ways due to the observed patient populations. The distribution of study subject demographics will be described in tabular format, noting irregularities and potential sources of error.
+```{r acuity histogram}
+#patients <- patients %>%
+ # filter(Acuity != "Not Recorded")
+#ggplot(patients, aes(Acuity)) + geom_bar(aes(fill = Acuity))
+```
+
+
+```{r participant type histogram} 
+#???????????????????????????????????????????????????????????????????????????????????????????????????
+#try to add race as a stack to patients bar??
+#colors <- c("blue","red","lightskyblue","pink")
+#ggplot(nodes, aes(participant_type, color = participant_type)) + geom_bar(aes(fill = colors)) + scale_fill_identity("Color legend", guide = "participant_type", labels = c("Patient","RN","MD","Staff")) + scale_color_identity("Color legend", guide = "participant_type", labels = c("Patient","RN","MD","Staff")) + labs(title = "Participant Type Distribution", x = "Participant Type", y = "Count") + sec_axis(race?)
+#???????????????????????????????????????????????????????????????????????????????????????????????????
+```
+
+##Variables used for final analysis:
+__Network Variables__
+>  - *Patient eigenvector centrality* (dependant varialbe of interest)
+>  - Network density
+>  - Network clustering coefficient
+>  - Network diversity scale??
+
+__Staff variables__
+>  - Title (RN, MD, staff)
+
+__Patient variables__
+>  - *Acuity* (ESI, independant variable of interest)
+>  - Commorbidities (index)
+>  - Gender
+>  - Age
+>  - Race
+>  - Ethnicity
+>  - Arrival mode (ambulance v. walk-in)
+>  - Education (if available)
+>  - Disposition (admission v. discharge)
+>  - Length of stay (common measure of quality in the literature used for comparison)
+>  - Time before first provider contact (common measure of quality in the literature used for comparison))
+  
+##Analysis
+
+Muliple linear regression will be used for the final analysis to assess the correlation between patient acuity and patient centrality. Relationships will be evaluated visually (see below) as well as statistically to an alpha of 0.05.
+```{r boxplot of mydata, echo=FALSE}
+#Set the dataframe up for a scatter of pt acuity/eigenvector centrality
+#mydata <- Nodes1019 %>% 
+ # filter(participant_type == "_PAT") %>% 
+  #select(sid, d8, ID, i, LNLN_WTDEGREE, AGE, Race, arrival_mode, Chief_Complaint, ED_Disposition, Arr_Mode, Sex, MinutesInED, Acuity, acuitycat, BLACKyn, wdegree, Eigenvector_Centrality, Betweenness_Centrality, degree, degree_ps, RELATIVE_DEGREE, Authority)
+#scatterplot of eigenvector centrality by acuity
+
+#ggplot(mydata, aes(x = Race, y = MinutesInED, color = Acuity)) + geom_boxplot() + labs(title = "Boxplot of Minutes in the ED by Race, grouped by Acuity", x = "Race", y = "Minutes in ED")
+```
+
+```{r boxplot minutes by race w acuity}
+#ggplot(mydata, aes(y = Eigenvector_Centrality, x = MinutesInED, color = Acuity)) + geom_point() + #labs(title = "Boxplot Play", x = "Acuity", y = "Minutes")
+```
+##Schedule
+Milestone 1: February 14th, 2018
+-Objectives 
+Milestone 2: March 15th, 2018
+Final Proposal: April 26th, 2018
+
+Results
+=======
+Results will be discussed with the visual supplementation of network graphs. This allows the reader to understand concepts that may be difficult to grasp through text alone. 
+
+
+
+Discussion
+==========
+Allocating staff resources in an Emergency Department is an ongoing challenge. How can these results begin to offer solutions to ED staff and patient management? 
+
+What were my primary limitation (both expected and unexpected)?
+
+
+
+Conclusion
+==========
+Did I meet my learning objectives? How would I design a better study next time? 
+
+
+
+
+References {#references.unnumbered} 
+==========
+
+
+
+
