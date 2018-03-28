@@ -1,5 +1,5 @@
 ---
-title: _Milestone TWO_  Exploratory Network Analysis of Clinical Interactions in the ED
+title: _Milestone TWO_ ":"  Exploratory Network Analysis of Clinical Interactions in the ED
 author:  
   - name: Tommy Flynn
     email: tjflynn@emory.edu
@@ -7,7 +7,7 @@ author:
     footnote: Corresponding Author
 address:
     code: Emory University
-    address: Find the GitHub repository at [https://github.com/tommyflynn/Project-Milestone-1.git](https://github.com/tommyflynn/Project-Milestone-1.git)
+    address: Find the GitHub repository for this Milestone at [https://github.com/tommyflynn/Flynn_N741_Project/tree/master/Flynn_Project](https://github.com/tommyflynn/Flynn_N741_Project/tree/master/Flynn_Project)
 abstract: Patient acuity in the Emergency Department is triaged at the beginning of the care process using the Emergency Severity Index (ESI). Although the ESI is widely used and accepted as a validated predictor of ED resource consumption, its predictive power has limitations that can negatively impact patient flow and safety. An objective measurement of individual resource consumption, that passively observes and calulates relative patient needs, would allow nurses and administrators to make better decisions with staffing and patient assignemnts. This study proposes an approach to continuous passive patient acuity monitoring using radio-frequency identifaction (RFID) technology and network analysis algorithms to define and potentially predict changes in patient acuity. The first step in this process is to determine how acuity, as it is currently measured, correlates to the network position of patients in the clinical interaction network. A strong correlation between network position and acuity is expected, and a change in network position is presumed to reflect a change in patient condition. 
   
 
@@ -30,9 +30,9 @@ Research Question & Specific Aims
 =================================
 Can network analysis of clinical interactions between patients and staff provide insight into the complex Emergency Department patient care process? 
 
-Aim 1: Explore the network of clinical interactions in the ED between patients and staff to determine whether predictable patterns emerge in terms of centrality, density, and change over time. 
+Aim 1: Create a netowrk graph from the data. (Baby steps)
 
-Aim 2: Test the assocaition between patient acuity and network position measure of eigenvector centrality of patient composite network, compared to the centrality of teh dynamic patient network (measure TBD).
+Aim 2: Compare network variables of .
 
 Background & Objectives
 =======================
@@ -40,30 +40,18 @@ Background & Objectives
 In an Emergency Deparmtent (ED), care is delivered over a network of face to face human interactions. Patients interact with registration staff, then a triage nurse who may decide to discuss the patient with a provider, the provider may then interact directly with the patient, and so on. In this way, the network grows over time, creating a web of care that may correlate with the amount and quality of care delivered to individual patients. 
 - __The purpose of this study is to explore the network of clinical interactions that take place in the Emergency Department and describe the raltionship between those network variables and patient acuity.__ To study this relationship, received permission to analyse existing data that includes the following; the frequency and duration of all face-to-face interactions (patients, providers, nurses, technicians, & administrators) that occured in the ED for 81 12hr shifts, the location of those interactions, and individual patients' medical and demographic characteristics including acuity, chief complaint, gender, age, arrival mode, and disposition. The network structural characteristics will be assessed in relation to the industry standard acuity measure, the Emergency Severity Index (ESI), and potential confounding variables. Using this data will require specific knowledge of the R statistical packages, network analysis, and data science. See Tables 1-4 for my learning goals with respective action items, timeline, and outcomes. 
 
-```{r objectives tables needing reformatting, echo=FALSE}
-column_names <- c("Demonstrate effective use of GitHub Version Control", "Demonstrate working knowledge of R Studio & R Markdown", "Create useful visualizations of data", "Apply appropriate statistical methods", "Interpret and communicate results")
-row_names <- c( "Action Items", "Timeline", "Outcome")
-github <- c("Use GitHub version control throughout project development", "Ongoing", "Complete record of data management & analysis")
-rstudio <- c("All data wrangling & analysis in R Studio and all milestones completed in R Markdown", "Ongoing", "Final Project, Presentation, and Website Completed in R Markdown")
-visualize <- c("Apply appropriate visualization tools to analysis results", "April 26 2018", "Appropriate Tables and Graphs in final presentation and manuscript")
-statistics <- c("Execute rigorous statistical analysis of the data", "Apeil 26 2018", "Statistical tests are appropriate to the data and research purpose and error is adequately minimized")
-results <- c("Recognize and communicate important results", "April 26 2018", "Results discussed in the final project speak to the research question and bridge a gap in the literature")
-mygoals <- data.frame(github, rstudio, visualize, statistics, results, row.names = row_names)
-pander(mygoals, col.names = column_names, align = 'l')
-```
-
 Data
 ====
-This study applies a secondary data analysis design due to the exploritory nature of the research aims. Data was made available with permissions from the originating research team. The purpose of the original study was to describe contact characteristics between patients and staff in the ED of a busy urban hospital to inform cross-infection control measures. Data were collected using a radio-frequency identification system that triangulated patient and staff (nurses, providers, and ancillary staff) locations within the ED at Emory University Hospital Midtwon. Data for this secondary analysis were collected using a prospective, longitudinal, observational design with a random sampling of one day shift and one night shift per week for one year, July 1, 2009 to June 30, 2010. This strategy was chosen to minimize sampling bias related to seasonal or weekly fluctuations in census, acuity, and ED staffing changes. Although a total of 104 shifts were observed, the original research team retained only 81 shifts for reasons related to issues with the RFID system and study staff sick leave.[@RN1X] 
-```{r load data}
-##this didn't work... too big! Ugh...
+This study applies a secondary data analysis design due to the exploritory nature of the research aims. Data was made available with permissions from the originating research team. The purpose of the original study was to describe contact characteristics between patients and staff in the ED of a busy urban hospital to inform cross-infection control measures. Data were collected using a radio-frequency identification system that triangulated patient and staff (nurses, providers, and ancillary staff) locations within the ED at Emory University Hospital Midtwon. The end result of the RFID collection system is a data set with every participant's location for the duration they were in the ED. With the location of every individual in the ED, we can determine when, and where, two individuals came into within 1 meter of one another while being in the same room. And that is how we define an interaction. Data for this secondary analysis were collected using a prospective, longitudinal, observational design with a random sampling of one day shift and one night shift per week for one year, July 1, 2009 to June 30, 2010. This strategy was chosen to minimize sampling bias related to seasonal or weekly fluctuations in census, acuity, and ED staffing changes. Although a total of 104 shifts were observed, the original research team retained only 81 shifts for reasons related to issues with the RFID system and study staff sick leave.[@RN1X] 
+```{r load temporary data}
+
 ```
 ##Data Wrangling:
-I have requested the original/raw data, which will require cleaning and organizing to meet the needs of my research aims. Data will be maintained in private repositories in the GitHub version control platform. Patient characteristic data will be evaluated for missing or implausible data with discriptive analyses, and RFID generated networks will be included for statistical analysis if variables of network density, centrality, and a network diversity scale are distributed normally across networks. 
+Now that I have the data, it turns out that the files are too large (1.5G) for my __little__ computer. As such, I will move forward with a previous subset of the data that was given to me earlier in the year. Although this is not the full data set, it will suffice while I learn the process needed to clean, explore, analyze, & report on the data with R and Rmarkdown.  
 ```{r data cleaning}
 
 ```
-#I have received the data, but it is too large for my computer... must troubleshoot this before I can move forward...
+
 Analysis Plan
 =============
 
@@ -109,7 +97,7 @@ __Patient variables__
 >  - Time before first provider contact (common measure of quality in the literature used for comparison))
   
 ##Analysis
-
+We start with discriptive statistics of all relevant variables for assumptions of normality. 
 Muliple linear regression will be used for the final analysis to assess the correlation between patient acuity and patient centrality. Relationships will be evaluated visually (see below) as well as statistically to an alpha of 0.05.
 ```{r boxplot of mydata, echo=FALSE}
 #Set the dataframe up for a scatter of pt acuity/eigenvector centrality
@@ -125,10 +113,10 @@ Muliple linear regression will be used for the final analysis to assess the corr
 #ggplot(mydata, aes(y = Eigenvector_Centrality, x = MinutesInED, color = Acuity)) + geom_point() + #labs(title = "Boxplot Play", x = "Acuity", y = "Minutes")
 ```
 ##Schedule
-Milestone 1: February 14th, 2018
--Objectives 
-Milestone 2: March 15th, 2018
-Final Proposal: April 26th, 2018
+-Milestone 1: February 14th, 2018
+-Milestone 2 UPDATE: March 28th
+-Milestone 2: April 4th, 2018
+-Final Proposal: April 26th, 2018
 
 Results
 =======
@@ -147,8 +135,6 @@ What were my primary limitation (both expected and unexpected)?
 Conclusion
 ==========
 Did I meet my learning objectives? How would I design a better study next time? 
-
-
 
 
 References {#references.unnumbered} 

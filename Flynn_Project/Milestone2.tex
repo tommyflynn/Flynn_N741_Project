@@ -45,7 +45,6 @@
 \fi
 % use microtype if available
 \IfFileExists{microtype.sty}{\usepackage{microtype}}{}
-\usepackage{longtable}
 \ifxetex
   \usepackage[setpagesize=false, % page size defined by xetex
               unicode=false, % unicode breaks when used with xetex
@@ -56,7 +55,7 @@
 \hypersetup{breaklinks=true,
             bookmarks=true,
             pdfauthor={},
-            pdftitle={Milestone TWO Exploratory Network Analysis of Clinical Interactions in the ED},
+            pdftitle={Milestone TWO : Exploratory Network Analysis of Clinical Interactions in the ED},
             colorlinks=true,
             urlcolor=blue,
             linkcolor=magenta,
@@ -76,13 +75,13 @@
 \begin{document}
 \begin{frontmatter}
 
-  \title{\emph{Milestone TWO} Exploratory Network Analysis of Clinical
+  \title{\emph{Milestone TWO} ``:'' Exploratory Network Analysis of Clinical
 Interactions in the ED}
     \author[Emory University]{Tommy Flynn\corref{c1}}
    \ead{tjflynn@emory.edu} 
    \cortext[c1]{Corresponding Author}
-      \address[Emory University]{Find the GitHub repository at
-\url{https://github.com/tommyflynn/Project-Milestone-1.git}}
+      \address[Emory University]{Find the GitHub repository for this Milestone at
+\url{https://github.com/tommyflynn/Flynn_N741_Project/tree/master/Flynn_Project}}
   
   \begin{abstract}
   Patient acuity in the Emergency Department is triaged at the beginning
@@ -112,13 +111,9 @@ Can network analysis of clinical interactions between patients and staff
 provide insight into the complex Emergency Department patient care
 process?
 
-Aim 1: Explore the network of clinical interactions in the ED between
-patients and staff to determine whether predictable patterns emerge in
-terms of centrality, density, and change over time.
+Aim 1: Create a netowrk graph from the data. (Baby steps)
 
-Aim 2: Test the assocaition between patient acuity and network position
-measure of eigenvector centrality of patient composite network, compared
-to the centrality of teh dynamic patient network (measure TBD).
+Aim 2: Compare network variables of .
 
 \section{Background \& Objectives}\label{background-objectives}
 
@@ -145,180 +140,6 @@ knowledge of the R statistical packages, network analysis, and data
 science. See Tables 1-4 for my learning goals with respective action
 items, timeline, and outcomes.
 
-\begin{longtable}[]{@{}cc@{}}
-\caption{Table continues below}\tabularnewline
-\toprule
-\begin{minipage}[b]{0.25\columnwidth}\centering\strut
-~\strut
-\end{minipage} & \begin{minipage}[b]{0.42\columnwidth}\centering\strut
-Demonstrate effective use of GitHub Version Control\strut
-\end{minipage}\tabularnewline
-\midrule
-\endfirsthead
-\toprule
-\begin{minipage}[b]{0.25\columnwidth}\centering\strut
-~\strut
-\end{minipage} & \begin{minipage}[b]{0.42\columnwidth}\centering\strut
-Demonstrate effective use of GitHub Version Control\strut
-\end{minipage}\tabularnewline
-\midrule
-\endhead
-\begin{minipage}[t]{0.25\columnwidth}\centering\strut
-\textbf{Action Items}\strut
-\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
-Use GitHub version control throughout project development\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.25\columnwidth}\centering\strut
-\textbf{Timeline}\strut
-\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
-Ongoing\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.25\columnwidth}\centering\strut
-\textbf{Outcome}\strut
-\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
-Complete record of data management \& analysis\strut
-\end{minipage}\tabularnewline
-\bottomrule
-\end{longtable}
-
-\begin{longtable}[]{@{}cc@{}}
-\caption{Table continues below}\tabularnewline
-\toprule
-\begin{minipage}[b]{0.25\columnwidth}\centering\strut
-~\strut
-\end{minipage} & \begin{minipage}[b]{0.42\columnwidth}\centering\strut
-Demonstrate working knowledge of R Studio \& R Markdown\strut
-\end{minipage}\tabularnewline
-\midrule
-\endfirsthead
-\toprule
-\begin{minipage}[b]{0.25\columnwidth}\centering\strut
-~\strut
-\end{minipage} & \begin{minipage}[b]{0.42\columnwidth}\centering\strut
-Demonstrate working knowledge of R Studio \& R Markdown\strut
-\end{minipage}\tabularnewline
-\midrule
-\endhead
-\begin{minipage}[t]{0.25\columnwidth}\centering\strut
-\textbf{Action Items}\strut
-\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
-All data wrangling \& analysis in R Studio and all milestones completed
-in R Markdown\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.25\columnwidth}\centering\strut
-\textbf{Timeline}\strut
-\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
-Ongoing\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.25\columnwidth}\centering\strut
-\textbf{Outcome}\strut
-\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
-Final Project, Presentation, and Website Completed in R Markdown\strut
-\end{minipage}\tabularnewline
-\bottomrule
-\end{longtable}
-
-\begin{longtable}[]{@{}cc@{}}
-\caption{Table continues below}\tabularnewline
-\toprule
-\begin{minipage}[b]{0.25\columnwidth}\centering\strut
-~\strut
-\end{minipage} & \begin{minipage}[b]{0.41\columnwidth}\centering\strut
-Create useful visualizations of data\strut
-\end{minipage}\tabularnewline
-\midrule
-\endfirsthead
-\toprule
-\begin{minipage}[b]{0.25\columnwidth}\centering\strut
-~\strut
-\end{minipage} & \begin{minipage}[b]{0.41\columnwidth}\centering\strut
-Create useful visualizations of data\strut
-\end{minipage}\tabularnewline
-\midrule
-\endhead
-\begin{minipage}[t]{0.25\columnwidth}\centering\strut
-\textbf{Action Items}\strut
-\end{minipage} & \begin{minipage}[t]{0.41\columnwidth}\centering\strut
-Apply appropriate visualization tools to analysis results\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.25\columnwidth}\centering\strut
-\textbf{Timeline}\strut
-\end{minipage} & \begin{minipage}[t]{0.41\columnwidth}\centering\strut
-April 26 2018\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.25\columnwidth}\centering\strut
-\textbf{Outcome}\strut
-\end{minipage} & \begin{minipage}[t]{0.41\columnwidth}\centering\strut
-Appropriate Tables and Graphs in final presentation and manuscript\strut
-\end{minipage}\tabularnewline
-\bottomrule
-\end{longtable}
-
-\begin{longtable}[]{@{}cc@{}}
-\caption{Table continues below}\tabularnewline
-\toprule
-\begin{minipage}[b]{0.25\columnwidth}\centering\strut
-~\strut
-\end{minipage} & \begin{minipage}[b]{0.41\columnwidth}\centering\strut
-Apply appropriate statistical methods\strut
-\end{minipage}\tabularnewline
-\midrule
-\endfirsthead
-\toprule
-\begin{minipage}[b]{0.25\columnwidth}\centering\strut
-~\strut
-\end{minipage} & \begin{minipage}[b]{0.41\columnwidth}\centering\strut
-Apply appropriate statistical methods\strut
-\end{minipage}\tabularnewline
-\midrule
-\endhead
-\begin{minipage}[t]{0.25\columnwidth}\centering\strut
-\textbf{Action Items}\strut
-\end{minipage} & \begin{minipage}[t]{0.41\columnwidth}\centering\strut
-Execute rigorous statistical analysis of the data\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.25\columnwidth}\centering\strut
-\textbf{Timeline}\strut
-\end{minipage} & \begin{minipage}[t]{0.41\columnwidth}\centering\strut
-Apeil 26 2018\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.25\columnwidth}\centering\strut
-\textbf{Outcome}\strut
-\end{minipage} & \begin{minipage}[t]{0.41\columnwidth}\centering\strut
-Statistical tests are appropriate to the data and research purpose and
-error is adequately minimized\strut
-\end{minipage}\tabularnewline
-\bottomrule
-\end{longtable}
-
-\begin{longtable}[]{@{}cc@{}}
-\toprule
-\begin{minipage}[b]{0.25\columnwidth}\centering\strut
-~\strut
-\end{minipage} & \begin{minipage}[b]{0.42\columnwidth}\centering\strut
-Interpret and communicate results\strut
-\end{minipage}\tabularnewline
-\midrule
-\endhead
-\begin{minipage}[t]{0.25\columnwidth}\centering\strut
-\textbf{Action Items}\strut
-\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
-Recognize and communicate important results\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.25\columnwidth}\centering\strut
-\textbf{Timeline}\strut
-\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
-April 26 2018\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.25\columnwidth}\centering\strut
-\textbf{Outcome}\strut
-\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
-Results discussed in the final project speak to the research question
-and bridge a gap in the literature\strut
-\end{minipage}\tabularnewline
-\bottomrule
-\end{longtable}
-
 \section{Data}\label{data}
 
 This study applies a secondary data analysis design due to the
@@ -329,30 +150,29 @@ and staff in the ED of a busy urban hospital to inform cross-infection
 control measures. Data were collected using a radio-frequency
 identification system that triangulated patient and staff (nurses,
 providers, and ancillary staff) locations within the ED at Emory
-University Hospital Midtwon. Data for this secondary analysis were
-collected using a prospective, longitudinal, observational design with a
-random sampling of one day shift and one night shift per week for one
-year, July 1, 2009 to June 30, 2010. This strategy was chosen to
-minimize sampling bias related to seasonal or weekly fluctuations in
-census, acuity, and ED staffing changes. Although a total of 104 shifts
-were observed, the original research team retained only 81 shifts for
-reasons related to issues with the RFID system and study staff sick
-leave.(Lowery-North et al. 2013)
+University Hospital Midtwon. The end result of the RFID collection
+system is a data set with every participant's location for the duration
+they were in the ED. With the location of every individual in the ED, we
+can determine when, and where, two individuals came into within 1 meter
+of one another while being in the same room. And that is how we define
+an interaction. Data for this secondary analysis were collected using a
+prospective, longitudinal, observational design with a random sampling
+of one day shift and one night shift per week for one year, July 1, 2009
+to June 30, 2010. This strategy was chosen to minimize sampling bias
+related to seasonal or weekly fluctuations in census, acuity, and ED
+staffing changes. Although a total of 104 shifts were observed, the
+original research team retained only 81 shifts for reasons related to
+issues with the RFID system and study staff sick leave.(Lowery-North et
+al. 2013)
 
 \subsection{Data Wrangling:}\label{data-wrangling}
 
-I have requested the original/raw data, which will require cleaning and
-organizing to meet the needs of my research aims. Data will be
-maintained in private repositories in the GitHub version control
-platform. Patient characteristic data will be evaluated for missing or
-implausible data with discriptive analyses, and RFID generated networks
-will be included for statistical analysis if variables of network
-density, centrality, and a network diversity scale are distributed
-normally across networks.
-
-\section{I have received the data, but it is too large for my
-computer\ldots{} must troubleshoot this before I can move
-forward\ldots{}}\label{i-have-received-the-data-but-it-is-too-large-for-my-computer-must-troubleshoot-this-before-i-can-move-forward}
+Now that I have the data, it turns out that the files are too large
+(1.5G) for my \textbf{little} computer. As such, I will move forward
+with a previous subset of the data that was given to me earlier in the
+year. Although this is not the full data set, it will suffice while I
+learn the process needed to clean, explore, analyze, \& report on the
+data with R and Rmarkdown.
 
 \section{Analysis Plan}\label{analysis-plan}
 
@@ -387,15 +207,16 @@ quality in the literature used for comparison))
 
 \subsection{Analysis}\label{analysis}
 
-Muliple linear regression will be used for the final analysis to assess
-the correlation between patient acuity and patient centrality.
-Relationships will be evaluated visually (see below) as well as
-statistically to an alpha of 0.05.
+We start with discriptive statistics of all relevant variables for
+assumptions of normality. Muliple linear regression will be used for the
+final analysis to assess the correlation between patient acuity and
+patient centrality. Relationships will be evaluated visually (see below)
+as well as statistically to an alpha of 0.05.
 
 \subsection{Schedule}\label{schedule}
 
-Milestone 1: February 14th, 2018 -Objectives Milestone 2: March 15th,
-2018 Final Proposal: April 26th, 2018
+-Milestone 1: February 14th, 2018 -Milestone 2 UPDATE: March 28th
+-Milestone 2: April 4th, 2018 -Final Proposal: April 26th, 2018
 
 \section{Results}\label{results}
 
