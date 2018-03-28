@@ -1,0 +1,433 @@
+\documentclass[]{elsarticle} %review=doublespace preprint=single 5p=2 column
+%%% Begin My package additions %%%%%%%%%%%%%%%%%%%
+\usepackage[hyphens]{url}
+\usepackage{lineno} % add
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\bibliographystyle{elsarticle-harv}
+\biboptions{sort&compress} % For natbib
+\usepackage{graphicx}
+\usepackage{booktabs} % book-quality tables
+%% Redefines the elsarticle footer
+%\makeatletter
+%\def\ps@pprintTitle{%
+% \let\@oddhead\@empty
+% \let\@evenhead\@empty
+% \def\@oddfoot{\it \hfill\today}%
+% \let\@evenfoot\@oddfoot}
+%\makeatother
+
+% A modified page layout
+\textwidth 6.75in
+\oddsidemargin -0.15in
+\evensidemargin -0.15in
+\textheight 9in
+\topmargin -0.5in
+%%%%%%%%%%%%%%%% end my additions to header
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \usepackage{fontspec}
+  \ifxetex
+    \usepackage{xltxtra,xunicode}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
+\fi
+% use microtype if available
+\IfFileExists{microtype.sty}{\usepackage{microtype}}{}
+\usepackage{longtable}
+\ifxetex
+  \usepackage[setpagesize=false, % page size defined by xetex
+              unicode=false, % unicode breaks when used with xetex
+              xetex]{hyperref}
+\else
+  \usepackage[unicode=true]{hyperref}
+\fi
+\hypersetup{breaklinks=true,
+            bookmarks=true,
+            pdfauthor={},
+            pdftitle={Milestone TWO Exploratory Network Analysis of Clinical Interactions in the ED},
+            colorlinks=true,
+            urlcolor=blue,
+            linkcolor=magenta,
+            pdfborder={0 0 0}}
+\urlstyle{same}  % don't use monospace font for urls
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\setcounter{secnumdepth}{0}
+% Pandoc toggle for numbering sections (defaults to be off)
+\setcounter{secnumdepth}{0}
+% Pandoc header
+
+
+\usepackage[nomarkers]{endfloat}
+
+\begin{document}
+\begin{frontmatter}
+
+  \title{\emph{Milestone TWO} Exploratory Network Analysis of Clinical
+Interactions in the ED}
+    \author[Emory University]{Tommy Flynn\corref{c1}}
+   \ead{tjflynn@emory.edu} 
+   \cortext[c1]{Corresponding Author}
+      \address[Emory University]{Find the GitHub repository at
+\url{https://github.com/tommyflynn/Project-Milestone-1.git}}
+  
+  \begin{abstract}
+  Patient acuity in the Emergency Department is triaged at the beginning
+  of the care process using the Emergency Severity Index (ESI). Although
+  the ESI is widely used and accepted as a validated predictor of ED
+  resource consumption, its predictive power has limitations that can
+  negatively impact patient flow and safety. An objective measurement of
+  individual resource consumption, that passively observes and calulates
+  relative patient needs, would allow nurses and administrators to make
+  better decisions with staffing and patient assignemnts. This study
+  proposes an approach to continuous passive patient acuity monitoring
+  using radio-frequency identifaction (RFID) technology and network
+  analysis algorithms to define and potentially predict changes in patient
+  acuity. The first step in this process is to determine how acuity, as it
+  is currently measured, correlates to the network position of patients in
+  the clinical interaction network. A strong correlation between network
+  position and acuity is expected, and a change in network position is
+  presumed to reflect a change in patient condition.
+  \end{abstract}
+  
+ \end{frontmatter}
+
+\section{Research Question \& Specific
+Aims}\label{research-question-specific-aims}
+
+Can network analysis of clinical interactions between patients and staff
+provide insight into the complex Emergency Department patient care
+process?
+
+Aim 1: Explore the network of clinical interactions in the ED between
+patients and staff to determine whether predictable patterns emerge in
+terms of centrality, density, and change over time.
+
+Aim 2: Test the assocaition between patient acuity and network position
+measure of eigenvector centrality of patient composite network, compared
+to the centrality of teh dynamic patient network (measure TBD).
+
+\section{Background \& Objectives}\label{background-objectives}
+
+In an Emergency Deparmtent (ED), care is delivered over a network of
+face to face human interactions. Patients interact with registration
+staff, then a triage nurse who may decide to discuss the patient with a
+provider, the provider may then interact directly with the patient, and
+so on. In this way, the network grows over time, creating a web of care
+that may correlate with the amount and quality of care delivered to
+individual patients. - \textbf{The purpose of this study is to explore
+the network of clinical interactions that take place in the Emergency
+Department and describe the raltionship between those network variables
+and patient acuity.} To study this relationship, received permission to
+analyse existing data that includes the following; the frequency and
+duration of all face-to-face interactions (patients, providers, nurses,
+technicians, \& administrators) that occured in the ED for 81 12hr
+shifts, the location of those interactions, and individual patients'
+medical and demographic characteristics including acuity, chief
+complaint, gender, age, arrival mode, and disposition. The network
+structural characteristics will be assessed in relation to the industry
+standard acuity measure, the Emergency Severity Index (ESI), and
+potential confounding variables. Using this data will require specific
+knowledge of the R statistical packages, network analysis, and data
+science. See Tables 1-4 for my learning goals with respective action
+items, timeline, and outcomes.
+
+\begin{longtable}[]{@{}cc@{}}
+\caption{Table continues below}\tabularnewline
+\toprule
+\begin{minipage}[b]{0.25\columnwidth}\centering\strut
+~\strut
+\end{minipage} & \begin{minipage}[b]{0.42\columnwidth}\centering\strut
+Demonstrate effective use of GitHub Version Control\strut
+\end{minipage}\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+\begin{minipage}[b]{0.25\columnwidth}\centering\strut
+~\strut
+\end{minipage} & \begin{minipage}[b]{0.42\columnwidth}\centering\strut
+Demonstrate effective use of GitHub Version Control\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.25\columnwidth}\centering\strut
+\textbf{Action Items}\strut
+\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
+Use GitHub version control throughout project development\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.25\columnwidth}\centering\strut
+\textbf{Timeline}\strut
+\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
+Ongoing\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.25\columnwidth}\centering\strut
+\textbf{Outcome}\strut
+\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
+Complete record of data management \& analysis\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[]{@{}cc@{}}
+\caption{Table continues below}\tabularnewline
+\toprule
+\begin{minipage}[b]{0.25\columnwidth}\centering\strut
+~\strut
+\end{minipage} & \begin{minipage}[b]{0.42\columnwidth}\centering\strut
+Demonstrate working knowledge of R Studio \& R Markdown\strut
+\end{minipage}\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+\begin{minipage}[b]{0.25\columnwidth}\centering\strut
+~\strut
+\end{minipage} & \begin{minipage}[b]{0.42\columnwidth}\centering\strut
+Demonstrate working knowledge of R Studio \& R Markdown\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.25\columnwidth}\centering\strut
+\textbf{Action Items}\strut
+\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
+All data wrangling \& analysis in R Studio and all milestones completed
+in R Markdown\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.25\columnwidth}\centering\strut
+\textbf{Timeline}\strut
+\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
+Ongoing\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.25\columnwidth}\centering\strut
+\textbf{Outcome}\strut
+\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
+Final Project, Presentation, and Website Completed in R Markdown\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[]{@{}cc@{}}
+\caption{Table continues below}\tabularnewline
+\toprule
+\begin{minipage}[b]{0.25\columnwidth}\centering\strut
+~\strut
+\end{minipage} & \begin{minipage}[b]{0.41\columnwidth}\centering\strut
+Create useful visualizations of data\strut
+\end{minipage}\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+\begin{minipage}[b]{0.25\columnwidth}\centering\strut
+~\strut
+\end{minipage} & \begin{minipage}[b]{0.41\columnwidth}\centering\strut
+Create useful visualizations of data\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.25\columnwidth}\centering\strut
+\textbf{Action Items}\strut
+\end{minipage} & \begin{minipage}[t]{0.41\columnwidth}\centering\strut
+Apply appropriate visualization tools to analysis results\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.25\columnwidth}\centering\strut
+\textbf{Timeline}\strut
+\end{minipage} & \begin{minipage}[t]{0.41\columnwidth}\centering\strut
+April 26 2018\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.25\columnwidth}\centering\strut
+\textbf{Outcome}\strut
+\end{minipage} & \begin{minipage}[t]{0.41\columnwidth}\centering\strut
+Appropriate Tables and Graphs in final presentation and manuscript\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[]{@{}cc@{}}
+\caption{Table continues below}\tabularnewline
+\toprule
+\begin{minipage}[b]{0.25\columnwidth}\centering\strut
+~\strut
+\end{minipage} & \begin{minipage}[b]{0.41\columnwidth}\centering\strut
+Apply appropriate statistical methods\strut
+\end{minipage}\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+\begin{minipage}[b]{0.25\columnwidth}\centering\strut
+~\strut
+\end{minipage} & \begin{minipage}[b]{0.41\columnwidth}\centering\strut
+Apply appropriate statistical methods\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.25\columnwidth}\centering\strut
+\textbf{Action Items}\strut
+\end{minipage} & \begin{minipage}[t]{0.41\columnwidth}\centering\strut
+Execute rigorous statistical analysis of the data\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.25\columnwidth}\centering\strut
+\textbf{Timeline}\strut
+\end{minipage} & \begin{minipage}[t]{0.41\columnwidth}\centering\strut
+Apeil 26 2018\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.25\columnwidth}\centering\strut
+\textbf{Outcome}\strut
+\end{minipage} & \begin{minipage}[t]{0.41\columnwidth}\centering\strut
+Statistical tests are appropriate to the data and research purpose and
+error is adequately minimized\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[]{@{}cc@{}}
+\toprule
+\begin{minipage}[b]{0.25\columnwidth}\centering\strut
+~\strut
+\end{minipage} & \begin{minipage}[b]{0.42\columnwidth}\centering\strut
+Interpret and communicate results\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.25\columnwidth}\centering\strut
+\textbf{Action Items}\strut
+\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
+Recognize and communicate important results\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.25\columnwidth}\centering\strut
+\textbf{Timeline}\strut
+\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
+April 26 2018\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.25\columnwidth}\centering\strut
+\textbf{Outcome}\strut
+\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
+Results discussed in the final project speak to the research question
+and bridge a gap in the literature\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+\section{Data}\label{data}
+
+This study applies a secondary data analysis design due to the
+exploritory nature of the research aims. Data was made available with
+permissions from the originating research team. The purpose of the
+original study was to describe contact characteristics between patients
+and staff in the ED of a busy urban hospital to inform cross-infection
+control measures. Data were collected using a radio-frequency
+identification system that triangulated patient and staff (nurses,
+providers, and ancillary staff) locations within the ED at Emory
+University Hospital Midtwon. Data for this secondary analysis were
+collected using a prospective, longitudinal, observational design with a
+random sampling of one day shift and one night shift per week for one
+year, July 1, 2009 to June 30, 2010. This strategy was chosen to
+minimize sampling bias related to seasonal or weekly fluctuations in
+census, acuity, and ED staffing changes. Although a total of 104 shifts
+were observed, the original research team retained only 81 shifts for
+reasons related to issues with the RFID system and study staff sick
+leave.(Lowery-North et al. 2013)
+
+\subsection{Data Wrangling:}\label{data-wrangling}
+
+I have requested the original/raw data, which will require cleaning and
+organizing to meet the needs of my research aims. Data will be
+maintained in private repositories in the GitHub version control
+platform. Patient characteristic data will be evaluated for missing or
+implausible data with discriptive analyses, and RFID generated networks
+will be included for statistical analysis if variables of network
+density, centrality, and a network diversity scale are distributed
+normally across networks.
+
+\section{I have received the data, but it is too large for my
+computer\ldots{} must troubleshoot this before I can move
+forward\ldots{}}\label{i-have-received-the-data-but-it-is-too-large-for-my-computer-must-troubleshoot-this-before-i-can-move-forward}
+
+\section{Analysis Plan}\label{analysis-plan}
+
+\subsection{Exploratory Analysis}\label{exploratory-analysis}
+
+Descriptive statistics of the network data as well as patient
+demographic data will be evaluated for asssumptions of normality. The
+data will be skewed in certain predictable ways due to the observed
+patient populations. The distribution of study subject demographics will
+be described in tabular format, noting irregularities and potential
+sources of error.
+
+\subsection{Variables used for final
+analysis:}\label{variables-used-for-final-analysis}
+
+\textbf{Network Variables} \textgreater{} - \emph{Patient eigenvector
+centrality} (dependant varialbe of interest) \textgreater{} - Network
+density \textgreater{} - Network clustering coefficient \textgreater{} -
+Network diversity scale??
+
+\textbf{Staff variables} \textgreater{} - Title (RN, MD, staff)
+
+\textbf{Patient variables} \textgreater{} - \emph{Acuity} (ESI,
+independant variable of interest) \textgreater{} - Commorbidities
+(index) \textgreater{} - Gender \textgreater{} - Age \textgreater{} -
+Race \textgreater{} - Ethnicity \textgreater{} - Arrival mode (ambulance
+v. walk-in) \textgreater{} - Education (if available) \textgreater{} -
+Disposition (admission v. discharge) \textgreater{} - Length of stay
+(common measure of quality in the literature used for comparison)
+\textgreater{} - Time before first provider contact (common measure of
+quality in the literature used for comparison))
+
+\subsection{Analysis}\label{analysis}
+
+Muliple linear regression will be used for the final analysis to assess
+the correlation between patient acuity and patient centrality.
+Relationships will be evaluated visually (see below) as well as
+statistically to an alpha of 0.05.
+
+\subsection{Schedule}\label{schedule}
+
+Milestone 1: February 14th, 2018 -Objectives Milestone 2: March 15th,
+2018 Final Proposal: April 26th, 2018
+
+\section{Results}\label{results}
+
+Results will be discussed with the visual supplementation of network
+graphs. This allows the reader to understand concepts that may be
+difficult to grasp through text alone.
+
+\section{Discussion}\label{discussion}
+
+Allocating staff resources in an Emergency Department is an ongoing
+challenge. How can these results begin to offer solutions to ED staff
+and patient management?
+
+What were my primary limitation (both expected and unexpected)?
+
+\section{Conclusion}\label{conclusion}
+
+Did I meet my learning objectives? How would I design a better study
+next time?
+
+\section*{References}\label{references.unnumbered}
+\addcontentsline{toc}{section}{References}
+
+\hypertarget{refs}{}
+\hypertarget{ref-RN1X}{}
+Lowery-North, Douglas W., Vicki Stover Hertzberg, Lisa Elon, George
+Cotsonis, Sarah A. Hilton, II Vaughns Christopher F., Eric Hill, Alok
+Shrestha, Alexandria Jo, and Nathan Adams. 2013. ``Measuring Social
+Contacts in the Emergency Department.'' Journal Article. \emph{PLoS ONE}
+8 (8): e70854.
+doi:\href{https://doi.org/10.1371/journal.pone.0070854}{10.1371/journal.pone.0070854}.
+
+\end{document}
+
+
