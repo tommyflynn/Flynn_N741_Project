@@ -24,6 +24,7 @@ library(dplyr)
 library(haven)
 library(lubridate)
 library(igraph)
+library(printr)
 ```
 
 Research Question & Specific Aims
@@ -43,13 +44,19 @@ In an Emergency Deparmtent (ED), care is delivered over a network of face to fac
 Data
 ====
 This study applies a secondary data analysis design due to the exploritory nature of the research aims. Data was made available with permissions from the originating research team. The purpose of the original study was to describe contact characteristics between patients and staff in the ED of a busy urban hospital to inform cross-infection control measures. Data were collected using a radio-frequency identification system that triangulated patient and staff (nurses, providers, and ancillary staff) locations within the ED at Emory University Hospital Midtwon. The end result of the RFID collection system is a data set with every participant's location for the duration they were in the ED. With the location of every individual in the ED, we can determine when, and where, two individuals came into within 1 meter of one another while being in the same room. And that is how we define an interaction. Data for this secondary analysis were collected using a prospective, longitudinal, observational design with a random sampling of one day shift and one night shift per week for one year, July 1, 2009 to June 30, 2010. This strategy was chosen to minimize sampling bias related to seasonal or weekly fluctuations in census, acuity, and ED staffing changes. Although a total of 104 shifts were observed, the original research team retained only 81 shifts for reasons related to issues with the RFID system and study staff sick leave.[@RN1X] 
-```{r load temporary data}
-
+```{r load temporary data & describe}
+edges <- read_sas("tommy_edges_2009.sas7bdat")
+nodes <- read_sas("tommy_nodes_2009.sas7bdat")
+patients <- read_sas("tommyflynn_patient_info_2009.sas7bdat")
+kable(glimpse(edges))
+kable(glimpse(nodes))
+kable(glimpse(patients))
 ```
 ##Data Wrangling:
-Now that I have the data, it turns out that the files are too large (1.5G) for my __little__ computer. As such, I will move forward with a previous subset of the data that was given to me earlier in the year. Although this is not the full data set, it will suffice while I learn the process needed to clean, explore, analyze, & report on the data with R and Rmarkdown.  
-```{r data cleaning}
-
+Now that I have the data, it turns out that the files are too large (1.5G) for my __little__ computer. Therefore, I will move forward with a previous subset of the data that was given to me earlier in the year. Although this is not the full data set, it will suffice while I learn the process needed to clean, explore, analyze, & report on the data with R and Rmarkdown.  
+```{r data wrangling}
+#All data has quirks; the last 6 months are unusable. 
+#You have to program the discriptive/wrangling efforts before you start actually looking for issues i#n the data
 ```
 
 Analysis Plan
