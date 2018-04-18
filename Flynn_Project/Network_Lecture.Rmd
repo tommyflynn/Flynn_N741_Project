@@ -5,17 +5,16 @@ date: "4/18/2018"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-Load up package:
-
-```{r}
-
+```{r setup, include=FALSE, tidy=TRUE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
 library(igraph); packageVersion("igraph")
-
+library(haven)
+library(dplyr)
+library(tidyverse)
+library(lubridate)
 ```
+
+
 
 #### Making the networks
 
@@ -23,9 +22,22 @@ For small graphs, one easy way to get data into igraph is to open up an editing 
 
 ```{r}
 
-datafab <- edit(data.frame()) #enter edges
+#datafab <- edit(data.frame()) #enter edges
 
+#load the edges dataset(SAS) into df "edges" with haven's read_sas()
+edges <- haven::read_sas("tommy_edges_2009.sas7bdat")
+
+#Now; eliminate extemporaneous variables for simplification
+lut <- c("_PAT" = "1", "RN" = "2" , "MD" = "3", "STAFF" = "4") #Use LUT to change titles to numbers
+edgeall <- edges %>% 
+  mutate(shift = numshift, inum = as.numeric(lut[i_participant_type]), jnum = as.numeric(lut[j_participant_type]), ampm = shiftampm,iname = i_participant_type, jname = j_participant_type)%>%
+  select("shift", "ampm", "sidi", "iname", "sidj", "jname", "edgeweight", "D8", "inum", "jnum") %>%
+  arrange(shift)
+summary(edgeall)
+#glimpse(edgeall)
+#ties <- matrix(c(edgeall[sidi]))
 ```
+
 
 You can then turn this data frame into a graph as follows:
 
