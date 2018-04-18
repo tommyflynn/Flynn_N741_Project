@@ -1,0 +1,173 @@
+---
+title: "Network Analysis Lecture"
+author: "Tommy Flynn"
+date: "4/18/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Load up package:
+
+```{r}
+
+library(igraph); packageVersion("igraph")
+
+```
+
+#### Making the networks
+
+For small graphs, one easy way to get data into igraph is to open up an editing window, as follows:
+
+```{r}
+
+datafab <- edit(data.frame()) #enter edges
+
+```
+
+You can then turn this data frame into a graph as follows:
+
+```{r}
+
+g <- graph.data.frame(datafab, directed = FALSE) # turn edge list into graph
+g # list the graph
+summary(g) # find out about the graph
+V(g) # list the vertices of the graph
+E(g) # list the edges of the graph
+
+```
+
+You can also create a graph from a set of excel files documenting the vertex (or node) names and the edges. First start with an empty graph
+
+```{r}
+
+g <- graph.empty() #start with empty graph
+traits <- read.csv("traits.csv", head = FALSE) # read in the vertices
+relations <- read.csv("relations.csv", head = FALSE) # read in the edges
+
+# add vertices to the empty graph
+g <- add.vertices(g, nv = nrow(traits), name = as.character(traits[,1]), age = traits[,2], gender = as.character(traits[,3]))
+
+# check that graph is being created properly
+
+V(g)$name
+V(g)$age
+V(g)$gender
+
+# strip out the last names
+
+names <- sapply(strsplit(V(g)$name, " "), "[", 1)
+ids <- 1:length(names)
+names(ids) <- names
+
+# list the ids
+
+ids
+
+# create an edges list with vertex ids instead of names
+
+from <- as.character(relations[,1])
+to <- as.character(relations[,2])
+edges <- matrix(c(ids[from], ids[to]), nc = 2)
+
+# list the edges
+
+edges
+
+# add edges to the graph, along with edge attributes
+
+g <- add.edges(g, t(edges), room = as.character(relations[,3]), friend = relations[,4], advice = relations[,5])
+
+```
+
+There are other ways to import pre-existing graphs, provided you know the formats.
+
+As seen above from the Alice and Bob example, we can import an edgelist. Another popular format is that used in the package Pajek. Still another common format is `GML`.
+
+```{r}
+
+# Import an edge list
+dolphins <- read.graph("dolphins.txt", format = c("edgelist"))
+dolphins
+
+# Leave edges as undirected
+dolphins <- read.graph("dolphins.txt", directed=FALSE, format = "edgelist")
+dolphins
+
+# Import a graph make in Pajek
+karate <- read.graph("karate.txt", format = "pajek")
+karate
+
+# Import a graph in GML format
+
+football <- read.graph("football.gml", format="gml")
+football 
+```
+
+#### Plotting the networks
+
+There are two ways to plot within `igraph`. The function `plot.igraph` gives you a static plot, while the function  `tkplot` gives you more interactive capability. Note you must have XQuartz functioning (Mac users) for `tkplot` to work.
+
+```{r}
+
+# Plotting
+
+plot.igraph(karate)
+
+# Another way
+
+tkplot(karate)
+
+```
+
+You can also do some more with color, as follows:
+
+```{r}
+
+E(g)$color <- "black"
+E(g)[room =="Y"]$color <- "red"
+
+tkplot(g, layout = layout.kamada.kawai, edge.color = E(g)$color)
+
+```
+
+#### Graph and Vertex Properties
+
+You can determine properties of the graph as a whole as well as those of individual vertices very easily in `igraph`.
+
+```{r}
+
+# Determine the degree sequence
+
+degree(karate)
+
+# Determine the diameter of the graph
+
+diameter(karate)
+
+# Calculate the closeness centrality for each vertex
+
+closeness(karate)
+
+# Note for directed graphs, you can use the  mode option to determine the in-, out-, or all-closeness properties, as follows:
+
+closeness(karate, mode="in")
+closeness(karate, mode = "out")
+closeness(karate, mode = "all")
+
+# Calculate the betweenness centrality for each vertex
+
+betweenness(karate)
+
+# And for directed graphs
+
+betweenness(karate, directed = "TRUE")
+
+```
+
+
+#### Want to try more?
+
+In the repo there are two more datasets. The dataset `lesmis.txt` is a Pajek file denoting the characters in the play "Les Mis", and two characters are related when they appear on stage at the same time. The dataset `adjnoun.gml` is a GML formatted graph that describes the word concurrencies in "David Copperfield".

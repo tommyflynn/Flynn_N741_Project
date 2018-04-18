@@ -33,7 +33,7 @@ Can network analysis of clinical interactions between patients and staff provide
 
 Aim 1: Create a netowrk graph from the data. (Baby steps)
 
-Aim 2: Compare network variables of .
+Aim 2: Create a visually engaging story of ED network development
 
 Background & Objectives
 =======================
@@ -48,9 +48,8 @@ This study applies a secondary data analysis design due to the exploritory natur
 edges <- read_sas("tommy_edges_2009.sas7bdat")
 nodes <- read_sas("tommy_nodes_2009.sas7bdat")
 patients <- read_sas("tommyflynn_patient_info_2009.sas7bdat")
-kable(glimpse(edges))
-kable(glimpse(nodes))
-kable(glimpse(patients))
+names(nodes)
+names(patients)
 ```
 ##Data Wrangling:
 Now that I have the data, it turns out that the files are too large (1.5G) for my __little__ computer. Therefore, I will move forward with a previous subset of the data that was given to me earlier in the year. Although this is not the full data set, it will suffice while I learn the process needed to clean, explore, analyze, & report on the data with R and Rmarkdown.  
@@ -66,9 +65,7 @@ Analysis Plan
 
 Descriptive statistics of the network data as well as patient demographic data will be evaluated for asssumptions of normality. The data will be skewed in certain predictable ways due to the observed patient populations. The distribution of study subject demographics will be described in tabular format, noting irregularities and potential sources of error.
 ```{r acuity histogram}
-#patients <- patients %>%
- # filter(Acuity != "Not Recorded")
-#ggplot(patients, aes(Acuity)) + geom_bar(aes(fill = Acuity))
+
 ```
 
 
