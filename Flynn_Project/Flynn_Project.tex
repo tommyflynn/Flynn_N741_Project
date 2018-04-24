@@ -45,6 +45,16 @@
 \fi
 % use microtype if available
 \IfFileExists{microtype.sty}{\usepackage{microtype}}{}
+\usepackage{graphicx}
+% We will generate all images so they have a width \maxwidth. This means
+% that they will get their normal width if they fit onto the page, but
+% are scaled down if they would overflow the margins.
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+\else\Gin@nat@width\fi}
+\makeatother
+\let\Oldincludegraphics\includegraphics
+\renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=\maxwidth]{#1}}
 \ifxetex
   \usepackage[setpagesize=false, % page size defined by xetex
               unicode=false, % unicode breaks when used with xetex
@@ -55,7 +65,7 @@
 \hypersetup{breaklinks=true,
             bookmarks=true,
             pdfauthor={},
-            pdftitle={Milestone TWO Exploratory Network Analysis of Clinical Interactions in the ED},
+            pdftitle={Exploratory Network Analysis of Clinical Interactions in the ED},
             colorlinks=true,
             urlcolor=blue,
             linkcolor=magenta,
@@ -75,28 +85,34 @@
 \begin{document}
 \begin{frontmatter}
 
-  \title{\emph{Milestone TWO} Exploratory Network Analysis of Clinical
-Interactions in the ED}
+  \title{Exploratory Network Analysis of Clinical Interactions in the ED}
     \author[Emory University]{Tommy Flynn\corref{c1}}
    \ead{tjflynn@emory.edu} 
    \cortext[c1]{Corresponding Author}
-      \address[Emory University]{GitHub repository
-\url{https://github.com/tommyflynn/Flynn_N741_Project/tree/master/Flynn_Project}}
+      \address[Emory University]{Repository
+(\url{https://github.com/tommyflynn/Flynn_N741_Project/tree/master/Flynn_Project})}
   
   \begin{abstract}
   Patient acuity in the Emergency Department is triaged at the beginning
-  of the care process using the Emergency Severity Index (ESI). Although
-  the ESI is widely used and accepted as a validated predictor of ED
-  resource consumption, its predictive power has limitations that can
-  negatively impact patient flow and safety. An objective measurement of
-  individual resource consumption, that passively observes and calulates
-  relative patient need in real time would allow charge nurses and
-  administrators to make informed decisions for more effective and
-  efficient patient care. This study tests a novel approach to patient
-  acuity monitoring using real-time location system (RTLS) data and
-  network analysis. The first step in this process is to determine how
-  acuity, as it is currently measured, correlates to network structural
-  development over time in the clinical interaction network.
+  of the care process using the Emergency Severity Index (ESI) metric. The
+  ESI is presumed to predict resource consumption in the ED, and is a
+  validated predictor of hospital admission for the majority of ED
+  patients. It is not sensitive to non-medical patient characteristics,
+  such as patient race, nor is it accountable to changes in patient
+  condition over time. ED administrators and charge nurses are left with
+  an impression of the unit that does not reveal the reality of current
+  paitient conditions or ED resources being utilized. The lack of
+  real-time ED resource and patient condition information creates
+  opportunities for unrecognized patient deterioration, medical errors,
+  increased wait times, and decreased patient satisfaction. An objective
+  measurement of patient resource consumption that passively observes and
+  calulates relative patient need in real-time would allow charge nurses
+  and administrators to make informed decisions for effective, efficient,
+  and safe patient care. This study tests a novel approach to measuring
+  patient acuity (ED resource consumption) using real-time location system
+  (RTLS) contact data and network analysis. This paper presents the
+  approach and analytic results of several ED contact networks in relation
+  to patient acuity (ESI)
   \end{abstract}
   
  \end{frontmatter}
@@ -104,45 +120,64 @@ Interactions in the ED}
 \section{Research Question \& Specific
 Aims}\label{research-question-specific-aims}
 
-Can network analysis of clinical interactions between patients and staff
-provide insight into the complex Emergency Department patient care
-process? (Canto et al. 2000)
-
-Aim 1: Explore the network of clinical interactions in the ED between
-patients and staff to determine whether predictable patterns emerge in
-terms of centrality, density, and change over time.
-
-Aim 2: Test the assocaition between patient acuity and network position
-measure of eigenvector centrality of patient composite network, compared
-to the centrality of teh dynamic patient network (measure TBD).
+\begin{itemize}
+\tightlist
+\item
+  Can network analysis of clinical interactions between patients and
+  staff provide insight into the complex Emergency Department patient
+  care process? (Canto et al. 2000) Aim 1: Explore the network of
+  clinical interactions in the ED between patients and staff to
+  determine whether predictable patterns emerge in terms of centrality,
+  density, and change over time. Aim 2: Test the assocaition between
+  patient acuity and network position measure of eigenvector centrality
+  of patient composite network, compared to the centrality of teh
+  dynamic patient network (measure TBD).
+\end{itemize}
 
 \section{Background \& Objectives}\label{background-objectives}
 
-Emergency Severity Index (ESI) is a validated metric used to triage
-patients in the . to .(Tanabe et al. 2004) That triage nurse may decide
-to involve the charge nurse or a physician given various concerns about
-the patient. These interactions, observed and measured by the Real Time
-Location System (RTLS), continue as more patients are triaged, moved
-into patient rooms, and so on toward a vast and complex network of
-interactions. This web of care is likely to correlate with the amount
-and quality of care delivered to individual patients. - \textbf{The
-purpose of this study is to explore the network of clinical interactions
-that take place in the Emergency Department and describe the raltionship
-between those network variables and patient acuity.} To study this
-relationship, received permission to analyse existing data that includes
-the following; the frequency and duration of all face-to-face
-interactions (patients, providers, nurses, technicians, \&
-administrators) that occured in the ED for 81 12hr shifts, the location
-of those interactions, and individual patients' medical and demographic
-characteristics including acuity, chief complaint, gender, age, arrival
-mode, and disposition. The network structural characteristics will be
-assessed in relation to the industry standard acuity measure, the
-Emergency Severity Index (ESI), and potential confounding variables.
-Using this data will require specific knowledge of the R statistical
-packages, network analysis, and data science. See Tables 1-4 for my
-learning goals with respective action items, timeline, and outcomes.
+Intelligent clinical monitoring software is not a new idea, but
+advancements in the field of data science continue to yield powerful new
+tools that may make such software a reality in the near future.(Yu et
+al. 2015, Donoho (2017)) Real-time location systems (RTLS) are
+increasingly common in hospitals across the nation, especially in
+clinical areas where patient care and flow are both complex and
+time-sensitive, such as the Emergency Department (ED).(Yao, Chu, and Li
+2012) A bird's-eye view of a busy urban ED might resemble a hive of
+frenzied bees, but as we have learned of beehives, patterns of work and
+interactions within EDs are necessarily purposed and complexly adaptive
+to the various needs of the system (or hive) as a whole.(Kridi,
+Carvalho, and Gomes 2016) By leveraging the technology of RTLS and
+analytical power of netowrk analysis, future ED monitoring systems will
+provide ED leadership with real-time resource allocation and patient
+condition information. The Emergency Severity Index (ESI) is a validated
+metric used to triage patients in US Emergency Departments.(Tanabe et
+al. 2004) That triage nurse may decide to involve the charge nurse or a
+physician given various concerns about the patient. These interactions,
+observed and measured by the Real Time Location System (RTLS), continue
+as more patients are triaged, moved into patient rooms, and so on toward
+a vast and complex network of interactions. This web of care is likely
+to correlate with the amount and quality of care delivered to individual
+patients. - \textbf{The purpose of this study is to explore the network
+of clinical interactions that take place in the Emergency Department and
+describe the raltionship between those network variables and patient
+acuity.} To study this relationship, received permission to analyse
+existing data that includes the following; the frequency and duration of
+all face-to-face interactions (patients, providers, nurses, technicians,
+\& administrators) that occured in the ED for 81 12hr shifts, the
+location of those interactions, and individual patients' medical and
+demographic characteristics including acuity, chief complaint, gender,
+age, arrival mode, and disposition. The network structural
+characteristics will be assessed in relation to the industry standard
+acuity measure, the Emergency Severity Index (ESI), and potential
+confounding variables. Using this data will require specific knowledge
+of the R statistical packages, network analysis, and data science. See
+Tables 1-4 for my learning goals with respective action items, timeline,
+and outcomes.
 
-\section{Data}\label{data}
+\section{Methods}\label{methods}
+
+\section{RTLS Data}\label{rtls-data}
 
 This study applies a secondary data analysis design due to the
 exploritory nature of the research aims. Data was made available with
@@ -161,21 +196,40 @@ census, acuity, and ED staffing changes. Although a total of 104 shifts
 were observed, the original research team retained only 81 shifts for
 reasons related to issues with the RFID system and study staff sick
 leave.(Lowery-North et al. 2013)
+\includegraphics{Flynn_Project_files/figure-latex/assign datasets-1.pdf}
+\includegraphics{Flynn_Project_files/figure-latex/assign datasets-2.pdf}
 
-\subsection{Data Wrangling:}\label{data-wrangling}
+\begin{verbatim}
+##  [1] "sid"                  "numshift"             "d8"                  
+##  [4] "shift_ampm"           "Reason_shortShift"    "startd8time"         
+##  [7] "endd8time"            "shift_d8_ampm"        "quarter"             
+## [10] "weekday"              "H1N1"                 "ED_ARRIVAL"          
+## [13] "ed_departure"         "durationInED"         "duration_UntilTag"   
+## [16] "Sex"                  "Patient_Age_at_Visit" "Race"                
+## [19] "Chief_Complaint"      "Acuity"               "Arr_Mode"            
+## [22] "ED_Disposition"       "daysinED"             "MinutesInED"         
+## [25] "AGE"                  "ILI_Syndrome"         "ILIwMissing"         
+## [28] "hrsinED"              "timeCoveredbyShift"   "popnFreqbyshift"     
+## [31] "shift_num_ampm"       "Participant_final"
+\end{verbatim}
 
-I have requested the original/raw data, which will require cleaning and
-organizing to meet the needs of my research aims. Data will be
-maintained in private repositories in the GitHub version control
-platform. Patient characteristic data will be evaluated for missing or
-implausible data with discriptive analyses, and RFID generated networks
-will be included for statistical analysis if variables of network
-density, centrality, and a network diversity scale are distributed
-normally across networks.
+\includegraphics{Flynn_Project_files/figure-latex/assign datasets-3.pdf}
+\#Results
 
 \section{Analysis Plan}\label{analysis-plan}
 
-\subsection{Exploratory Analysis}\label{exploratory-analysis}
+\section{Data Exploration \& Cleaning}\label{data-exploration-cleaning}
+
+Data will be maintained in private repositories in the GitHub version
+control platform. Patient characteristic data will be evaluated for
+missing or implausible data with discriptive analyses, and RFID
+generated networks will be included for statistical analysis if
+variables of network density, centrality, and a network diversity scale
+are distributed normally across networks.
+
+Why do I find 1102 unique nodes in the vertices data, 1023 unique nodes
+in the edges dataset, and 1017 unique patients in the patient
+characteristics dataset?
 
 Descriptive statistics of the network data as well as patient
 demographic data will be evaluated for asssumptions of normality. The
@@ -260,6 +314,19 @@ Csardi, Gabor, and Tamas Nepusz. 2006. ``The Igraph Software Package for
 Complex Network Research.'' \emph{InterJournal} Complex Systems: 1695.
 \url{http://igraph.org}.
 
+\hypertarget{ref-RN794}{}
+Donoho, David. 2017. ``50 Years of Data Science.'' Journal Article.
+\emph{Journal of Computational and Graphical Statistics} 26 (4):
+745--66.
+doi:\href{https://doi.org/10.1080/10618600.2017.1384734}{10.1080/10618600.2017.1384734}.
+
+\hypertarget{ref-BEES}{}
+Kridi, Douglas S., Carlos Giovanni N. de Carvalho, and Danielo G. Gomes.
+2016. ``Application of Wireless Sensor Networks for Beehive Monitoring
+and in-Hive Thermal Patterns Detection.'' \emph{Computers and
+Electronics in Agriculture} 127: 221--35.
+doi:\href{https://doi.org/https://doi.org/10.1016/j.compag.2016.05.013}{https://doi.org/10.1016/j.compag.2016.05.013}.
+
 \hypertarget{ref-RN1X}{}
 Lowery-North, Douglas W., Vicki Stover Hertzberg, Lisa Elon, George
 Cotsonis, Sarah A. Hilton, II Vaughns Christopher F., Eric Hill, Alok
@@ -287,6 +354,21 @@ Analysis}. Springer-Verlag New York. \url{http://ggplot2.org}.
 \hypertarget{ref-TIDY}{}
 ---------. 2017. \emph{Tidyverse: Easily Install and Load the
 'Tidyverse'}. \url{https://CRAN.R-project.org/package=tidyverse}.
+
+\hypertarget{ref-RN257}{}
+Yao, Wen, Chao-Hsien Chu, and Zang Li. 2012. ``The Adoption and
+Implementation of Rfid Technologies in Healthcare: A Literature
+Review.'' Journal Article. \emph{Journal of Medical Systems} 36 (6):
+3507--25.
+doi:\href{https://doi.org/10.1007/s10916-011-9789-8}{10.1007/s10916-011-9789-8}.
+
+\hypertarget{ref-RN253}{}
+Yu, Denny, Renaldo C. Blocker, Mustafa Y. Sir, M. Susan Hallbeck, Thomas
+R. Hellmich, Tara Cohen, David M. Nestler, and Kalyan S. Pasupathy.
+2015. ``Intelligent Emergency Department: Validation of Sociometers to
+Study Workload.'' Journal Article. \emph{Journal of Medical Systems} 40
+(3): 53.
+doi:\href{https://doi.org/10.1007/s10916-015-0405-1}{10.1007/s10916-015-0405-1}.
 
 \end{document}
 
