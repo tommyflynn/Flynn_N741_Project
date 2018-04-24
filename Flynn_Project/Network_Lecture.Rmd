@@ -5,11 +5,10 @@ date: "4/18/2018"
 output: html_document
 ---
 
-```{r setup, include=FALSE, tidy=TRUE, warning=FALSE, message=FALSE}
+```{r setup, include=FALSE, tidy=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 library(igraph); packageVersion("igraph")
 library(haven)
-library(dplyr)
 library(tidyverse)
 library(lubridate)
 ```
@@ -20,47 +19,42 @@ library(lubridate)
 
 For small graphs, one easy way to get data into igraph is to open up an editing window, as follows:
 
-```{r}
-
-#datafab <- edit(data.frame()) #enter edges
-
+```{r edges}
 #load the edges dataset(SAS) into df "edges" with haven's read_sas()
-edges <- haven::read_sas("tommy_edges_2009.sas7bdat")
-
+edges <- haven::read_sas("tommy_edges_2009.sas7bdat") # read in the edges
 #Now; eliminate extemporaneous variables for simplification
 lut <- c("_PAT" = "1", "RN" = "2" , "MD" = "3", "STAFF" = "4") #Use LUT to change titles to numbers
 edgeall <- edges %>% 
-  mutate(shift = numshift, inum = as.numeric(lut[i_participant_type]), jnum = as.numeric(lut[j_participant_type]), ampm = shiftampm,iname = i_participant_type, jname = j_participant_type)%>%
-  select("shift", "ampm", "sidi", "iname", "sidj", "jname", "edgeweight", "D8", "inum", "jnum") %>%
-  arrange(shift)
-summary(edgeall)
-#glimpse(edgeall)
-#ties <- matrix(c(edgeall[sidi]))
+  mutate(shift = numshift, inum = as.numeric(lut[i_participant_type]), jnum = as.numeric(lut[j_participant_type]), ampm = shiftampm,iname = i_participant_type, jname = j_participant_type, weight = as.numeric(edgeweight))%>%
+  select("shift", "ampm", "sidi", "iname", "sidj", "jname", "weight", "D8", "inum", "jnum") %>%
+  filter(!is.na(inum) | !is.na(jnum) | (sidi == "_PAT" & sidj == "_PAT") )
+#str(edgeall)
+ggplot2::hist(log10(edgeall$weight))
 ```
 
 
 You can then turn this data frame into a graph as follows:
 
-```{r}
+```{r nodes}
+nodes <- haven::read_sas("tommy_nodes_2009.sas7bdat") # read in nodes
+str(nodes)
 
-g <- graph.data.frame(datafab, directed = FALSE) # turn edge list into graph
-g # list the graph
-summary(g) # find out about the graph
-V(g) # list the vertices of the graph
-E(g) # list the edges of the graph
 
 ```
 
 You can also create a graph from a set of excel files documenting the vertex (or node) names and the edges. First start with an empty graph
 
-```{r}
-
+```{r graph}
 g <- graph.empty() #start with empty graph
-traits <- read.csv("traits.csv", head = FALSE) # read in the vertices
-relations <- read.csv("relations.csv", head = FALSE) # read in the edges
-
 # add vertices to the empty graph
-g <- add.vertices(g, nv = nrow(traits), name = as.character(traits[,1]), age = traits[,2], gender = as.character(traits[,3]))
+g <- add.vertices(g, nv = nrow(nodes), name = as.character(traits[,1]), age = traits[,2], gender = as.character(traits[,3]))
+
+# create an edges list with vertex ids instead of names
+
+from <- as.character(relations[,1])
+to <- as.character(relations[,2])
+edges <- matrix(c(ids[from], ids[to]), nc = 2)
+
 
 # check that graph is being created properly
 
@@ -78,11 +72,7 @@ names(ids) <- names
 
 ids
 
-# create an edges list with vertex ids instead of names
 
-from <- as.character(relations[,1])
-to <- as.character(relations[,2])
-edges <- matrix(c(ids[from], ids[to]), nc = 2)
 
 # list the edges
 

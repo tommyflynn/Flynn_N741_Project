@@ -45,7 +45,6 @@
 \fi
 % use microtype if available
 \IfFileExists{microtype.sty}{\usepackage{microtype}}{}
-\usepackage{longtable}
 \ifxetex
   \usepackage[setpagesize=false, % page size defined by xetex
               unicode=false, % unicode breaks when used with xetex
@@ -81,8 +80,8 @@ Interactions in the ED}
     \author[Emory University]{Tommy Flynn\corref{c1}}
    \ead{tjflynn@emory.edu} 
    \cortext[c1]{Corresponding Author}
-      \address[Emory University]{Find the GitHub repository at
-\url{https://github.com/tommyflynn/Project-Milestone-1.git}}
+      \address[Emory University]{GitHub repository
+\url{https://github.com/tommyflynn/Flynn_N741_Project/tree/master/Flynn_Project}}
   
   \begin{abstract}
   Patient acuity in the Emergency Department is triaged at the beginning
@@ -91,16 +90,13 @@ Interactions in the ED}
   resource consumption, its predictive power has limitations that can
   negatively impact patient flow and safety. An objective measurement of
   individual resource consumption, that passively observes and calulates
-  relative patient needs, would allow nurses and administrators to make
-  better decisions with staffing and patient assignemnts. This study
-  proposes an approach to continuous passive patient acuity monitoring
-  using radio-frequency identifaction (RFID) technology and network
-  analysis algorithms to define and potentially predict changes in patient
-  acuity. The first step in this process is to determine how acuity, as it
-  is currently measured, correlates to the network position of patients in
-  the clinical interaction network. A strong correlation between network
-  position and acuity is expected, and a change in network position is
-  presumed to reflect a change in patient condition.
+  relative patient need in real time would allow charge nurses and
+  administrators to make informed decisions for more effective and
+  efficient patient care. This study tests a novel approach to patient
+  acuity monitoring using real-time location system (RTLS) data and
+  network analysis. The first step in this process is to determine how
+  acuity, as it is currently measured, correlates to network structural
+  development over time in the clinical interaction network.
   \end{abstract}
   
  \end{frontmatter}
@@ -110,7 +106,7 @@ Aims}\label{research-question-specific-aims}
 
 Can network analysis of clinical interactions between patients and staff
 provide insight into the complex Emergency Department patient care
-process?
+process? (Canto et al. 2000)
 
 Aim 1: Explore the network of clinical interactions in the ED between
 patients and staff to determine whether predictable patterns emerge in
@@ -122,202 +118,29 @@ to the centrality of teh dynamic patient network (measure TBD).
 
 \section{Background \& Objectives}\label{background-objectives}
 
-In an Emergency Deparmtent (ED), care is delivered over a network of
-face to face human interactions. Patients interact with registration
-staff, then a triage nurse who may decide to discuss the patient with a
-provider, the provider may then interact directly with the patient, and
-so on. In this way, the network grows over time, creating a web of care
-that may correlate with the amount and quality of care delivered to
-individual patients. - \textbf{The purpose of this study is to explore
-the network of clinical interactions that take place in the Emergency
-Department and describe the raltionship between those network variables
-and patient acuity.} To study this relationship, received permission to
-analyse existing data that includes the following; the frequency and
-duration of all face-to-face interactions (patients, providers, nurses,
-technicians, \& administrators) that occured in the ED for 81 12hr
-shifts, the location of those interactions, and individual patients'
-medical and demographic characteristics including acuity, chief
-complaint, gender, age, arrival mode, and disposition. The network
-structural characteristics will be assessed in relation to the industry
-standard acuity measure, the Emergency Severity Index (ESI), and
-potential confounding variables. Using this data will require specific
-knowledge of the R statistical packages, network analysis, and data
-science. See Tables 1-4 for my learning goals with respective action
-items, timeline, and outcomes.
-
-\begin{longtable}[]{@{}cc@{}}
-\caption{Table continues below}\tabularnewline
-\toprule
-\begin{minipage}[b]{0.25\columnwidth}\centering\strut
-~\strut
-\end{minipage} & \begin{minipage}[b]{0.42\columnwidth}\centering\strut
-Demonstrate effective use of GitHub Version Control\strut
-\end{minipage}\tabularnewline
-\midrule
-\endfirsthead
-\toprule
-\begin{minipage}[b]{0.25\columnwidth}\centering\strut
-~\strut
-\end{minipage} & \begin{minipage}[b]{0.42\columnwidth}\centering\strut
-Demonstrate effective use of GitHub Version Control\strut
-\end{minipage}\tabularnewline
-\midrule
-\endhead
-\begin{minipage}[t]{0.25\columnwidth}\centering\strut
-\textbf{Action Items}\strut
-\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
-Use GitHub version control throughout project development\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.25\columnwidth}\centering\strut
-\textbf{Timeline}\strut
-\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
-Ongoing\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.25\columnwidth}\centering\strut
-\textbf{Outcome}\strut
-\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
-Complete record of data management \& analysis\strut
-\end{minipage}\tabularnewline
-\bottomrule
-\end{longtable}
-
-\begin{longtable}[]{@{}cc@{}}
-\caption{Table continues below}\tabularnewline
-\toprule
-\begin{minipage}[b]{0.25\columnwidth}\centering\strut
-~\strut
-\end{minipage} & \begin{minipage}[b]{0.42\columnwidth}\centering\strut
-Demonstrate working knowledge of R Studio \& R Markdown\strut
-\end{minipage}\tabularnewline
-\midrule
-\endfirsthead
-\toprule
-\begin{minipage}[b]{0.25\columnwidth}\centering\strut
-~\strut
-\end{minipage} & \begin{minipage}[b]{0.42\columnwidth}\centering\strut
-Demonstrate working knowledge of R Studio \& R Markdown\strut
-\end{minipage}\tabularnewline
-\midrule
-\endhead
-\begin{minipage}[t]{0.25\columnwidth}\centering\strut
-\textbf{Action Items}\strut
-\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
-All data wrangling \& analysis in R Studio and all milestones completed
-in R Markdown\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.25\columnwidth}\centering\strut
-\textbf{Timeline}\strut
-\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
-Ongoing\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.25\columnwidth}\centering\strut
-\textbf{Outcome}\strut
-\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
-Final Project, Presentation, and Website Completed in R Markdown\strut
-\end{minipage}\tabularnewline
-\bottomrule
-\end{longtable}
-
-\begin{longtable}[]{@{}cc@{}}
-\caption{Table continues below}\tabularnewline
-\toprule
-\begin{minipage}[b]{0.25\columnwidth}\centering\strut
-~\strut
-\end{minipage} & \begin{minipage}[b]{0.41\columnwidth}\centering\strut
-Create useful visualizations of data\strut
-\end{minipage}\tabularnewline
-\midrule
-\endfirsthead
-\toprule
-\begin{minipage}[b]{0.25\columnwidth}\centering\strut
-~\strut
-\end{minipage} & \begin{minipage}[b]{0.41\columnwidth}\centering\strut
-Create useful visualizations of data\strut
-\end{minipage}\tabularnewline
-\midrule
-\endhead
-\begin{minipage}[t]{0.25\columnwidth}\centering\strut
-\textbf{Action Items}\strut
-\end{minipage} & \begin{minipage}[t]{0.41\columnwidth}\centering\strut
-Apply appropriate visualization tools to analysis results\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.25\columnwidth}\centering\strut
-\textbf{Timeline}\strut
-\end{minipage} & \begin{minipage}[t]{0.41\columnwidth}\centering\strut
-April 26 2018\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.25\columnwidth}\centering\strut
-\textbf{Outcome}\strut
-\end{minipage} & \begin{minipage}[t]{0.41\columnwidth}\centering\strut
-Appropriate Tables and Graphs in final presentation and manuscript\strut
-\end{minipage}\tabularnewline
-\bottomrule
-\end{longtable}
-
-\begin{longtable}[]{@{}cc@{}}
-\caption{Table continues below}\tabularnewline
-\toprule
-\begin{minipage}[b]{0.25\columnwidth}\centering\strut
-~\strut
-\end{minipage} & \begin{minipage}[b]{0.41\columnwidth}\centering\strut
-Apply appropriate statistical methods\strut
-\end{minipage}\tabularnewline
-\midrule
-\endfirsthead
-\toprule
-\begin{minipage}[b]{0.25\columnwidth}\centering\strut
-~\strut
-\end{minipage} & \begin{minipage}[b]{0.41\columnwidth}\centering\strut
-Apply appropriate statistical methods\strut
-\end{minipage}\tabularnewline
-\midrule
-\endhead
-\begin{minipage}[t]{0.25\columnwidth}\centering\strut
-\textbf{Action Items}\strut
-\end{minipage} & \begin{minipage}[t]{0.41\columnwidth}\centering\strut
-Execute rigorous statistical analysis of the data\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.25\columnwidth}\centering\strut
-\textbf{Timeline}\strut
-\end{minipage} & \begin{minipage}[t]{0.41\columnwidth}\centering\strut
-Apeil 26 2018\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.25\columnwidth}\centering\strut
-\textbf{Outcome}\strut
-\end{minipage} & \begin{minipage}[t]{0.41\columnwidth}\centering\strut
-Statistical tests are appropriate to the data and research purpose and
-error is adequately minimized\strut
-\end{minipage}\tabularnewline
-\bottomrule
-\end{longtable}
-
-\begin{longtable}[]{@{}cc@{}}
-\toprule
-\begin{minipage}[b]{0.25\columnwidth}\centering\strut
-~\strut
-\end{minipage} & \begin{minipage}[b]{0.42\columnwidth}\centering\strut
-Interpret and communicate results\strut
-\end{minipage}\tabularnewline
-\midrule
-\endhead
-\begin{minipage}[t]{0.25\columnwidth}\centering\strut
-\textbf{Action Items}\strut
-\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
-Recognize and communicate important results\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.25\columnwidth}\centering\strut
-\textbf{Timeline}\strut
-\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
-April 26 2018\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.25\columnwidth}\centering\strut
-\textbf{Outcome}\strut
-\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering\strut
-Results discussed in the final project speak to the research question
-and bridge a gap in the literature\strut
-\end{minipage}\tabularnewline
-\bottomrule
-\end{longtable}
+Emergency Severity Index (ESI) is a validated metric used to triage
+patients in the . to .(Tanabe et al. 2004) That triage nurse may decide
+to involve the charge nurse or a physician given various concerns about
+the patient. These interactions, observed and measured by the Real Time
+Location System (RTLS), continue as more patients are triaged, moved
+into patient rooms, and so on toward a vast and complex network of
+interactions. This web of care is likely to correlate with the amount
+and quality of care delivered to individual patients. - \textbf{The
+purpose of this study is to explore the network of clinical interactions
+that take place in the Emergency Department and describe the raltionship
+between those network variables and patient acuity.} To study this
+relationship, received permission to analyse existing data that includes
+the following; the frequency and duration of all face-to-face
+interactions (patients, providers, nurses, technicians, \&
+administrators) that occured in the ED for 81 12hr shifts, the location
+of those interactions, and individual patients' medical and demographic
+characteristics including acuity, chief complaint, gender, age, arrival
+mode, and disposition. The network structural characteristics will be
+assessed in relation to the industry standard acuity measure, the
+Emergency Severity Index (ESI), and potential confounding variables.
+Using this data will require specific knowledge of the R statistical
+packages, network analysis, and data science. See Tables 1-4 for my
+learning goals with respective action items, timeline, and outcomes.
 
 \section{Data}\label{data}
 
@@ -350,10 +173,6 @@ will be included for statistical analysis if variables of network
 density, centrality, and a network diversity scale are distributed
 normally across networks.
 
-\section{I have received the data, but it is too large for my
-computer\ldots{} must troubleshoot this before I can move
-forward\ldots{}}\label{i-have-received-the-data-but-it-is-too-large-for-my-computer-must-troubleshoot-this-before-i-can-move-forward}
-
 \section{Analysis Plan}\label{analysis-plan}
 
 \subsection{Exploratory Analysis}\label{exploratory-analysis}
@@ -365,37 +184,40 @@ patient populations. The distribution of study subject demographics will
 be described in tabular format, noting irregularities and potential
 sources of error.
 
-\subsection{Variables used for final
-analysis:}\label{variables-used-for-final-analysis}
+\subsection{Variables available for final
+analysis:}\label{variables-available-for-final-analysis}
 
-\textbf{Network Variables} \textgreater{} - \emph{Patient eigenvector
-centrality} (dependant varialbe of interest) \textgreater{} - Network
-density \textgreater{} - Network clustering coefficient \textgreater{} -
-Network diversity scale??
+\textbf{Network Variables} \textgreater{} - Network Centrality (based on
+the eigenvector up to, but not including, any other patient-staff
+interactions) \textgreater{} - Network density \textgreater{} - Network
+clustering coefficient
 
-\textbf{Staff variables} \textgreater{} - Title (RN, MD, staff)
+\textbf{Staff title} \textgreater{} - Title (RN, MD, Other Staff)
 
 \textbf{Patient variables} \textgreater{} - \emph{Acuity} (ESI,
-independant variable of interest) \textgreater{} - Commorbidities
-(index) \textgreater{} - Gender \textgreater{} - Age \textgreater{} -
-Race \textgreater{} - Ethnicity \textgreater{} - Arrival mode (ambulance
-v. walk-in) \textgreater{} - Education (if available) \textgreater{} -
-Disposition (admission v. discharge) \textgreater{} - Length of stay
-(common measure of quality in the literature used for comparison)
-\textgreater{} - Time before first provider contact (common measure of
-quality in the literature used for comparison))
+independant variable of interest) \textgreater{} - Gender \textgreater{}
+- Age \textgreater{} - Race \textgreater{} - Arrival mode (ambulance v.
+walk-in) \textgreater{} - Disposition (admission v. discharge)
+\textgreater{} - Length of stay (common measure of quality in the
+literature used for comparison)
 
 \subsection{Analysis}\label{analysis}
 
-Muliple linear regression will be used for the final analysis to assess
-the correlation between patient acuity and patient centrality.
+The open-source R statistical language and R-Studio user interface from
+the developers at CRAN were used for all data exploration, wrangling,
+cleaning, description, and analysis.(R Core Team 2017) Pandoc's Markdown
+allows for seemless integration of code, results, visualizations, and
+author interpretation of the research into a single document.(Allaire et
+al. 2017) Running all code and calculating all results within the
+menuscript itself, Markdown eliminates risk for errors in transferring
+statistical software output into foreign documents. The data were
+explored, cleaned, and assessed for statistical assumptions using the
+Tidyverse group of R packages.(Wickham 2017, Wickham (2016)) Data were
+prepared for network analysis with the iGraph package.(Csardi and Nepusz
+2006) Muliple linear regression will be used for the final analysis to
+assess the correlation between patient acuity and patient centrality.
 Relationships will be evaluated visually (see below) as well as
 statistically to an alpha of 0.05.
-
-\subsection{Schedule}\label{schedule}
-
-Milestone 1: February 14th, 2018 -Objectives Milestone 2: March 15th,
-2018 Final Proposal: April 26th, 2018
 
 \section{Results}\label{results}
 
@@ -420,6 +242,24 @@ next time?
 \addcontentsline{toc}{section}{References}
 
 \hypertarget{refs}{}
+\hypertarget{ref-MARKDOWN}{}
+Allaire, JJ, Jeffrey Horner, Vicent Marti, and Natacha Porte. 2017.
+\emph{Markdown: 'Markdown' Rendering for R}.
+\url{https://CRAN.R-project.org/package=markdown}.
+
+\hypertarget{ref-RN602}{}
+Canto, John G., Jeroan J. Allison, Catarina I. Kiefe, Contessa Fincher,
+Robert Farmer, Padmini Sekar, Sharina Person, and Norman W. Weissman.
+2000. ``Relation of Race and Sex to the Use of Reperfusion Therapy in
+Medicare Beneficiaries with Acute Myocardial Infarction.'' Journal
+Article. \emph{New England Journal of Medicine} 342 (15): 1094--1100.
+doi:\href{https://doi.org/10.1056/NEJM200004133421505}{10.1056/NEJM200004133421505}.
+
+\hypertarget{ref-IGRAPH}{}
+Csardi, Gabor, and Tamas Nepusz. 2006. ``The Igraph Software Package for
+Complex Network Research.'' \emph{InterJournal} Complex Systems: 1695.
+\url{http://igraph.org}.
+
 \hypertarget{ref-RN1X}{}
 Lowery-North, Douglas W., Vicki Stover Hertzberg, Lisa Elon, George
 Cotsonis, Sarah A. Hilton, II Vaughns Christopher F., Eric Hill, Alok
@@ -427,6 +267,26 @@ Shrestha, Alexandria Jo, and Nathan Adams. 2013. ``Measuring Social
 Contacts in the Emergency Department.'' Journal Article. \emph{PLoS ONE}
 8 (8): e70854.
 doi:\href{https://doi.org/10.1371/journal.pone.0070854}{10.1371/journal.pone.0070854}.
+
+\hypertarget{ref-CRAN}{}
+R Core Team. 2017. \emph{R: A Language and Environment for Statistical
+Computing}. Vienna, Austria: R Foundation for Statistical Computing.
+\url{https://www.R-project.org/}.
+
+\hypertarget{ref-RN251}{}
+Tanabe, Paula, Rick Gimbel, Paul R. Yarnold, and James G. Adams. 2004.
+``The Emergency Severity Index (Version 3) 5-Level Triage System Scores
+Predict Ed Resource Consumption.'' Journal Article. \emph{Journal of
+Emergency Nursing} 30 (1): 22--29.
+doi:\href{https://doi.org/http://dx.doi.org/10.1016/j.jen.2003.11.004}{http://dx.doi.org/10.1016/j.jen.2003.11.004}.
+
+\hypertarget{ref-GGPLOT2}{}
+Wickham, Hadley. 2016. \emph{Ggplot2: Elegant Graphics for Data
+Analysis}. Springer-Verlag New York. \url{http://ggplot2.org}.
+
+\hypertarget{ref-TIDY}{}
+---------. 2017. \emph{Tidyverse: Easily Install and Load the
+'Tidyverse'}. \url{https://CRAN.R-project.org/package=tidyverse}.
 
 \end{document}
 
