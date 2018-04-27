@@ -15,11 +15,10 @@ output: rticles::elsevier_article
 ---
 ```{r setup, include=FALSE, tidy=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
 knitr::opts_chunk$set(echo = FALSE, tidy=TRUE, warning=FALSE, message=FALSE)
-library(igraph); packageVersion("igraph")
+library(igraph)
 library(haven)
 library(tidyverse)
 library(lubridate)
-library(tidyverse)
 library(pander)
 library(printr)
 ```
@@ -36,13 +35,72 @@ Aim 2: Test the assocaition between patient acuity and network position measure 
  The Emergency Severity Index (ESI) is a validated metric used to triage patients in US Emergency Departments.[@RN251] That triage nurse may decide to involve the charge nurse or a physician given various concerns about the patient. These interactions, observed and measured by the Real Time Location System (RTLS), continue as more patients are triaged, moved into patient rooms, and so on toward a vast and complex network of interactions. This web of care is likely to correlate with the amount and quality of care delivered to individual patients. 
 - __The purpose of this study is to explore the network of clinical interactions that take place in the Emergency Department and describe the raltionship between those network variables and patient acuity.__ To study this relationship, received permission to analyse existing data that includes the following; the frequency and duration of all face-to-face interactions (patients, providers, nurses, technicians, & administrators) that occured in the ED for 81 12hr shifts, the location of those interactions, and individual patients' medical and demographic characteristics including acuity, chief complaint, gender, age, arrival mode, and disposition. The network structural characteristics will be assessed in relation to the industry standard acuity measure, the Emergency Severity Index (ESI), and potential confounding variables. Using this data will require specific knowledge of the R statistical packages, network analysis, and data science. See Tables 1-4 for my learning goals with respective action items, timeline, and outcomes. 
 
-```{r}
-
+```{r read data}
+# read in the edges
+edges <- haven::read_sas("tommy_edges_2009.sas7bdat") 
+# read in the node traits: nodes
+nodes <- haven::read_sas("tommy_nodes_2009.sas7bdat")
+# read in patient characteristics data: patients
+patients <- haven::read_sas("tommyflynn_patient_info_2009.sas7bdat")
+names(patients)
 ```
 #Methods
 
+```{r spring cleaning}
+# Add level names (if using facets) at the beginning
+levels(patients$Acuity) <- c("Immediate", "Urgent", "Acute", "Not Sick", "Go Home")
+# Data Layer
+ggplot(data = patients)
+# Geometry Layer
+geom_jitter()
+# Facet Layer (Group by column)
+facet_grid(.~Acuity)
+# Stats Layer
+stat_smooth(mehtod = "lm", se = F, col = "red")
+# More aesthetics
+  scale_y_continuous("Axis Name",
+                   limits = c(2,6),
+                   expand = c(0, 0)) +
+  scale_x_continuous("X Axis Name", 
+                     limits = c(4, 8),
+                     expand = c(0, 0)) + 
+    coord_equal() + 
+    theme(panel.background = element_blank(),
+          plot.background = element_blank(),
+          legend.background = element_blank(),
+          legend.key = element_blank(),
+          strip.background = element_blank(),
+          axis.text = element_text(colour = "black"),
+          axis.ticks = element_line(colour = "black"),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          axis.line = element_line(colour = "black"),
+          strip.text = element_blank(),
+          panel.margin = unit(1, "lines")
+          )
+
+# 
+```
 
 
+```{r univariate analyses}
+# what variables do we have?
+tail(edges)
+edge_vars <- names(edges)
+print(edge_vars)
+node_vars <- names(nodes)
+pt_vars <- names(patients)
+# print(all_vars)
+# Subset edge variables of interest for analysis
+
+# Subset node variables of interest for analysis
+
+# Subset pt variables of interest for analysis
+
+# Describe remaining variables (univariately)
+
+
+```
 
 
 
@@ -50,29 +108,20 @@ Aim 2: Test the assocaition between patient acuity and network position measure 
 
 This study applies a secondary data analysis design due to the exploritory nature of the research aims. Data was made available with permissions from the originating research team. The purpose of the original study was to describe contact characteristics between patients and staff in the ED of a busy urban hospital to inform cross-infection control measures. Data were collected using a radio-frequency identification system that triangulated patient and staff (nurses, providers, and ancillary staff) locations within the ED at Emory University Hospital Midtwon. Data for this secondary analysis were collected using a prospective, longitudinal, observational design with a random sampling of one day shift and one night shift per week for one year, July 1, 2009 to June 30, 2010. This strategy was chosen to minimize sampling bias related to seasonal or weekly fluctuations in census, acuity, and ED staffing changes. Although a total of 104 shifts were observed, the original research team retained only 81 shifts for reasons related to issues with the RFID system and study staff sick leave.[@RN1X] 
 ```{r assign datasets, echo=FALSE}
-# read in the edges
-edges <- haven::read_sas("tommy_edges_2009.sas7bdat") 
-# read in the node traits: nodes
-nodes <- haven::read_sas("tommy_nodes_2009.sas7bdat")
-# read in patient characteristics data: patients
-patients <- haven::read_sas("tommyflynn_patient_info_2009.sas7bdat")
-#names(patients)
 # patient demographics
 g <- ggplot(patients) 
 g + geom_count(aes(x = Race, y = Acuity))
-g + geom_density(aes(x = Patient_Age_at_Visit))
-names(patients)
 # how many shifts?
 shifts <- unique(edges$D8)
 k <- length(shifts) #35
 # print(k)
 # how many participants?
 n <- unique(nodes$ID)
-n <- length(n)
+length(n)
 # print(n)
 
 # participant title
-ggplot(data = nodes) + geom_bar(aes(x=participant_type, fill = participant_type)) + labs(title = "Participant Counts by Title")
+# ggplot(data = nodes) + geom_bar(aes(x=participant_type, fill = participant_type)) + labs(title = "Participant Counts by Title")
 
 ```
 #Results
@@ -134,9 +183,10 @@ Muliple linear regression will be used for the final analysis to assess the corr
 edgesimple <- edges %>% select(sidi, sidj, D8, i_participant_type, j_participant_type) %>%
   filter(!is.na(i_participant_type) & !is.na(j_participant_type) | 
            !(i_participant_type == "_PAT" & j_participant_type == "_PAT"))
+
 ```
 
-```{r igraph object, eval=FALSE}
+```{r igraph object}
 # create an igraph object from the edges data frame (all 35 shifts)
 g <- graph_from_data_frame(edgesimple, directed = FALSE)
 plot(g, 
@@ -147,8 +197,8 @@ plot(g,
 
 #create an igraph object from each individual shift
 shift <- c(1:35)
-shiftdf <- data_frame(shift, shifts)
-str(shiftdf)
+#shiftdf <- data_frame(shift, shifts)
+# str(shiftdf)
 ```
 
 ```{r}
