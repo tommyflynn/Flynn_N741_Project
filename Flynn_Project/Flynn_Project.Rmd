@@ -46,15 +46,55 @@ names(patients)
 ```
 #Methods
 
-```{r spring cleaning}
+```{r exploratory analysis}
+# First, there is an issue with dates; each dataset has different set of shift dates
+# Something strange with DATES across the three tbls...
+PTS_d8s <- unique(patients$d8) 
+Nodes_d8s <-  unique(nodes$d8)
+Edges_D8s <-  unique(edges$D8)
+alldates <- c(PTS_d8s, Nodes_d8s , Edges_D8s)
+# length(alldates) answer= 131
+alldates <- unique(alldates) 
+# now there are 49 total unique dates across all three tbls (but only 35 in edges-so we will eventually limit to those only)
+
+# Put tbls into the DATA layer  of ggplot (Patient = pts, Edges = edg, & Nodes = nds)
+pts <- ggplot(data = patients)
+edg <- ggplot(data = edges)
+nds <- ggplot(data = nodes)
+
+# Starting by visualizing & summarizing CONTINUOUS variables 
+# for patients age
+age_histogram <- pts + geom_histogram(aes(x = AGE), na.rm = TRUE, 
+                               fill = "blue", color = "orange")
+
+# Now look at patient age by shift
+patients %>% group_by(Date = d8[(d8 %in% alldates)==TRUE]) %>% summarise(Mean_Age = mean(AGE), 
+                                               SD_Age = sd(AGE), IQR = IQR(AGE)) -> Age_stats_byD8
+# knitr::kable(Age_stats_byD8)
+# str(Age_stats_byD8)
+
+pts_acuity <- patients %>% filter(Acuity != "Not Recorded")
+# ggplot(data = pts_acuity, mapping = aes(x = AGE, colour = shift_ampm)) +
+  # geom_freqpoly()
+am_pts <- pts_acuity %>% filter(shift_ampm == "am")
+pm_pts <- pts_acuity %>% filter(shift_ampm == "pm")
+black_pts <- pts_acuity %>% filter(Race == "Black")
+white_pts <- pts_acuity %>% filter(Race == "White")
+
+
+```
+
+
+
+```{r spring cleaning, eval=FALSE}
 # Add level names (if using facets) at the beginning
 levels(patients$Acuity) <- c("Immediate", "Urgent", "Acute", "Not Sick", "Go Home")
 # Data Layer
-ggplot(data = patients)
+ggplot(data = patients, aes(x = variable , y = variable ))
 # Geometry Layer
-geom_jitter()
+geom_jitter(alpha = 0.6)
 # Facet Layer (Group by column)
-facet_grid(.~Acuity)
+facet_grid(.~groupingvariable)
 # Stats Layer
 stat_smooth(mehtod = "lm", se = F, col = "red")
 # More aesthetics
