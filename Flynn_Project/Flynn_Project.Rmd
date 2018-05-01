@@ -21,6 +21,7 @@ library(tidyverse)
 library(lubridate)
 library(pander)
 library(printr)
+library(forcats)
 ```
 
 #Research Question & Specific Aims
@@ -42,128 +43,273 @@ edges <- haven::read_sas("tommy_edges_2009.sas7bdat")
 nodes <- haven::read_sas("tommy_nodes_2009.sas7bdat")
 # read in patient characteristics data: patients
 patients <- haven::read_sas("tommyflynn_patient_info_2009.sas7bdat")
-names(patients)
+complaints <- levels(factor(patients$Chief_Complaint))
 ```
 #Methods
 
-```{r exploratory analysis}
-# First, there is an issue with dates; each dataset has different set of shift dates
-# Something strange with DATES across the three tbls...
+```{r TidyTime}
+# There is an issue with dates; each dataset has a different set of dates; figure out what dates to use with:
 PTS_d8s <- unique(patients$d8) 
 Nodes_d8s <-  unique(nodes$d8)
 Edges_D8s <-  unique(edges$D8)
 alldates <- c(PTS_d8s, Nodes_d8s , Edges_D8s)
 # length(alldates) answer= 131
-alldates <- unique(alldates) 
-# now there are 49 total unique dates across all three tbls (but only 35 in edges-so we will eventually limit to those only)
+alldates <- unique(alldates) # There are 49 total unique dates across all three tbls, but only 35 in edges!
 
-# Put tbls into the DATA layer  of ggplot (Patient = pts, Edges = edg, & Nodes = nds)
-pts <- ggplot(data = patients)
-edg <- ggplot(data = edges)
-nds <- ggplot(data = nodes)
+# Now clean the patients data to include: acuity recorded, race black or white, date for which edges are available, chief complaint, MinutesInED, & CC group after re-leveling Chief Complaint.
+patients_cc <- patients %>% mutate(CC_group = fct_collapse(Chief_Complaint,
+                                            Pain_Abd = c("Pain, Abd General", "Abdominal pain",
+                                                         "Abdominal pain - pregnant", "Abdominal problem",
+                                                         "Pain, Abd LLQ", "Nausea/Vomiting with Abd Pain",
+                                                         "Flank Pain", "Pain, Abd RLQ", "Pain, Epigastric",
+                                                         "Pain, Flank", "Preg w/ Abd Pain", "Pain, Abd RUQ",
+                                                         "Flank pain", "Pain, Abd LUQ"),
+                                            Pain_Chest = c("Chest Pain", "Chest pain", "Pain, Chest", 
+                                                           "Chest Pressure", "Chest Wall Pain", 
+                                                           "Heartburn or indigestion",
+                                                           "Pain, Chest/Ribs", "Pain, Rib(s)"),
+                                            Resp_ARDS = c("Dyspnea", "Difficulty Breathing", "Asthma", 
+                                                          "Respiratory problem", "Wheezing", 
+                                                          "Exposure, Chemical, Inhalation"),
+                                            Pain_MSK = c("Back Pain", "Pain, Knee", "Pain, Leg", 
+                                                         "Pain, Ankle", 
+                                                         "Pain, Arm", "Pain, Back", "Pain, Foot", 
+                                                         "Pain, Hip", 
+                                                         "Pain, Other", "Body aches (general)", 
+                                                         "Knee pain - swelling", 
+                                                         "Pain, Shoulder", "Pain, Neck", 
+                                                         "Back pain - lumbar", 
+                                                         "Leg pain - swelling", "Pain, Hand", 
+                                                         "Arm pain - swelling",
+                                                         "Foot pain - swelling", "Pain, Low Back", 
+                                                         "Pain, Wrist", 
+                                                         "Shoulder pain - swelling", 
+                                                         "Ankle pain - swelling",
+                                                         "Elbow pain - swelling", 
+                                                         "Hip pain - swelling", "Neck pain",
+                                                         "Pain, Breast", "Pain, Buttocks", "Pain, Finger", 
+                                                         "Pain, Forearm",
+                                                         "Pain, Joints, Multiple", "Pain, Muscular General",
+                                                         "Pain, Toe",
+                                                         "Back pain - thoracic", "Facial pain", 
+                                                         "Hand pain - swelling", 
+                                                         "Lower leg pain - swelling", "Pain, Face", 
+                                                         "Pain, Heel",
+                                                         "Multiple musculoskeletal pain/swelling", 
+                                                         "Pain, Generalized", 
+                                                         "Rib/Trunk pain - swelling", 
+                                                         "Wrist pain - swelling", 
+                                                         "Finger(s) pain - swelling", "Preg w/ Back Pain"),
+                                            Neuro_HA = c("Headache", "Headache, Migraine Hx", 
+                                                         "Headache - recurrent",
+                                                         "Headache, Cluster Hx", 
+                                                         "Headache, New, No Prior Hx", 
+                                                         "Headache, Post Traumatic", "Pain, Head"),
+                                            Resp_Inf = c("Flu Symptoms", "Cough", "Sore Throat", "URI Sxs", 
+                                                         "Cough, Productive", "Throat pain", 
+                                                         "Cough, Cold, Congestion",
+                                                         "Cold Symptoms", "Congestion", 
+                                                         "Upper respiratory infection",
+                                                         "Cough, Non Productive"),
+                                            Other = c("Multiple Complaints", "AICD discharge", 
+                                                      "Medical Problem - Minor", "Other Complaint", 
+                                                      "Sweats", "Medical Problem - Minor", "Hiccoughs",
+                                                      "Choking", "Cyst", "Gout"),
+                                            Neuro_AMS = c("Dizzy", "Syncope", "Altered Mental Status", 
+                                                          "Dizziness", 
+                                                          "Altered mental status", "Seizure, Epilepsy Hx",
+                                                          "Fatigue",
+                                                          "Seizure, Non Specific", "Neurological problem",
+                                                          "Near Syncope",
+                                                          "Seizure, New Onset", "Difficulty Speaking", 
+                                                          "Confusion", "Fainting", "Seizure", 
+                                                          "Seizure - prior history", 
+                                                          "Vertigo", "Vision Loss or Disturbance"),
+                                            GI_General = c("Vomiting", "Bleeding, Rectal",
+                                                           "Nausea/Vomiting/Diarrhea", 
+                                                         "Nausea/Vomiting", "Diarrhea", "Nausea", 
+                                                         "GI bleed",
+                                                         "Constipation", "Nausea/Vomiting/ Abd Pain",
+                                                         "Dehydration", 
+                                                         "Rectal pain", "FB, Rectum", "Hemorrhoids",
+                                                         "Hernia, Abd",
+                                                         "Hernia, Other", "Loss of Appetite", 
+                                                         "Failure to Thrive",
+                                                         "Pain, Hemorroids", "Preg w/ Epigastric Pain", 
+                                                         "Preg w/ Nausea,Vomiting &lt; 20 wks",
+                                                         "Regurgitation", 
+                                                         "Vomiting - pregnant"),
+                                            GU = c("Bleeding, Vaginal", "Vaginal Discharge", 
+                                                   "Urinary Retention", 
+                                                   "Urinary Burning", "Pain, Pelvic", 
+                                                   "Pelvic pain &lt; 20 weeks pregnant",
+                                                   "Preg, Vag Bleed, &lt; 20 wks", "Dysuria", "Hematuria",
+                                                   "Pelvic pain",
+                                                   "STD exposure", "Vaginal bleed", 
+                                                   "Vaginal discharge/Itching", 
+                                                   "Dysuria/Frequency", "Genitourinary problem", 
+                                                   "Preg w/ Pelvic Pain",
+                                                   "Preg w/ painful vaginal bleeding", "STD Exposure",
+                                                   "Vaginal pain",
+                                                   "Vaginal bleed &lt; 20 weeks pregnant", "FB, Vagina",
+                                                   "Groin pain", 
+                                                   "Incontinent, Urine", "Pain, Groin", "Penile Discharge",
+                                                   "Preg w/ Vag D/C", "Preg w/ Vag Pain", 
+                                                   "Preg, Poss Spont Abortion",
+                                                   "Preg, Possible", "Testicular pain", "Urinary Frequency",
+                                                   "Urinary Hesitancy", "STD, Possible"),
+                                            Weakness_Numbness = c("Weakness, Generalized", 
+                                                          "Weakness, All Extremities", 
+                                                         "Weakness or fatigue", "Focal motor weakness",
+                                                         "Weakness, One Side Body", "Numbness, Arm(s)", 
+                                                         "Numbness, One Side Body", "Numbness, Face", 
+                                                         "Numbness, Hand(s)/Finger(s)", "Numbness, Other",
+                                                         "Weakness, Face",
+                                                         "Weakness, Lower Ext", "Weakness, Other", 
+                                                         "Weakness, Upper Ext"),
+                                            MVC = c("Motor Vehicle Crash", "MVC - Minor", 
+                                                    "Auto-Pedest Crash"),
+                                            Fall = c("Fall", "Fall, ground level"),
+                                            Swelling = c("Swelling, Leg", "Swelling, Face", 
+                                                         "Edema, Lower Ext",
+                                                         "Swelling, Hand", "Swelling, Knee", 
+                                                         "Swelling, Neck", "Edema, Other",
+                                                         "Swelling, Abd", "Swelling, Arm", "Swelling, Eye", 
+                                                         "Swelling, Foot",
+                                                         "Swollen Glands Other", "Leg edema", 
+                                                         "Swelling, Airway", "Abnormal diagnostic test",
+                                                         "Swelling, General", "Swelling, Ankle"),
+                                            Glycemias = c("Hyperglycemia", "Hypoglycemia", 
+                                                          "Diabetes Mellitus, IDDM"),
+                                            Heme_HgSS = c("Sickle Cell crisis", "Sickle Cell, Pain", 
+                                                          "Sickle Cell, Joint Pain",
+                                                          "Sickle Cell, Chest Pain", "Sickle Cell, Other"),
+                                            Allergic_Rx = c("Allergic Reaction", 
+                                                            "Allergic reaction - minor", 
+                                                           "Allergic reaction - major", 
+                                                           "Medication Reaction"),
+                                            Follow_Up = c("Surgical Problem Re-evaluation", 
+                                                          "Medical Clearance",
+                                                          "Infection, Incision", "Lab draw", 
+                                                          "Medication refill", 
+                                                          "Suture Removal", "Abnormal diagnostic test",
+                                                          "Surgical problem re-evaluation",
+                                                          "Wound, Dehiscence", "Wound, Re-eval", 
+                                                          "Supplies Only", "Lab or Test Abnormality",
+                                                          "Medical problem re-evaluation", 
+                                                          "Disloc Hip, Prior Replace"),
+                                            Chronic = c( "Catheter check or insertion", 
+                                                         "Dialysis shunt problem", 
+                                                         "Dialysis Access Problem", "Cancer", 
+                                                         "Pacemaker Problem",
+                                                         "Dialysis Prob, Hemodialysis Access", 
+                                                         "Dialysis Prob, Hemodialysis Graft", 
+                                                         "GI tube evaluation", 
+                                                         "ICD Related Problem", 
+                                                         "Indwelling line problem",
+                                                         "PEG Tube Problem", "PICC Line Problem"),
+                                            Behavioral = c("Suicidal", "Anxiety/Anxious", 
+                                                           "Alcohol Intoxication Possible",
+                                                           "Alcohol Related Problem", "Depression", 
+                                                           "Psych, Anxiety/Anxious",
+                                                           "Suicidal ideation", "Anxiety", 
+                                                           "Detox Requested", "Suicide Attempt", 
+                                                           "Suicidal Ideation", "Withdrawal, Alcohol",
+                                                           "Psychiatric problem", 
+                                                           "Psych, Behavior Disorder"),
+                                            Injury = c("Assault, Physical", "Sexual assault", "Lac, Finger",
+                                                       "Bleeding, Other", "Lac, Leg", "Inj, Finger(s)",
+                                                       "Lac, Hand", "Hip injury - minor", "Inj, Arm",
+                                                       "Inj, Hand(s)", "Inj, Leg", "Inj, Head", 
+                                                       "Inj, Wrist", "Lac, Arm", "Assault, Sexual",
+                                                       "Lac, Face", "Lac, Forehead", "Lac, Scalp", 
+                                                       "Facial injury - minor", "Extremity injury - minor",
+                                                       "Inj, Ankle", "Inj, Hip", "Lac, Chin",
+                                                       "Knee injury - minor", "Lac, Eyelid", "Lac, Foot",
+                                                       "Lac, Lip", "Laceration - facial", 
+                                                       "Laceration - finger", "Laceration - scalp",
+                                                       "Laceration - facial", "Laceration - finger",
+                                                       "Laceration - scalp",
+                                                       "Puncture Wound", "Shoulder injury - minor", 
+                                                       "Wrist injury - minor",
+                                                       "Hand injury - major", "Arm injury - minor",
+                                                       "Abrasion minor", 
+                                                       "Abrasion, Abd", "Bite, Insect", "Bite, Dog", 
+                                                       "Bite, Human", 
+                                                       "Bite, Spider", "Bite, Animal", 
+                                                       "Bite, Unknown", "Sting, Insect"),
+                                            HEENT_oral = c("Eye(s), Complaint, Other", "Pain, Ear",
+                                                           "Earache", "Nosebleed", 
+                                                      "ENT problem", "Pain, Eye", "Pain, Dental", 
+                                                      "Pain, Oral", "Eye pain",
+                                                      "Swallowing Problem", "Ear Discharge", "Epistaxis", 
+                                                      "Ear pain", 
+                                                      "Eye(s), Swollen", "Hemoptysis", "Dental pain", 
+                                                      "Difficulty swallowing",
+                                                      "Ear Wax", "Eye foreign body", "Eye(s), Irritation", 
+                                                      "FB, Throat", 
+                                                      "Nasal drainage", "Tongue swelling"),
+                                            CV_Sxs = c("Hypertension", "Hypotension", "Tachycardia", 
+                                                       "Heartbeat, Palpitations",
+                                                       "Palpitations", "Heartbeat, Irregular", 
+                                                       "Bradycardia", 
+                                                       "Heartbeat, Racing"),
+                                            Fever = c("Fever, Pediatric", "Fever, Adult", "Fever",
+                                                       "Chills", "Fever, Immunocompromised"),
+                                           Skin_Wnd_Absc = c("Rash", "Itching", "Sores, Skin", 
+                                                     "Burn, Thermal","Abscess - complicated", 
+                                                     "Abscess - simple", "Abscess Skin/Soft Tissue", 
+                                                     "Infection, Skin/Soft Tissue, Other", "Jaundice",
+                                                     "Burn, Chemical", "Infection, Hand/Finger",
+                                                     "Infection, Other", "Poison Ivy/Poison Oak", 
+                                                     "Rash, Possible Allergy", 
+                                                     "Wound infection (complicated)",
+                                                     "Skin lesion bleed", "Skin problem", "Leg ulcers", 
+                                                     "Ulcer, Lower Extremity", 
+                                                     "Infection, Rectal/Perirectal" ),
+                                            Emergent = c("Medical Problem - Major", "Wound, Gunshot", 
+                                                       "Cardiac and/or respiratory arrest")
+                                            
+))
+patients35 <- patients_cc %>% filter(Acuity != "Not Recorded", (Race == "Black" | Race == "White" ), 
+                                  !is.na(Acuity), d8 %in% Edges_D8s) %>%
+  select(sid, d8, Acuity, Race, AGE, Sex, Chief_Complaint, CC_group, MinutesInED, ED_ARRIVAL, ed_departure, Arr_Mode) %>%
+  group_by(d8)
 
-# Starting by visualizing & summarizing CONTINUOUS variables 
-# for patients age
-age_histogram <- pts + geom_histogram(aes(x = AGE), na.rm = TRUE, 
-                               fill = "blue", color = "orange")
-
-# Now look at patient age by shift
-patients %>% group_by(Date = d8[(d8 %in% alldates)==TRUE]) %>% summarise(Mean_Age = mean(AGE), 
-                                               SD_Age = sd(AGE), IQR = IQR(AGE)) -> Age_stats_byD8
-# knitr::kable(Age_stats_byD8)
-# str(Age_stats_byD8)
-
-pts_acuity <- patients %>% filter(Acuity != "Not Recorded")
-# ggplot(data = pts_acuity, mapping = aes(x = AGE, colour = shift_ampm)) +
-  # geom_freqpoly()
-am_pts <- pts_acuity %>% filter(shift_ampm == "am")
-pm_pts <- pts_acuity %>% filter(shift_ampm == "pm")
-black_pts <- pts_acuity %>% filter(Race == "Black")
-white_pts <- pts_acuity %>% filter(Race == "White")
+# Group EDGES by DATE, select only the needed variables (idi, idj, participant type i-j, date, am, pm, weight)
+edges35 <- edges %>% filter(!is.na(i_participant_type), !is.na(j_participant_type), 
+                            (i_participant_type  != "_PAT" | j_participant_type != "_PAT" )) %>%
+  mutate(i = i_participant_type, j = j_participant_type, am = (shiftampm == 1), pm = (shiftampm == 2)) %>%
+  group_by(D8) %>%
+  select(sidi, sidj, i, j, edgeweight, am, pm, D8, idi, idj)
+```
+```{r Race}
+patients35 %>% ungroup(d8) %>% count(Race)
 
 
+# Plot race in a bar chart
+ggplot(patients35, aes(Race, d8, color = Race)) +
+  geom_point(position = "jitter", shape = 1, size = 2) + scale_x_discrete(drop = FALSE) # (drop = FALSE) will show NA values in the graph
 ```
 
 
 
-```{r spring cleaning, eval=FALSE}
-# Add level names (if using facets) at the beginning
-levels(patients$Acuity) <- c("Immediate", "Urgent", "Acute", "Not Sick", "Go Home")
-# Data Layer
-ggplot(data = patients, aes(x = variable , y = variable ))
-# Geometry Layer
-geom_jitter(alpha = 0.6)
-# Facet Layer (Group by column)
-facet_grid(.~groupingvariable)
-# Stats Layer
-stat_smooth(mehtod = "lm", se = F, col = "red")
-# More aesthetics
-  scale_y_continuous("Axis Name",
-                   limits = c(2,6),
-                   expand = c(0, 0)) +
-  scale_x_continuous("X Axis Name", 
-                     limits = c(4, 8),
-                     expand = c(0, 0)) + 
-    coord_equal() + 
-    theme(panel.background = element_blank(),
-          plot.background = element_blank(),
-          legend.background = element_blank(),
-          legend.key = element_blank(),
-          strip.background = element_blank(),
-          axis.text = element_text(colour = "black"),
-          axis.ticks = element_line(colour = "black"),
-          panel.grid.major = element_blank(),
-          panel.grid.minor = element_blank(),
-          axis.line = element_line(colour = "black"),
-          strip.text = element_blank(),
-          panel.margin = unit(1, "lines")
-          )
-
-# 
-```
-
-
-```{r univariate analyses}
-# what variables do we have?
-tail(edges)
-edge_vars <- names(edges)
-print(edge_vars)
-node_vars <- names(nodes)
-pt_vars <- names(patients)
-# print(all_vars)
-# Subset edge variables of interest for analysis
-
-# Subset node variables of interest for analysis
-
-# Subset pt variables of interest for analysis
-
-# Describe remaining variables (univariately)
-
+```{r Chief Complaint}
+ggplot(patients, aes(AGE, fct_reorder(Chief_Complaint, AGE), color = Acuity)) +
+         geom_point(position = "jitter", alpha = 0.6, shape = 1, size = 4) +
+         scale_x_continuous("Patient Age (yrs)", limits = c(1, 100)) + 
+         scale_y_discrete(name = "Chief Complaint")
 
 ```
+
+
 
 
 
 #RTLS Data
 
 This study applies a secondary data analysis design due to the exploritory nature of the research aims. Data was made available with permissions from the originating research team. The purpose of the original study was to describe contact characteristics between patients and staff in the ED of a busy urban hospital to inform cross-infection control measures. Data were collected using a radio-frequency identification system that triangulated patient and staff (nurses, providers, and ancillary staff) locations within the ED at Emory University Hospital Midtwon. Data for this secondary analysis were collected using a prospective, longitudinal, observational design with a random sampling of one day shift and one night shift per week for one year, July 1, 2009 to June 30, 2010. This strategy was chosen to minimize sampling bias related to seasonal or weekly fluctuations in census, acuity, and ED staffing changes. Although a total of 104 shifts were observed, the original research team retained only 81 shifts for reasons related to issues with the RFID system and study staff sick leave.[@RN1X] 
-```{r assign datasets, echo=FALSE}
-# patient demographics
-g <- ggplot(patients) 
-g + geom_count(aes(x = Race, y = Acuity))
-# how many shifts?
-shifts <- unique(edges$D8)
-k <- length(shifts) #35
-# print(k)
-# how many participants?
-n <- unique(nodes$ID)
-length(n)
-# print(n)
 
-# participant title
-# ggplot(data = nodes) + geom_bar(aes(x=participant_type, fill = participant_type)) + labs(title = "Participant Counts by Title")
-
-```
 #Results
 
 
@@ -185,9 +331,7 @@ Why do I find `r length(unique(nodes$sid))` unique nodes in the vertices data, `
 
 Descriptive statistics of the network data as well as patient demographic data will be evaluated for asssumptions of normality. The data will be skewed in certain predictable ways due to the observed patient populations. The distribution of study subject demographics will be described in tabular format, noting irregularities and potential sources of error.
 ```{r acuity histogram, eval=FALSE}
-patients <- patients %>%
- filter(Acuity != "Not Recorded")
-ggplot(patients, aes(Acuity)) + geom_bar(aes(fill = Acuity))
+
 ```
 
 
@@ -218,11 +362,10 @@ __Patient variables__
 ##Analysis
 The open-source R statistical language and R-Studio user interface from the developers at CRAN were used for all data exploration, wrangling, cleaning, description, and analysis.[@CRAN] Pandoc's Markdown allows for seemless integration of code, results, visualizations, and author interpretation of the research into a single document.[@MARKDOWN] Running all code and calculating all results within the menuscript itself, Markdown eliminates risk for errors in transferring statistical software output into foreign documents. The data were explored, cleaned, and assessed for statistical assumptions using the Tidyverse group of R packages.[@TIDY, @GGPLOT2] Data were prepared for network analysis with the iGraph package.[@IGRAPH]
 Muliple linear regression will be used for the final analysis to assess the correlation between patient acuity and patient centrality. Relationships will be evaluated visually (see below) as well as statistically to an alpha of 0.05.
-```{r prepare data for igraphs}
-#prepare edges for transformation into igraph object (1st two rows are i & j)
-edgesimple <- edges %>% select(sidi, sidj, D8, i_participant_type, j_participant_type) %>%
-  filter(!is.na(i_participant_type) & !is.na(j_participant_type) | 
-           !(i_participant_type == "_PAT" & j_participant_type == "_PAT"))
+```{r igraph objects}
+net_viz <- graph_from_data_frame(d = edges, vertices = nodes, directed = FALSE)
+
+
 
 ```
 
