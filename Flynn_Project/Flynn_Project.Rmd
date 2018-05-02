@@ -347,7 +347,7 @@ ggplot(patients35, aes(x = AGE)) + geom_histogram(fill = "orange", alpha = .5) +
 
 # now let's see if this works... finally
 results <- nodes35 %>% summarise(n = n_distinct(ID), shifts = n_distinct(shift_num), meanparts = n/35,
-                                  participation = mean(participationrate), ties = length(edges35), 
+                                  participation = mean(participationrate), ties = length(edges35$sidi), 
                                  tieshifts = ties/35)
 # column headers
 headers <- c("Participants (n)", "Shifts", "Participants/Shift", "Participation Rate (mean%)", "Total Ties",
@@ -357,10 +357,10 @@ knitr::kable(results, align = "c", caption = "Overall Participation", col.names 
              row.names = FALSE)
 
 # Chief Complaints
-ggplot(patients35, aes(x = Chief_Complaint, y = CC_group, color = CC_group)) +
-  geom_count() + theme(legend.position = "none")
+ggplot(patients35, aes(x = Chief_Complaint, fct_reorder(CC_group, MinutesInED), color = Acuity)) +
+  geom_count() + theme(legend.position = "right")
 nodes %>% filter(participant_type == "_PAT", Acuity != "Not Recorded") %>%
-  ggplot(aes(x = LOG_WTDEGREE, y = Acuity)) + geom_point()
+  ggplot(aes(x = LOG_WTDEGREE, y = MinutesInED)) + geom_point(shape = 1, alpha = 0.6)
 # 
 # names(nodes)
 # ptnodes <- nodes %>% filter(participant_type == "_PAT", Acuity != "Not Recorded") %>% 
