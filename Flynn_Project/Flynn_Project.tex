@@ -126,13 +126,10 @@ Aims}\label{research-question-specific-aims}
 \item
   Can network analysis of clinical interactions between patients and
   staff provide insight into the complex Emergency Department patient
-  care process? (Canto et al. 2000) Aim 1: Explore the network of
-  clinical interactions in the ED between patients and staff to
-  determine whether predictable patterns emerge in terms of centrality,
-  density, and change over time. Aim 2: Test the assocaition between
-  patient acuity and network position measure of eigenvector centrality
-  of patient composite network, compared to the centrality of teh
-  dynamic patient network (measure TBD).
+  care process? (Canto et al. 2000) Aim 1: Graph the network of clinical
+  interactions in the ED between patients and staff to explore potential
+  similarities, future research questions, and more robust applicationg
+  of igraph in R studio.
 \end{itemize}
 
 \section{Background \& Objectives}\label{background-objectives}
@@ -161,116 +158,21 @@ a vast and complex network of interactions. This web of care is likely
 to correlate with the amount and quality of care delivered to individual
 patients. - \textbf{The purpose of this study is to explore the network
 of clinical interactions that take place in the Emergency Department and
-describe the raltionship between those network variables and patient
-acuity.} To study this relationship, received permission to analyse
-existing data that includes the following; the frequency and duration of
-all face-to-face interactions (patients, providers, nurses, technicians,
-\& administrators) that occured in the ED for 81 12hr shifts, the
-location of those interactions, and individual patients' medical and
-demographic characteristics including acuity, chief complaint, gender,
-age, arrival mode, and disposition. The network structural
-characteristics will be assessed in relation to the industry standard
-acuity measure, the Emergency Severity Index (ESI), and potential
-confounding variables. Using this data will require specific knowledge
-of the R statistical packages, network analysis, and data science. See
-Tables 1-4 for my learning goals with respective action items, timeline,
-and outcomes.
+present graphical representations of those networks.} To meet this
+purpose, I received permission to analyse existing data that includes
+the following; the frequency and duration of all face-to-face
+interactions (patients, providers, nurses, technicians, \&
+administrators) that occured in the ED for 81 12hr shifts, the location
+of those interactions, and individual patients' medical and demographic
+characteristics including acuity, chief complaint, gender, age, arrival
+mode, and disposition. The network structural characteristics will be
+assessed in relation to the industry standard acuity measure, the
+Emergency Severity Index (ESI), and potential confounding variables.
+Using this data will require specific knowledge of the R statistical
+packages, network analysis, and data science. See Tables 1-4 for my
+learning goals with respective action items, timeline, and outcomes.
 
 \section{Methods}\label{methods}
-
-\begin{longtable}[]{@{}ll@{}}
-\caption{Patient Race}\tabularnewline
-\toprule
-Race & Count\tabularnewline
-\midrule
-\endfirsthead
-\toprule
-Race & Count\tabularnewline
-\midrule
-\endhead
-Black & 1931\tabularnewline
-Hispanic & 24\tabularnewline
-Other & 35\tabularnewline
-White & 353\tabularnewline
-\bottomrule
-\end{longtable}
-
-\includegraphics{Flynn_Project_files/figure-latex/Participants-1.pdf}
-
-\begin{longtable}[]{@{}ll@{}}
-\caption{Patient Acuity}\tabularnewline
-\toprule
-Acuity Level & Count\tabularnewline
-\midrule
-\endfirsthead
-\toprule
-Acuity Level & Count\tabularnewline
-\midrule
-\endhead
-Immediate (1) & 14\tabularnewline
-Emergent (2) & 694\tabularnewline
-Urgent (3) & 1191\tabularnewline
-Stable (4) & 417\tabularnewline
-Non Urgent (5) & 27\tabularnewline
-\bottomrule
-\end{longtable}
-
-\includegraphics{Flynn_Project_files/figure-latex/Participants-2.pdf}
-
-\begin{longtable}[]{@{}ll@{}}
-\caption{Patient Gender}\tabularnewline
-\toprule
-Sex & Count\tabularnewline
-\midrule
-\endfirsthead
-\toprule
-Sex & Count\tabularnewline
-\midrule
-\endhead
-Female & 1334\tabularnewline
-Male & 1009\tabularnewline
-\bottomrule
-\end{longtable}
-
-\includegraphics{Flynn_Project_files/figure-latex/Participants-3.pdf}
-
-\begin{longtable}[]{@{}ll@{}}
-\caption{Patient Age}\tabularnewline
-\toprule
-Age\_mean & sd\tabularnewline
-\midrule
-\endfirsthead
-\toprule
-Age\_mean & sd\tabularnewline
-\midrule
-\endhead
-45.99317 & 19.19107\tabularnewline
-\bottomrule
-\end{longtable}
-
-\includegraphics{Flynn_Project_files/figure-latex/Participants-4.pdf}
-
-\begin{longtable}[]{@{}cccccc@{}}
-\caption{Overall Participation}\tabularnewline
-\toprule
-Participants (n) & Shifts & Participants/Shift & Participation Rate
-(mean\%) & Total Ties & Ties/Shift\tabularnewline
-\midrule
-\endfirsthead
-\toprule
-Participants (n) & Shifts & Participants/Shift & Participation Rate
-(mean\%) & Total Ties & Ties/Shift\tabularnewline
-\midrule
-\endhead
-3635 & 35 & 103.8571 & 63.09335 & 21600 & 617.1429\tabularnewline
-\bottomrule
-\end{longtable}
-
-\includegraphics{Flynn_Project_files/figure-latex/Participants-5.pdf}
-\includegraphics{Flynn_Project_files/figure-latex/Participants-6.pdf}
-
-\includegraphics{Flynn_Project_files/figure-latex/Chief Complaint-1.pdf}
-\includegraphics{Flynn_Project_files/figure-latex/Chief Complaint-2.pdf}
 
 \section{RTLS Data}\label{rtls-data}
 
@@ -292,1053 +194,23 @@ were observed, the original research team retained only 81 shifts for
 reasons related to issues with the RFID system and study staff sick
 leave.(Lowery-North et al. 2013)
 
-\section{Results}\label{results}
-
 \section{Analysis Plan}\label{analysis-plan}
 
 \section{Data Exploration \& Cleaning}\label{data-exploration-cleaning}
 
-Data will be maintained in private repositories in the GitHub version
-control platform. Patient characteristic data will be evaluated for
+Code for analyses were maintained in private repositories in the GitHub
+version control platform. Patient characteristic data was evaluated for
 missing or implausible data with discriptive analyses, and RFID
 generated networks will be included for statistical analysis if
 variables of network density, centrality, and a network diversity scale
-are distributed normally across networks.
-
-Why do I find 1102 unique nodes in the vertices data, 1023 unique nodes
-in the edges dataset, and 1017 unique patients in the patient
-characteristics dataset?
-
-\begin{longtable}[]{@{}lllllrllllrrrlllr@{}}
-\toprule
-sid & i & d8 & ID & participant\_type & AGE & Race & Sex & Acuity &
-Arr\_Mode & shift\_num & MinutesInED & duration\_observed & shift\_ampm
-& ED\_Disposition & BLACKyn & participationrate\tabularnewline
-\midrule
-\endhead
-0002f35c & 1 & 2009-08-24 & 82420091 & STAFF & NA & & & & & 47 & NA &
-352.65000 & am & & & 67.85714\tabularnewline
-0002f445 & 2 & 2009-08-24 & 82420092 & STAFF & NA & & & & & 47 & NA &
-397.78333 & am & & & 67.85714\tabularnewline
-0002f469 & 3 & 2009-08-24 & 82420093 & STAFF & NA & & & & & 47 & NA &
-259.61667 & am & & & 67.85714\tabularnewline
-0002f46c & 4 & 2009-08-24 & 82420094 & STAFF & NA & & & & & 47 & NA &
-305.41667 & am & & & 67.85714\tabularnewline
-0002f472 & 5 & 2009-08-24 & 82420095 & STAFF & NA & & & & & 47 & NA &
-406.68333 & am & & & 67.85714\tabularnewline
-0002f495 & 6 & 2009-08-24 & 82420096 & STAFF & NA & & & & & 47 & NA &
-352.81667 & am & & & 67.85714\tabularnewline
-0002f49c & 7 & 2009-08-24 & 82420097 & STAFF & NA & & & & & 47 & NA &
-382.25000 & am & & & 67.85714\tabularnewline
-0002f4a3 & 8 & 2009-08-24 & 82420098 & STAFF & NA & & & & & 47 & NA &
-387.28333 & am & & & 67.85714\tabularnewline
-0002f4e2 & 9 & 2009-08-24 & 82420099 & STAFF & NA & & & & & 47 & NA &
-406.45000 & am & & & 67.85714\tabularnewline
-0002f4e8 & 10 & 2009-08-24 & 824200910 & STAFF & NA & & & & & 47 & NA &
-413.16667 & am & & & 67.85714\tabularnewline
-0002f4f9 & 11 & 2009-08-24 & 824200911 & STAFF & NA & & & & & 47 & NA &
-168.98333 & am & & & 67.85714\tabularnewline
-0002f507 & 12 & 2009-08-24 & 824200912 & STAFF & NA & & & & & 47 & NA &
-307.15000 & am & & & 67.85714\tabularnewline
-0002f508 & 13 & 2009-08-24 & 824200913 & STAFF & NA & & & & & 47 & NA &
-379.86667 & am & & & 67.85714\tabularnewline
-00101d8b & 14 & 2009-08-24 & 824200914 & RN & NA & & & & & 47 & NA &
-15.76667 & am & & & 67.85714\tabularnewline
-00101dc1 & 15 & 2009-08-24 & 824200915 & RN & NA & & & & & 47 & NA &
-95.25000 & am & & & 67.85714\tabularnewline
-00101dc6 & 16 & 2009-08-24 & 824200916 & MD & NA & & & & & 47 & NA &
-254.61667 & am & & & 67.85714\tabularnewline
-00101f37 & 17 & 2009-08-24 & 824200917 & RN & NA & & & & & 47 & NA &
-157.93333 & am & & & 67.85714\tabularnewline
-00101f73 & 18 & 2009-08-24 & 824200918 & RN & NA & & & & & 47 & NA &
-404.96667 & am & & & 67.85714\tabularnewline
-00101f7e & 19 & 2009-08-24 & 824200919 & RN & NA & & & & & 47 & NA &
-417.73333 & am & & & 67.85714\tabularnewline
-00101f80 & 20 & 2009-08-24 & 824200920 & RN & NA & & & & & 47 & NA &
-412.01667 & am & & & 67.85714\tabularnewline
-00101f9f & 21 & 2009-08-24 & 824200921 & MD & NA & & & & & 47 & NA &
-416.20000 & am & & & 67.85714\tabularnewline
-00101faf & 22 & 2009-08-24 & 824200922 & RN & NA & & & & & 47 & NA &
-84.26667 & am & & & 67.85714\tabularnewline
-00101fd6 & 23 & 2009-08-24 & 824200923 & RN & NA & & & & & 47 & NA &
-348.33333 & am & & & 67.85714\tabularnewline
-00101fdd & 24 & 2009-08-24 & 824200924 & MD & NA & & & & & 47 & NA &
-417.41667 & am & & & 67.85714\tabularnewline
-00102149 & 25 & 2009-08-24 & 824200925 & MD & NA & & & & & 47 & NA &
-236.08333 & am & & & 67.85714\tabularnewline
-00102159 & 26 & 2009-08-24 & 824200926 & RN & NA & & & & & 47 & NA &
-162.26667 & am & & & 67.85714\tabularnewline
-00102164 & 27 & 2009-08-24 & 824200927 & STAFF & NA & & & & & 47 & NA &
-198.31667 & am & & & 67.85714\tabularnewline
-001021aa & 28 & 2009-08-24 & 824200928 & RN & NA & & & & & 47 & NA &
-419.56667 & am & & & 67.85714\tabularnewline
-001021b5 & 29 & 2009-08-24 & 824200929 & RN & NA & & & & & 47 & NA &
-294.86667 & am & & & 67.85714\tabularnewline
-00102235 & 30 & 2009-08-24 & 824200930 & RN & NA & & & & & 47 & NA &
-409.46667 & am & & & 67.85714\tabularnewline
-0010223e & 31 & 2009-08-24 & 824200931 & MD & NA & & & & & 47 & NA &
-242.21667 & am & & & 67.85714\tabularnewline
-0010224d & 32 & 2009-08-24 & 824200932 & RN & NA & & & & & 47 & NA &
-328.28333 & am & & & 67.85714\tabularnewline
-001022ad & 33 & 2009-08-24 & 824200933 & RN & NA & & & & & 47 & NA &
-395.56667 & am & & & 67.85714\tabularnewline
-0021159c & 34 & 2009-08-24 & 824200934 & \_PAT & 63 & Black & Male & 3
-Urgent & Private Vehicle & 47 & 376.61667 & 286.61667 & am & Discharge &
-Black & 67.85714\tabularnewline
-00215dbb & 35 & 2009-08-24 & 824200935 & \_PAT & 22 & Black & Female & 3
-Urgent & Public Trans & 47 & 400.15000 & 154.00000 & am & Discharge &
-Black & 67.85714\tabularnewline
-00215de8 & 36 & 2009-08-24 & 824200936 & \_PAT & 50 & White & Male & 3
-Urgent & Public Trans & 47 & 364.71667 & 332.71667 & am & Discharge &
-All Other & 67.85714\tabularnewline
-00215ea2 & 37 & 2009-08-24 & 824200937 & \_PAT & 53 & Black & Female & 2
-Emergent & Walk & 47 & 1213.56667 & 74.00000 & am & Discharge & Black &
-67.85714\tabularnewline
-00215eb5 & 38 & 2009-08-24 & 824200938 & \_PAT & 69 & Black & Male & 4
-Stable & Private Vehicle & 47 & 139.55000 & 132.55000 & am & Discharge &
-Black & 67.85714\tabularnewline
-00215ee0 & 39 & 2009-08-24 & 824200939 & \_PAT & 67 & White & Male & 2
-Emergent & Private Vehicle & 47 & 2115.71667 & 71.71667 & am & Discharge
-& All Other & 67.85714\tabularnewline
-00215eea & 40 & 2009-08-24 & 824200940 & \_PAT & 46 & White & Male & 3
-Urgent & Walk & 47 & 2555.93333 & 392.00000 & am & Discharge & All Other
-& 67.85714\tabularnewline
-00215eee & 41 & 2009-08-24 & 824200941 & \_PAT & 31 & Black & Female & 3
-Urgent & Private Vehicle & 47 & 122.45000 & 23.45000 & am & Not Recorded
-& Black & 67.85714\tabularnewline
-00215f07 & 42 & 2009-08-24 & 824200942 & \_PAT & 46 & Black & Male & 2
-Emergent & EMS Ground & 47 & 315.76667 & 48.00000 & am & Discharge &
-Black & 67.85714\tabularnewline
-00215f47 & 43 & 2009-08-24 & 824200943 & \_PAT & 33 & Black & Female & 4
-Stable & Private Vehicle & 47 & 277.81667 & 22.00000 & am & Discharge &
-Black & 67.85714\tabularnewline
-00215f4e & 44 & 2009-08-24 & 824200944 & \_PAT & 28 & Black & Male & 3
-Urgent & Private Vehicle & 47 & 332.33333 & 45.00000 & am & Admit &
-Black & 67.85714\tabularnewline
-00215f53 & 45 & 2009-08-24 & 824200945 & \_PAT & 27 & Black & Female & 3
-Urgent & Private Vehicle & 47 & 548.08333 & 38.00000 & am & Discharge &
-Black & 67.85714\tabularnewline
-00216010 & 46 & 2009-08-24 & 824200946 & \_PAT & 39 & Black & Male & 4
-Stable & Private Vehicle & 47 & 334.00000 & 80.00000 & am & Discharge &
-Black & 67.85714\tabularnewline
-00216046 & 47 & 2009-08-24 & 824200947 & \_PAT & 54 & Black & Female & 3
-Urgent & Private Vehicle & 47 & 1507.13333 & 48.00000 & am & Discharge &
-Black & 67.85714\tabularnewline
-0021606a & 48 & 2009-08-24 & 824200948 & \_PAT & 39 & Black & Male & 4
-Stable & Public Trans & 47 & 201.10000 & 181.00000 & am & Discharge &
-Black & 67.85714\tabularnewline
-0021607a & 49 & 2009-08-24 & 824200949 & \_PAT & 61 & White & Female & 3
-Urgent & Private Vehicle & 47 & 371.16667 & 135.00000 & am & Admit & All
-Other & 67.85714\tabularnewline
-0021607d & 50 & 2009-08-24 & 824200950 & \_PAT & 56 & Black & Male & 3
-Urgent & EMS Ground & 47 & 326.06667 & 268.06667 & am & Admit & Black &
-67.85714\tabularnewline
-00216080 & 51 & 2009-08-24 & 824200951 & \_PAT & 54 & Black & Male & 3
-Urgent & Private Vehicle & 47 & 342.80000 & 146.00000 & am & Discharge &
-Black & 67.85714\tabularnewline
-002160a1 & 52 & 2009-08-24 & 824200952 & \_PAT & 30 & Black & Female & 3
-Urgent & Private Vehicle & 47 & 170.81667 & 96.81667 & am & Discharge &
-Black & 67.85714\tabularnewline
-002160b9 & 53 & 2009-08-24 & 824200953 & \_PAT & 35 & Black & Female & 3
-Urgent & Private Vehicle & 47 & 2225.75000 & 414.00000 & am & Admit &
-Black & 67.85714\tabularnewline
-00216266 & 54 & 2009-08-24 & 824200954 & \_PAT & 23 & Black & Female & 3
-Urgent & Private Vehicle & 47 & 556.40000 & 136.00000 & am & Discharge &
-Black & 67.85714\tabularnewline
-0021642e & 55 & 2009-08-24 & 824200955 & \_PAT & 66 & Black & Male & 3
-Urgent & EMS Ground & 47 & 375.11667 & 318.00000 & am & Admit & Black &
-67.85714\tabularnewline
-00216481 & 56 & 2009-08-24 & 824200956 & \_PAT & 56 & Black & Male & 2
-Emergent & Walk & 47 & 472.56667 & 210.00000 & am & Admit & Black &
-67.85714\tabularnewline
-00216728 & 57 & 2009-08-24 & 824200957 & \_PAT & 49 & Black & Female & 2
-Emergent & Walk & 47 & 1473.55000 & 402.00000 & am & Discharge & Black &
-67.85714\tabularnewline
-0021672a & 58 & 2009-08-24 & 824200958 & \_PAT & 78 & Black & Male & 2
-Emergent & Private Vehicle & 47 & 207.70000 & 128.70000 & am & Admit &
-Black & 67.85714\tabularnewline
-0021672d & 59 & 2009-08-24 & 824200959 & \_PAT & 31 & Black & Female & 5
-Non Urgent & Private Vehicle & 47 & 254.20000 & 178.20000 & am &
-Discharge & Black & 67.85714\tabularnewline
-0021672f & 60 & 2009-08-24 & 824200960 & \_PAT & 52 & Black & Female & 3
-Urgent & Private Vehicle & 47 & 443.35000 & 169.00000 & am & Discharge &
-Black & 67.85714\tabularnewline
-00216730 & 61 & 2009-08-24 & 824200961 & \_PAT & 50 & Black & Male & Not
-Recorded & Not Recorded & 47 & 90.46667 & 74.46667 & am & Left W/out
-Being Seen & Black & 67.85714\tabularnewline
-00216731 & 62 & 2009-08-24 & 824200962 & \_PAT & 42 & Black & Female & 3
-Urgent & Private Vehicle & 47 & 391.58333 & 86.00000 & am & Discharge &
-Black & 67.85714\tabularnewline
-00216733 & 63 & 2009-08-24 & 824200963 & \_PAT & 49 & Black & Female & 2
-Emergent & EMS Ground & 47 & 500.18333 & 168.18333 & am & Discharge &
-Black & 67.85714\tabularnewline
-00216736 & 64 & 2009-08-24 & 824200964 & \_PAT & 60 & White & Female & 2
-Emergent & EMS Ground & 47 & 1806.05000 & 378.00000 & am & Discharge &
-All Other & 67.85714\tabularnewline
-00216758 & 65 & 2009-08-24 & 824200965 & \_PAT & 38 & White & Female & 3
-Urgent & Walk & 47 & 545.70000 & 230.70000 & am & Discharge & All Other
-& 67.85714\tabularnewline
-0021675b & 66 & 2009-08-24 & 824200966 & \_PAT & 80 & Black & Male & 2
-Emergent & EMS Ground & 47 & 277.61667 & 248.61667 & am & Admit & Black
-& 67.85714\tabularnewline
-0021675c & 67 & 2009-08-24 & 824200967 & \_PAT & 55 & Black & Male & 2
-Emergent & EMS Air & 47 & 289.73333 & 138.00000 & am & Discharge & Black
-& 67.85714\tabularnewline
-0021675e & 68 & 2009-08-24 & 824200968 & \_PAT & 51 & White & Male & Not
-Recorded & Not Recorded & 47 & 90.65000 & 75.65000 & am & Left W/out
-Being Seen & All Other & 67.85714\tabularnewline
-0021675f & 69 & 2009-08-24 & 824200969 & \_PAT & 14 & Black & Female & 4
-Stable & Private Vehicle & 47 & 253.16667 & 165.16667 & am & Discharge &
-Black & 67.85714\tabularnewline
-00216763 & 70 & 2009-08-24 & 824200970 & \_PAT & 0 & Black & Male & 3
-Urgent & Private Vehicle & 47 & 216.43333 & 105.00000 & am & Transfer &
-Black & 67.85714\tabularnewline
-002183fb & 71 & 2009-08-24 & 824200971 & \_PAT & 59 & Black & Male & 3
-Urgent & Private Vehicle & 47 & 1879.76667 & 413.00000 & am & Discharge
-& Black & 67.85714\tabularnewline
-00218408 & 72 & 2009-08-24 & 824200972 & \_PAT & 61 & Black & Female & 2
-Emergent & Private Vehicle & 47 & 368.83333 & 203.00000 & am & Discharge
-& Black & 67.85714\tabularnewline
-00218409 & 73 & 2009-08-24 & 824200973 & \_PAT & 26 & Black & Female & 3
-Urgent & EMS Ground & 47 & 1334.41667 & 84.00000 & am & Transfer & Black
-& 67.85714\tabularnewline
-0021840a & 74 & 2009-08-24 & 824200974 & \_PAT & 26 & Black & Male & 4
-Stable & Public Trans & 47 & 207.80000 & 167.80000 & am & Discharge &
-Black & 67.85714\tabularnewline
-0021840f & 75 & 2009-08-24 & 824200975 & \_PAT & 38 & Black & Female & 3
-Urgent & Private Vehicle & 47 & 378.60000 & 172.00000 & am & Discharge &
-Black & 67.85714\tabularnewline
-00218413 & 76 & 2009-08-24 & 824200976 & \_PAT & 16 & Black & Female & 3
-Urgent & Private Vehicle & 47 & 378.85000 & 150.00000 & am & Discharge &
-Black & 67.85714\tabularnewline
-00218414 & 77 & 2009-08-24 & 824200977 & \_PAT & 98 & Black & Female & 3
-Urgent & Private Vehicle & 47 & 456.58333 & 340.00000 & am & Admit &
-Black & 67.85714\tabularnewline
-0021843a & 78 & 2009-08-24 & 824200978 & \_PAT & 25 & Black & Female & 3
-Urgent & Private Vehicle & 47 & 183.18333 & 120.18333 & am & Discharge &
-Black & 67.85714\tabularnewline
-00218443 & 79 & 2009-08-24 & 824200979 & \_PAT & 50 & Black & Female & 3
-Urgent & Public Trans & 47 & 1354.11667 & 70.00000 & am & Discharge &
-Black & 67.85714\tabularnewline
-00218444 & 80 & 2009-08-24 & 824200980 & \_PAT & 56 & Black & Female & 4
-Stable & Private Vehicle & 47 & 121.20000 & 16.20000 & am & Discharge &
-Black & 67.85714\tabularnewline
-0021844c & 81 & 2009-08-24 & 824200981 & \_PAT & 21 & White & Male & 4
-Stable & Walk & 47 & 219.25000 & 91.00000 & am & Discharge & All Other &
-67.85714\tabularnewline
-0021844f & 82 & 2009-08-24 & 824200982 & \_PAT & 54 & White & Female & 4
-Stable & Private Vehicle & 47 & 246.53333 & 152.53333 & am & Discharge &
-All Other & 67.85714\tabularnewline
-00218450 & 83 & 2009-08-24 & 824200983 & \_PAT & 70 & Black & Female & 3
-Urgent & Walk & 47 & 320.31667 & 125.31667 & am & Discharge & Black &
-67.85714\tabularnewline
-00218451 & 84 & 2009-08-24 & 824200984 & \_PAT & 83 & Black & Female & 2
-Emergent & EMS Ground & 47 & 1732.93333 & 402.00000 & am & Discharge &
-Black & 67.85714\tabularnewline
-00218452 & 85 & 2009-08-24 & 824200985 & \_PAT & 89 & White & Female & 4
-Stable & Private Vehicle & 47 & 294.00000 & 146.00000 & am & Discharge &
-All Other & 67.85714\tabularnewline
-00218453 & 86 & 2009-08-24 & 824200986 & \_PAT & 60 & White & Female &
-Not Recorded & Not Recorded & 47 & 138.45000 & 74.45000 & am & Left
-W/out Being Seen & All Other & 67.85714\tabularnewline
-00218454 & 87 & 2009-08-24 & 824200987 & \_PAT & 84 & Black & Female & 2
-Emergent & EMS Ground & 47 & 359.38333 & 87.00000 & am & Admit & Black &
-67.85714\tabularnewline
-00218456 & 88 & 2009-08-24 & 824200988 & \_PAT & 38 & Black & Female & 4
-Stable & Private Vehicle & 47 & 301.86667 & 107.00000 & am & Discharge &
-Black & 67.85714\tabularnewline
-00218457 & 89 & 2009-08-24 & 824200989 & \_PAT & 50 & Black & Female & 3
-Urgent & Private Vehicle & 47 & 475.66667 & 147.00000 & am & Discharge &
-Black & 67.85714\tabularnewline
-00218458 & 90 & 2009-08-24 & 824200990 & \_PAT & 58 & Black & Male & 4
-Stable & EMS Ground & 47 & 172.56667 & 75.56667 & am & Discharge & Black
-& 67.85714\tabularnewline
-00218459 & 91 & 2009-08-24 & 824200991 & \_PAT & 7 & Black & Female & 4
-Stable & Public Trans & 47 & 209.10000 & 58.10000 & am & Discharge &
-Black & 67.85714\tabularnewline
-0021845a & 92 & 2009-08-24 & 824200992 & \_PAT & 53 & Black & Female & 2
-Emergent & Walk & 47 & 314.11667 & 138.00000 & am & Admit & Black &
-67.85714\tabularnewline
-0021845f & 93 & 2009-08-24 & 824200993 & \_PAT & 57 & Black & Female & 2
-Emergent & Private Vehicle & 47 & 190.28333 & 65.00000 & am & Discharge
-& Black & 67.85714\tabularnewline
-00218461 & 94 & 2009-08-24 & 824200994 & \_PAT & 57 & White & Male & 3
-Urgent & Private Vehicle & 47 & 1040.76667 & 201.76667 & am & Admit &
-All Other & 67.85714\tabularnewline
-00218462 & 95 & 2009-08-24 & 824200995 & \_PAT & 60 & Black & Male & 3
-Urgent & Private Vehicle & 47 & 373.43333 & 137.00000 & am & Discharge &
-Black & 67.85714\tabularnewline
-00218463 & 96 & 2009-08-24 & 824200996 & \_PAT & 17 & Black & Male & 3
-Urgent & Private Vehicle & 47 & 208.31667 & 15.31667 & am & Discharge &
-Black & 67.85714\tabularnewline
-00218465 & 97 & 2009-08-24 & 824200997 & \_PAT & 67 & Black & Female & 2
-Emergent & EMS Ground & 47 & 353.81667 & 305.81667 & am & Not Recorded &
-Black & 67.85714\tabularnewline
-00218467 & 98 & 2009-08-24 & 824200998 & \_PAT & 44 & Black & Female & 4
-Stable & Private Vehicle & 47 & 142.65000 & 60.65000 & am & Discharge &
-Black & 67.85714\tabularnewline
-0021846a & 99 & 2009-08-24 & 824200999 & \_PAT & 27 & Black & Female & 3
-Urgent & Private Vehicle & 47 & 238.55000 & 129.00000 & am & Discharge &
-Black & 67.85714\tabularnewline
-0021846b & 100 & 2009-08-24 & 8242009100 & \_PAT & 36 & Black & Female &
-3 Urgent & Private Vehicle & 47 & 353.71667 & 64.00000 & am & Admit &
-Black & 67.85714\tabularnewline
-0021846f & 101 & 2009-08-24 & 8242009101 & \_PAT & 75 & White & Female &
-3 Urgent & Private Vehicle & 47 & 991.51667 & 88.00000 & am & Discharge
-& All Other & 67.85714\tabularnewline
-00218470 & 102 & 2009-08-24 & 8242009102 & \_PAT & 27 & Black & Female &
-4 Stable & Private Vehicle & 47 & 286.83333 & 151.83333 & am & Discharge
-& Black & 67.85714\tabularnewline
-00218471 & 103 & 2009-08-24 & 8242009103 & \_PAT & 3 & Black & Male & 3
-Urgent & Public Trans & 47 & 212.68333 & 62.68333 & am & Discharge &
-Black & 67.85714\tabularnewline
-00218472 & 104 & 2009-08-24 & 8242009104 & \_PAT & 4 & Black & Male & 4
-Stable & Private Vehicle & 47 & 125.13333 & 110.13333 & am & Discharge &
-Black & 67.85714\tabularnewline
-00218473 & 105 & 2009-08-24 & 8242009105 & \_PAT & 18 & Black & Female &
-4 Stable & EMS Ground & 47 & 335.55000 & 309.55000 & am & Discharge &
-Black & 67.85714\tabularnewline
-00218479 & 106 & 2009-08-24 & 8242009106 & \_PAT & 53 & Black & Male & 2
-Emergent & Public Trans & 47 & 697.11667 & 158.00000 & am & Discharge &
-Black & 67.85714\tabularnewline
-00218481 & 107 & 2009-08-24 & 8242009107 & \_PAT & 61 & White & Female &
-2 Emergent & EMS Ground & 47 & 1546.61667 & 117.61667 & am & Discharge &
-All Other & 67.85714\tabularnewline
-00218484 & 108 & 2009-08-24 & 8242009108 & \_PAT & 47 & Black & Female &
-2 Emergent & Private Vehicle & 47 & 271.06667 & 85.00000 & am &
-Discharge & Black & 67.85714\tabularnewline
-00218486 & 109 & 2009-08-24 & 8242009109 & \_PAT & 49 & Black & Male & 3
-Urgent & Walk & 47 & 1315.75000 & 70.75000 & am & Discharge & Black &
-67.85714\includegraphics{Flynn_Project_files/figure-latex/shift 10-1.pdf}\tabularnewline
-{[}{]}(Flynn\_P & roject & \_files/figure & -latex/shift1 & 0
-labels-1.pdf)\textless{}!-- & --\textgreater{} & & & & & & & & & &
-&\tabularnewline
-\bottomrule
-\end{longtable}
-
-\includegraphics{Flynn_Project_files/figure-latex/shift10 circle-1.pdf}
-
-Descriptive statistics of the network data as well as patient
-demographic data will be evaluated for asssumptions of normality. The
-data will be skewed in certain predictable ways due to the observed
-patient populations. The distribution of study subject demographics will
-be described in tabular format, noting irregularities and potential
-sources of error.
-\includegraphics{Flynn_Project_files/figure-latex/Shift10 4x4-1.pdf}
-
-\begin{longtable}[]{@{}lllllrllllrrrlllr@{}}
-\toprule
-sid & i & d8 & ID & participant\_type & AGE & Race & Sex & Acuity &
-Arr\_Mode & shift\_num & MinutesInED & duration\_observed & shift\_ampm
-& ED\_Disposition & BLACKyn & participationrate\tabularnewline
-\midrule
-\endhead
-0002f35c & 1 & 2009-10-20 & 102020091 & STAFF & NA & & & & & 104 & NA &
-294.583333 & am & & & 54.02299\tabularnewline
-0002f445 & 2 & 2009-10-20 & 102020092 & STAFF & NA & & & & & 104 & NA &
-327.216667 & am & & & 54.02299\tabularnewline
-0002f468 & 3 & 2009-10-20 & 102020093 & STAFF & NA & & & & & 104 & NA &
-344.650000 & am & & & 54.02299\tabularnewline
-0002f469 & 4 & 2009-10-20 & 102020094 & STAFF & NA & & & & & 104 & NA &
-170.500000 & am & & & 54.02299\tabularnewline
-0002f46c & 5 & 2009-10-20 & 102020095 & STAFF & NA & & & & & 104 & NA &
-325.450000 & am & & & 54.02299\tabularnewline
-0002f472 & 6 & 2009-10-20 & 102020096 & STAFF & NA & & & & & 104 & NA &
-283.300000 & am & & & 54.02299\tabularnewline
-0002f495 & 7 & 2009-10-20 & 102020097 & STAFF & NA & & & & & 104 & NA &
-307.766667 & am & & & 54.02299\tabularnewline
-0002f49c & 8 & 2009-10-20 & 102020098 & STAFF & NA & & & & & 104 & NA &
-326.816667 & am & & & 54.02299\tabularnewline
-0002f4a3 & 9 & 2009-10-20 & 102020099 & STAFF & NA & & & & & 104 & NA &
-341.916667 & am & & & 54.02299\tabularnewline
-0002f503 & 10 & 2009-10-20 & 1020200910 & STAFF & NA & & & & & 104 & NA
-& 8.566667 & am & & & 54.02299\tabularnewline
-0002f507 & 11 & 2009-10-20 & 1020200911 & STAFF & NA & & & & & 104 & NA
-& 326.916667 & am & & & 54.02299\tabularnewline
-0002f508 & 12 & 2009-10-20 & 1020200912 & STAFF & NA & & & & & 104 & NA
-& 339.350000 & am & & & 54.02299\tabularnewline
-0002f515 & 13 & 2009-10-20 & 1020200913 & STAFF & NA & & & & & 104 & NA
-& 0.150000 & am & & & 54.02299\tabularnewline
-00101f37 & 14 & 2009-10-20 & 1020200914 & RN & NA & & & & & 104 & NA &
-325.100000 & am & & & 54.02299\tabularnewline
-00101f73 & 15 & 2009-10-20 & 1020200915 & RN & NA & & & & & 104 & NA &
-315.766667 & am & & & 54.02299\tabularnewline
-00101f7e & 16 & 2009-10-20 & 1020200916 & RN & NA & & & & & 104 & NA &
-333.400000 & am & & & 54.02299\tabularnewline
-00101fa9 & 17 & 2009-10-20 & 1020200917 & MD & NA & & & & & 104 & NA &
-2.783333 & am & & & 54.02299\tabularnewline
-00101faf & 18 & 2009-10-20 & 1020200918 & RN & NA & & & & & 104 & NA &
-315.650000 & am & & & 54.02299\tabularnewline
-00101fd6 & 19 & 2009-10-20 & 1020200919 & RN & NA & & & & & 104 & NA &
-332.633333 & am & & & 54.02299\tabularnewline
-00101fdd & 20 & 2009-10-20 & 1020200920 & MD & NA & & & & & 104 & NA &
-2.983333 & am & & & 54.02299\tabularnewline
-00102159 & 21 & 2009-10-20 & 1020200921 & RN & NA & & & & & 104 & NA &
-256.816667 & am & & & 54.02299\tabularnewline
-00102164 & 22 & 2009-10-20 & 1020200922 & STAFF & NA & & & & & 104 & NA
-& 1.166667 & am & & & 54.02299\tabularnewline
-001021b5 & 23 & 2009-10-20 & 1020200923 & RN & NA & & & & & 104 & NA &
-336.950000 & am & & & 54.02299\tabularnewline
-00102235 & 24 & 2009-10-20 & 1020200924 & RN & NA & & & & & 104 & NA &
-340.950000 & am & & & 54.02299\tabularnewline
-00102288 & 25 & 2009-10-20 & 1020200925 & RN & NA & & & & & 104 & NA &
-154.166667 & am & & & 54.02299\tabularnewline
-001022ad & 26 & 2009-10-20 & 1020200926 & RN & NA & & & & & 104 & NA &
-306.700000 & am & & & 54.02299\tabularnewline
-00124758 & 27 & 2009-10-20 & 1020200927 & MD & NA & & & & & 104 & NA &
-343.600000 & am & & & 54.02299\tabularnewline
-0012476b & 28 & 2009-10-20 & 1020200928 & MD & NA & & & & & 104 & NA &
-191.966667 & am & & & 54.02299\tabularnewline
-00124775 & 29 & 2009-10-20 & 1020200929 & MD & NA & & & & & 104 & NA &
-320.616667 & am & & & 54.02299\tabularnewline
-001248f7 & 30 & 2009-10-20 & 1020200930 & RN & NA & & & & & 104 & NA &
-2.216667 & am & & & 54.02299\tabularnewline
-00215e36 & 31 & 2009-10-20 & 1020200931 & \_PAT & 18 & Black & Female &
-3 Urgent & Walk & 104 & 225 & 101.000000 & am & Discharge & Black &
-54.02299\tabularnewline
-00215e49 & 32 & 2009-10-20 & 1020200932 & \_PAT & 51 & Black & Female &
-3 Urgent & Private Vehicle & 104 & 224 & 192.966667 & am & Discharge &
-Black & 54.02299\tabularnewline
-00215e82 & 33 & 2009-10-20 & 1020200933 & \_PAT & 42 & Black & Male & 3
-Urgent & EMS Ground & 104 & 463 & 267.933333 & am & Discharge & Black &
-54.02299\tabularnewline
-00215e8e & 34 & 2009-10-20 & 1020200934 & \_PAT & 24 & White & Female &
-3 Urgent & Private Vehicle & 104 & 559 & 297.250000 & am & Discharge &
-All Other & 54.02299\tabularnewline
-00215f44 & 35 & 2009-10-20 & 1020200935 & \_PAT & 82 & Black & Female &
-3 Urgent & Private Vehicle & 104 & 308 & 229.916667 & am & Discharge &
-Black & 54.02299\tabularnewline
-00216002 & 36 & 2009-10-20 & 1020200936 & \_PAT & 58 & Black & Male & 3
-Urgent & Private Vehicle & 104 & 531 & 90.500000 & am & Discharge &
-Black & 54.02299\tabularnewline
-00216050 & 37 & 2009-10-20 & 1020200937 & \_PAT & 21 & Black & Male & 4
-Stable & Public Trans & 104 & 265 & 191.866667 & am & Discharge & Black
-& 54.02299\tabularnewline
-00216095 & 38 & 2009-10-20 & 1020200938 & \_PAT & 41 & Black & Male & 3
-Urgent & EMS Ground & 104 & 917 & 332.000000 & am & Discharge & Black &
-54.02299\tabularnewline
-002160e7 & 39 & 2009-10-20 & 1020200939 & \_PAT & 26 & Other & Female &
-3 Urgent & Private Vehicle & 104 & 445 & 222.000000 & am & Discharge &
-All Other & 54.02299\tabularnewline
-002160ed & 40 & 2009-10-20 & 1020200940 & \_PAT & 27 & Other & Female &
-3 Urgent & Private Vehicle & 104 & 293 & 226.000000 & am & Discharge &
-All Other & 54.02299\tabularnewline
-002160ef & 41 & 2009-10-20 & 1020200941 & \_PAT & 28 & Black & Female &
-3 Urgent & Walk & 104 & 302 & 132.000000 & am & Discharge & Black &
-54.02299\tabularnewline
-002160f8 & 42 & 2009-10-20 & 1020200942 & \_PAT & 22 & Black & Female &
-3 Urgent & Private Vehicle & 104 & 559 & 342.000000 & am & Discharge &
-Black & 54.02299\tabularnewline
-00216138 & 43 & 2009-10-20 & 1020200943 & \_PAT & 42 & Black & Male & 4
-Stable & Private Vehicle & 104 & 226 & 207.216667 & am & Discharge &
-Black & 54.02299\tabularnewline
-00216145 & 44 & 2009-10-20 & 1020200944 & \_PAT & 50 & White & Male & 2
-Emergent & EMS Ground & 104 & 1737 & 136.000000 & am & Discharge & All
-Other & 54.02299\tabularnewline
-0021615d & 45 & 2009-10-20 & 1020200945 & \_PAT & 45 & Black & Female &
-3 Urgent & Private Vehicle & 104 & 235 & 104.000000 & am & Discharge &
-Black & 54.02299\tabularnewline
-00216179 & 46 & 2009-10-20 & 1020200946 & \_PAT & 46 & Black & Female &
-3 Urgent & Private Vehicle & 104 & 345 & 103.000000 & am & Discharge &
-Black & 54.02299\tabularnewline
-0021618b & 47 & 2009-10-20 & 1020200947 & \_PAT & 22 & Black & Male & 2
-Emergent & Private Vehicle & 104 & 1098 & 337.000000 & am & Discharge &
-Black & 54.02299\tabularnewline
-00216343 & 48 & 2009-10-20 & 1020200948 & \_PAT & 58 & White & Male & 2
-Emergent & Private Vehicle & 104 & 492 & 90.000000 & am & Admit & All
-Other & 54.02299\tabularnewline
-0021634a & 49 & 2009-10-20 & 1020200949 & \_PAT & 82 & Black & Female &
-3 Urgent & Private Vehicle & 104 & 1642 & 338.000000 & am & Discharge &
-Black & 54.02299\tabularnewline
-0021636f & 50 & 2009-10-20 & 1020200950 & \_PAT & 32 & Black & Male & 4
-Stable & Walk & 104 & 248 & 202.000000 & am & Discharge & Black &
-54.02299\tabularnewline
-00216391 & 51 & 2009-10-20 & 1020200951 & \_PAT & 57 & Black & Male & 2
-Emergent & Walk & 104 & 544 & 278.000000 & am & Not Recorded & Black &
-54.02299\tabularnewline
-00216490 & 52 & 2009-10-20 & 1020200952 & \_PAT & 37 & Black & Female &
-3 Urgent & Private Vehicle & 104 & 285 & 133.000000 & am & Discharge &
-Black & 54.02299\tabularnewline
-0021651e & 53 & 2009-10-20 & 1020200953 & \_PAT & 19 & White & Female &
-3 Urgent & EMS Ground & 104 & 189 & 124.000000 & am & Discharge & All
-Other & 54.02299\tabularnewline
-002165d1 & 54 & 2009-10-20 & 1020200954 & \_PAT & 90 & White & Female &
-2 Emergent & EMS Ground & 104 & 363 & 163.000000 & am & Admit & All
-Other & 54.02299\tabularnewline
-002165f0 & 55 & 2009-10-20 & 1020200955 & \_PAT & 84 & Black & Male & 3
-Urgent & Not Recorded & 104 & 248 & 103.000000 & am & Left W/out Being
-Seen & Black & 54.02299\tabularnewline
-002166a9 & 56 & 2009-10-20 & 1020200956 & \_PAT & 54 & Black & Female &
-4 Stable & Private Vehicle & 104 & 143 & 105.633333 & am & Discharge &
-Black & 54.02299\tabularnewline
-002166af & 57 & 2009-10-20 & 1020200957 & \_PAT & 43 & Black & Female &
-2 Emergent & EMS Ground & 104 & 674 & 226.000000 & am & Discharge &
-Black & 54.02299\tabularnewline
-002166e1 & 58 & 2009-10-20 & 1020200958 & \_PAT & 85 & White & Female &
-2 Emergent & Private Vehicle & 104 & 1494 & 338.000000 & am & Discharge
-& All Other & 54.02299\tabularnewline
-002166f1 & 59 & 2009-10-20 & 1020200959 & \_PAT & 94 & Black & Female &
-3 Urgent & EMS Ground & 104 & 411 & 164.000000 & am & Admit & Black &
-54.02299\tabularnewline
-00216700 & 60 & 2009-10-20 & 1020200960 & \_PAT & 51 & Black & Male & 2
-Emergent & Private Vehicle & 104 & 501 & 135.000000 & am & Admit & Black
-& 54.02299\tabularnewline
-0021670c & 61 & 2009-10-20 & 1020200961 & \_PAT & 16 & White & Female &
-2 Emergent & Private Vehicle & 104 & 262 & 209.083333 & am & Not
-Recorded & All Other & 54.02299\tabularnewline
-00216715 & 62 & 2009-10-20 & 1020200962 & \_PAT & 36 & Black & Male & 2
-Emergent & Private Vehicle & 104 & 976 & 332.000000 & am & Discharge &
-Black & 54.02299\tabularnewline
-00216725 & 63 & 2009-10-20 & 1020200963 & \_PAT & 40 & Black & Male & 3
-Urgent & Private Vehicle & 104 & 441 & 267.316667 & am & Discharge &
-Black & 54.02299\tabularnewline
-0021673b & 64 & 2009-10-20 & 1020200964 & \_PAT & 45 & Black & Female &
-4 Stable & Private Vehicle & 104 & 231 & 143.850000 & am & Discharge &
-Black & 54.02299\tabularnewline
-0021673d & 65 & 2009-10-20 & 1020200965 & \_PAT & 70 & Black & Female &
-3 Urgent & EMS Ground & 104 & 400 & 91.000000 & am & Admit & Black &
-54.02299\tabularnewline
-00216743 & 66 & 2009-10-20 & 1020200966 & \_PAT & 53 & Black & Female &
-2 Emergent & Private Vehicle & 104 & 517 & 49.383333 & am & Admit &
-Black & 54.02299\tabularnewline
-00216746 & 67 & 2009-10-20 & 1020200967 & \_PAT & 39 & Black & Female &
-2 Emergent & EMS Ground & 104 & 1030 & 333.000000 & am & Transfer &
-Black & 54.02299\tabularnewline
-0021674b & 68 & 2009-10-20 & 1020200968 & \_PAT & 54 & Black & Female &
-3 Urgent & Public Trans & 104 & 362 & 225.000000 & am & Discharge &
-Black & 54.02299\tabularnewline
-0021674f & 69 & 2009-10-20 & 1020200969 & \_PAT & 76 & Black & Male & 4
-Stable & EMS Ground & 104 & 325 & 164.633333 & am & Discharge & Black &
-54.02299\tabularnewline
-002167ef & 70 & 2009-10-20 & 1020200970 & \_PAT & 55 & Black & Male & 3
-Urgent & Private Vehicle & 104 & 326 & 100.000000 & am & Discharge &
-Black & 54.02299\tabularnewline
-00216857 & 71 & 2009-10-20 & 1020200971 & \_PAT & 25 & Black & Male & 3
-Urgent & Private Vehicle & 104 & 490 & 203.000000 & am & Discharge &
-Black & 54.02299\tabularnewline
-0021685a & 72 & 2009-10-20 & 1020200972 & \_PAT & 21 & White & Female &
-2 Emergent & Private Vehicle & 104 & 167 & 76.733333 & am & Discharge &
-All Other & 54.02299\tabularnewline
-0021687d & 73 & 2009-10-20 & 1020200973 & \_PAT & 68 & Black & Female &
-2 Emergent & Private Vehicle & 104 & 1588 & 338.000000 & am & Discharge
-& Black & 54.02299\tabularnewline
-002169b3 & 74 & 2009-10-20 & 1020200974 & \_PAT & 19 & Black & Female &
-3 Urgent & Walk & 104 & 179 & 102.000000 & am & Discharge & Black &
-54.02299\tabularnewline
-002169bc & 75 & 2009-10-20 & 1020200975 & \_PAT & 25 & White & Male & 3
-Urgent & Private Vehicle & 104 & 1065 & 278.000000 & am & Discharge &
-All Other & 54.02299\tabularnewline
-002169c5 & 76 & 2009-10-20 & 1020200976 & \_PAT & 52 & Black & Male & 4
-Stable & Walk & 104 & 210 & 103.100000 & am & Discharge & Black &
-54.02299\tabularnewline
-002169ca & 77 & 2009-10-20 & 1020200977 & \_PAT & 17 & Black & Female &
-4 Stable & Private Vehicle & 104 & 397 & 59.566667 & am & Discharge &
-Black &
-54.02299\includegraphics{Flynn_Project_files/figure-latex/shift 23-1.pdf}\tabularnewline
-\bottomrule
-\end{longtable}
-
-\begin{verbatim}
-## [1] "layout_as_star"
-\end{verbatim}
-
-\begin{verbatim}
-## [1] "layout_components"
-\end{verbatim}
-
-\begin{verbatim}
-## [1] "layout_in_circle"
-\end{verbatim}
-
-\begin{verbatim}
-## [1] "layout_nicely"
-\end{verbatim}
-
-\begin{verbatim}
-## [1] "layout_on_grid"
-\end{verbatim}
-
-\begin{verbatim}
-## [1] "layout_on_sphere"
-\end{verbatim}
-
-\begin{verbatim}
-## [1] "layout_randomly"
-\end{verbatim}
-
-\begin{verbatim}
-## [1] "layout_with_dh"
-\end{verbatim}
-
-\begin{verbatim}
-## [1] "layout_with_drl"
-\end{verbatim}
-
-\includegraphics{Flynn_Project_files/figure-latex/shift23 layouts-1.pdf}
-
-\begin{verbatim}
-## [1] "layout_with_fr"
-\end{verbatim}
-
-\begin{verbatim}
-## [1] "layout_with_gem"
-\end{verbatim}
-
-\begin{verbatim}
-## [1] "layout_with_graphopt"
-\end{verbatim}
-
-\begin{verbatim}
-## [1] "layout_with_kk"
-\end{verbatim}
-
-\begin{verbatim}
-## [1] "layout_with_lgl"
-\end{verbatim}
-
-\begin{verbatim}
-## [1] "layout_with_mds"
-\end{verbatim}
-
-\includegraphics{Flynn_Project_files/figure-latex/shift23 layouts-2.pdf}
-
-\begin{longtable}[]{@{}lllllrllllrrrlllr@{}}
-\toprule
-sid & i & d8 & ID & participant\_type & AGE & Race & Sex & Acuity &
-Arr\_Mode & shift\_num & MinutesInED & duration\_observed & shift\_ampm
-& ED\_Disposition & BLACKyn & participationrate\tabularnewline
-\midrule
-\endhead
-0002f35c & 1 & 2009-09-09 & 9920091 & STAFF & NA & & & & & 63 & NA &
-633.700000 & am & & & 65.95745\tabularnewline
-0002f445 & 2 & 2009-09-09 & 9920092 & STAFF & NA & & & & & 63 & NA &
-659.000000 & am & & & 65.95745\tabularnewline
-0002f468 & 3 & 2009-09-09 & 9920093 & STAFF & NA & & & & & 63 & NA &
-74.366667 & am & & & 65.95745\tabularnewline
-0002f469 & 4 & 2009-09-09 & 9920094 & STAFF & NA & & & & & 63 & NA &
-654.950000 & am & & & 65.95745\tabularnewline
-0002f46c & 5 & 2009-09-09 & 9920095 & STAFF & NA & & & & & 63 & NA &
-653.383333 & am & & & 65.95745\tabularnewline
-0002f472 & 6 & 2009-09-09 & 9920096 & STAFF & NA & & & & & 63 & NA &
-647.516667 & am & & & 65.95745\tabularnewline
-0002f495 & 7 & 2009-09-09 & 9920097 & STAFF & NA & & & & & 63 & NA &
-638.366667 & am & & & 65.95745\tabularnewline
-0002f4a3 & 8 & 2009-09-09 & 9920098 & STAFF & NA & & & & & 63 & NA &
-647.350000 & am & & & 65.95745\tabularnewline
-0002f4e2 & 9 & 2009-09-09 & 9920099 & STAFF & NA & & & & & 63 & NA &
-654.450000 & am & & & 65.95745\tabularnewline
-0002f4e8 & 10 & 2009-09-09 & 99200910 & STAFF & NA & & & & & 63 & NA &
-508.050000 & am & & & 65.95745\tabularnewline
-0002f4f9 & 11 & 2009-09-09 & 99200911 & STAFF & NA & & & & & 63 & NA &
-624.016667 & am & & & 65.95745\tabularnewline
-0002f503 & 12 & 2009-09-09 & 99200912 & STAFF & NA & & & & & 63 & NA &
-648.966667 & am & & & 65.95745\tabularnewline
-0002f507 & 13 & 2009-09-09 & 99200913 & STAFF & NA & & & & & 63 & NA &
-290.650000 & am & & & 65.95745\tabularnewline
-0002f508 & 14 & 2009-09-09 & 99200914 & STAFF & NA & & & & & 63 & NA &
-561.066667 & am & & & 65.95745\tabularnewline
-0002f515 & 15 & 2009-09-09 & 99200915 & STAFF & NA & & & & & 63 & NA &
-655.716667 & am & & & 65.95745\tabularnewline
-00101d8f & 16 & 2009-09-09 & 99200916 & RN & NA & & & & & 63 & NA &
-434.050000 & am & & & 65.95745\tabularnewline
-00101f37 & 17 & 2009-09-09 & 99200917 & RN & NA & & & & & 63 & NA &
-80.466667 & am & & & 65.95745\tabularnewline
-00101f73 & 18 & 2009-09-09 & 99200918 & RN & NA & & & & & 63 & NA &
-596.400000 & am & & & 65.95745\tabularnewline
-00101f7e & 19 & 2009-09-09 & 99200919 & RN & NA & & & & & 63 & NA &
-659.900000 & am & & & 65.95745\tabularnewline
-00101f80 & 20 & 2009-09-09 & 99200920 & RN & NA & & & & & 63 & NA &
-600.183333 & am & & & 65.95745\tabularnewline
-00101f9f & 21 & 2009-09-09 & 99200921 & MD & NA & & & & & 63 & NA &
-659.200000 & am & & & 65.95745\tabularnewline
-00101faf & 22 & 2009-09-09 & 99200922 & RN & NA & & & & & 63 & NA &
-648.150000 & am & & & 65.95745\tabularnewline
-00101fd6 & 23 & 2009-09-09 & 99200923 & RN & NA & & & & & 63 & NA &
-658.033333 & am & & & 65.95745\tabularnewline
-00101fdd & 24 & 2009-09-09 & 99200924 & MD & NA & & & & & 63 & NA &
-658.250000 & am & & & 65.95745\tabularnewline
-00102156 & 25 & 2009-09-09 & 99200925 & MD & NA & & & & & 63 & NA &
-487.550000 & am & & & 65.95745\tabularnewline
-00102159 & 26 & 2009-09-09 & 99200926 & RN & NA & & & & & 63 & NA &
-656.816667 & am & & & 65.95745\tabularnewline
-00102164 & 27 & 2009-09-09 & 99200927 & STAFF & NA & & & & & 63 & NA &
-342.116667 & am & & & 65.95745\tabularnewline
-001021b0 & 28 & 2009-09-09 & 99200928 & RN & NA & & & & & 63 & NA &
-655.033333 & am & & & 65.95745\tabularnewline
-001021b5 & 29 & 2009-09-09 & 99200929 & RN & NA & & & & & 63 & NA &
-636.483333 & am & & & 65.95745\tabularnewline
-00102288 & 30 & 2009-09-09 & 99200930 & RN & NA & & & & & 63 & NA &
-657.700000 & am & & & 65.95745\tabularnewline
-001022a1 & 31 & 2009-09-09 & 99200931 & RN & NA & & & & & 63 & NA &
-483.850000 & am & & & 65.95745\tabularnewline
-0012476b & 32 & 2009-09-09 & 99200932 & MD & NA & & & & & 63 & NA &
-362.566667 & am & & & 65.95745\tabularnewline
-00124775 & 33 & 2009-09-09 & 99200933 & MD & NA & & & & & 63 & NA &
-315.816667 & am & & & 65.95745\tabularnewline
-001248f7 & 34 & 2009-09-09 & 99200934 & RN & NA & & & & & 63 & NA &
-8.566667 & am & & & 65.95745\tabularnewline
-00215d96 & 35 & 2009-09-09 & 99200935 & \_PAT & 44 & Black & Female & 3
-Urgent & Private Vehicle & 63 & 260 & 176.783333 & am & Discharge &
-Black & 65.95745\tabularnewline
-00215da1 & 36 & 2009-09-09 & 99200936 & \_PAT & 50 & Black & Female & 1
-Immediate & Private Vehicle & 63 & 280 & 277.433333 & am & Admit & Black
-& 65.95745\tabularnewline
-00215de8 & 37 & 2009-09-09 & 99200937 & \_PAT & 52 & Black & Male & 3
-Urgent & Private Vehicle & 63 & 268 & 141.450000 & am & Discharge &
-Black & 65.95745\tabularnewline
-002161de & 38 & 2009-09-09 & 99200938 & \_PAT & 53 & Black & Male & 2
-Emergent & Private Vehicle & 63 & 266 & 206.950000 & am & Discharge &
-Black & 65.95745\tabularnewline
-002161f8 & 39 & 2009-09-09 & 99200939 & \_PAT & 29 & White & Female & 3
-Urgent & Private Vehicle & 63 & 480 & 220.516667 & am & Discharge & All
-Other & 65.95745\tabularnewline
-00216206 & 40 & 2009-09-09 & 99200940 & \_PAT & 79 & Black & Female & 2
-Emergent & Private Vehicle & 63 & 330 & 75.650000 & am & Discharge &
-Black & 65.95745\tabularnewline
-00216210 & 41 & 2009-09-09 & 99200941 & \_PAT & 77 & White & Female & 3
-Urgent & EMS Ground & 63 & 421 & 269.816667 & am & Not Recorded & All
-Other & 65.95745\tabularnewline
-00216229 & 42 & 2009-09-09 & 99200942 & \_PAT & 50 & Black & Female & 2
-Emergent & EMS Ground & 63 & 1380 & 199.000000 & am & Discharge & Black
-& 65.95745\tabularnewline
-00216230 & 43 & 2009-09-09 & 99200943 & \_PAT & 22 & Black & Female &
-Not Recorded & Not Recorded & 63 & 93 & 63.000000 & am & Left W/out
-Being Seen & Black & 65.95745\tabularnewline
-00216239 & 44 & 2009-09-09 & 99200944 & \_PAT & 39 & Black & Female & 3
-Urgent & EMS Ground & 63 & 343 & 220.733333 & am & Discharge & Black &
-65.95745\tabularnewline
-0021624d & 45 & 2009-09-09 & 99200945 & \_PAT & 56 & Black & Male & 3
-Urgent & EMS Ground & 63 & 1597 & 310.000000 & am & Discharge & Black &
-65.95745\tabularnewline
-00216266 & 46 & 2009-09-09 & 99200946 & \_PAT & 18 & Black & Male & 4
-Stable & Public Trans & 63 & 266 & 156.166667 & am & Discharge & Black &
-65.95745\tabularnewline
-002162ac & 47 & 2009-09-09 & 99200947 & \_PAT & 29 & Black & Male & 3
-Urgent & Private Vehicle & 63 & 1068 & 37.000000 & am & AMA & Black &
-65.95745\tabularnewline
-002162da & 48 & 2009-09-09 & 99200948 & \_PAT & 56 & Black & Male & 4
-Stable & Private Vehicle & 63 & 309 & 156.150000 & am & Discharge &
-Black & 65.95745\tabularnewline
-002162f0 & 49 & 2009-09-09 & 99200949 & \_PAT & 26 & Black & Female & 3
-Urgent & Private Vehicle & 63 & 461 & 57.000000 & am & Discharge & Black
-& 65.95745\tabularnewline
-00216300 & 50 & 2009-09-09 & 99200950 & \_PAT & 20 & Black & Male & 4
-Stable & Private Vehicle & 63 & 415 & 53.000000 & am & Discharge & Black
-& 65.95745\tabularnewline
-00216301 & 51 & 2009-09-09 & 99200951 & \_PAT & 21 & Black & Female &
-Not Recorded & Not Recorded & 63 & 70 & 62.000000 & am & Not Recorded &
-Black & 65.95745\tabularnewline
-0021630c & 52 & 2009-09-09 & 99200952 & \_PAT & 90 & White & Male & 1
-Immediate & EMS Ground & 63 & 404 & 225.000000 & am & Discharge & All
-Other & 65.95745\tabularnewline
-0021635d & 53 & 2009-09-09 & 99200953 & \_PAT & 22 & Black & Female & 4
-Stable & Private Vehicle & 63 & 559 & 204.000000 & am & Discharge &
-Black & 65.95745\tabularnewline
-00216372 & 54 & 2009-09-09 & 99200954 & \_PAT & 74 & Black & Female & 3
-Urgent & EMS Ground & 63 & 1473 & 314.000000 & am & Admit & Black &
-65.95745\tabularnewline
-00216395 & 55 & 2009-09-09 & 99200955 & \_PAT & 10 & Not Recorded &
-Female & Not Recorded & Not Recorded & 63 & 149 & 55.000000 & am & AMA &
-All Other & 65.95745\tabularnewline
-002163a5 & 56 & 2009-09-09 & 99200956 & \_PAT & 53 & Black & Female & 3
-Urgent & Not Recorded & 63 & 216 & 61.000000 & am & Left W/out Being
-Seen & Black & 65.95745\tabularnewline
-00216410 & 57 & 2009-09-09 & 99200957 & \_PAT & 3 & Black & Female & 3
-Urgent & Private Vehicle & 63 & 262 & 238.000000 & am & Discharge &
-Black & 65.95745\tabularnewline
-0021642e & 58 & 2009-09-09 & 99200958 & \_PAT & 76 & Black & Female & 3
-Urgent & Private Vehicle & 63 & 791 & 246.000000 & am & Discharge &
-Black & 65.95745\tabularnewline
-00216439 & 59 & 2009-09-09 & 99200959 & \_PAT & 66 & Black & Female & 2
-Emergent & EMS Ground & 63 & 514 & 87.000000 & am & Admit & Black &
-65.95745\tabularnewline
-00216447 & 60 & 2009-09-09 & 99200960 & \_PAT & 27 & Black & Female & 3
-Urgent & Private Vehicle & 63 & 478 & 223.566667 & am & Discharge &
-Black & 65.95745\tabularnewline
-0021645b & 61 & 2009-09-09 & 99200961 & \_PAT & 82 & Black & Female & 3
-Urgent & Private Vehicle & 63 & 500 & 240.900000 & am & Discharge &
-Black & 65.95745\tabularnewline
-00216466 & 62 & 2009-09-09 & 99200962 & \_PAT & 46 & Black & Female & 3
-Urgent & EMS Ground & 63 & 687 & 288.000000 & am & Discharge & Black &
-65.95745\tabularnewline
-00216479 & 63 & 2009-09-09 & 99200963 & \_PAT & 33 & Black & Female & 3
-Urgent & Private Vehicle & 63 & 614 & 85.000000 & am & Discharge & Black
-& 65.95745\tabularnewline
-00216503 & 64 & 2009-09-09 & 99200964 & \_PAT & 45 & Black & Male & 3
-Urgent & Private Vehicle & 63 & 497 & 33.000000 & am & Discharge & Black
-& 65.95745\tabularnewline
-0021654b & 65 & 2009-09-09 & 99200965 & \_PAT & 50 & Black & Male & 3
-Urgent & Private Vehicle & 63 & 471 & 188.000000 & am & Discharge &
-Black & 65.95745\tabularnewline
-00216550 & 66 & 2009-09-09 & 99200966 & \_PAT & 29 & White & Male & 2
-Emergent & Private Vehicle & 63 & 493 & 203.000000 & am & Discharge &
-All Other & 65.95745\tabularnewline
-00216552 & 67 & 2009-09-09 & 99200967 & \_PAT & 25 & Black & Female & 4
-Stable & Private Vehicle & 63 & 369 & 203.000000 & am & Left W/out Being
-Seen & Black & 65.95745\tabularnewline
-002165b3 & 68 & 2009-09-09 & 99200968 & \_PAT & 21 & White & Male & 3
-Urgent & Private Vehicle & 63 & 438 & 35.000000 & am & Discharge & All
-Other & 65.95745\tabularnewline
-002165b4 & 69 & 2009-09-09 & 99200969 & \_PAT & 40 & Other & Female & 3
-Urgent & Private Vehicle & 63 & 392 & 84.000000 & am & Discharge & All
-Other & 65.95745\tabularnewline
-002165b8 & 70 & 2009-09-09 & 99200970 & \_PAT & 39 & White & Male & 3
-Urgent & Walk & 63 & 510 & 65.000000 & am & Discharge & All Other &
-65.95745\tabularnewline
-002165ba & 71 & 2009-09-09 & 99200971 & \_PAT & 65 & Black & Male & 2
-Emergent & EMS Ground & 63 & 373 & 35.000000 & am & Admit & Black &
-65.95745\tabularnewline
-002165c3 & 72 & 2009-09-09 & 99200972 & \_PAT & 9 & Black & Female & 4
-Stable & Public Trans & 63 & 537 & 26.000000 & am & Discharge & Black &
-65.95745\tabularnewline
-002165fe & 73 & 2009-09-09 & 99200973 & \_PAT & 25 & Black & Female & 3
-Urgent & EMS Ground & 63 & 330 & 214.516667 & am & Discharge & Black &
-65.95745\tabularnewline
-00216615 & 74 & 2009-09-09 & 99200974 & \_PAT & 24 & Black & Female & 4
-Stable & Private Vehicle & 63 & 448 & 32.000000 & am & Discharge & Black
-& 65.95745\tabularnewline
-0021666a & 75 & 2009-09-09 & 99200975 & \_PAT & 20 & Black & Male & 2
-Emergent & Private Vehicle & 63 & 1114 & 67.000000 & am & Discharge &
-Black & 65.95745\tabularnewline
-00216670 & 76 & 2009-09-09 & 99200976 & \_PAT & 21 & Black & Male & 3
-Urgent & Private Vehicle & 63 & 528 & 176.000000 & am & Discharge &
-Black & 65.95745\tabularnewline
-0021668f & 77 & 2009-09-09 & 99200977 & \_PAT & 24 & Black & Female & 4
-Stable & Walk & 63 & 192 & 67.000000 & am & Discharge & Black &
-65.95745\tabularnewline
-002166c6 & 78 & 2009-09-09 & 99200978 & \_PAT & 57 & Black & Female & 2
-Emergent & EMS Ground & 63 & 524 & 310.000000 & am & Not Recorded &
-Black & 65.95745\tabularnewline
-002166c7 & 79 & 2009-09-09 & 99200979 & \_PAT & 52 & White & Female & 3
-Urgent & Private Vehicle & 63 & 415 & 60.000000 & am & Discharge & All
-Other & 65.95745\tabularnewline
-002166cb & 80 & 2009-09-09 & 99200980 & \_PAT & 19 & Black & Female & 4
-Stable & Private Vehicle & 63 & 434 & 427.533333 & am & Discharge &
-Black & 65.95745\tabularnewline
-002166cd & 81 & 2009-09-09 & 99200981 & \_PAT & 46 & Black & Female & 1
-Immediate & EMS Ground & 63 & 413 & 361.883333 & am & Not Recorded &
-Black & 65.95745\tabularnewline
-002166ce & 82 & 2009-09-09 & 99200982 & \_PAT & 25 & Black & Female & 2
-Emergent & Private Vehicle & 63 & 338 & 143.116667 & am & Admit & Black
-& 65.95745\tabularnewline
-002166d1 & 83 & 2009-09-09 & 99200983 & \_PAT & 70 & Black & Female & 2
-Emergent & EMS Ground & 63 & 1312 & 128.266667 & am & Discharge & Black
-& 65.95745\tabularnewline
-002166d3 & 84 & 2009-09-09 & 99200984 & \_PAT & 31 & Black & Male & 2
-Emergent & EMS Ground & 63 & 729 & 17.200000 & am & Discharge & Black &
-65.95745\tabularnewline
-002166d5 & 85 & 2009-09-09 & 99200985 & \_PAT & 85 & Black & Female & 3
-Urgent & EMS Ground & 63 & 420 & 379.850000 & am & Not Recorded & Black
-& 65.95745\tabularnewline
-002166d7 & 86 & 2009-09-09 & 99200986 & \_PAT & 49 & White & Male & 4
-Stable & Private Vehicle & 63 & 316 & 307.266667 & am & Discharge & All
-Other & 65.95745\tabularnewline
-002166df & 87 & 2009-09-09 & 99200987 & \_PAT & 16 & Black & Female & 3
-Urgent & Private Vehicle & 63 & 509 & 73.000000 & am & Discharge & Black
-& 65.95745\tabularnewline
-002166e0 & 88 & 2009-09-09 & 99200988 & \_PAT & 27 & Black & Female & 3
-Urgent & Private Vehicle & 63 & 449 & 66.000000 & am & Discharge & Black
-& 65.95745\tabularnewline
-002166fa & 89 & 2009-09-09 & 99200989 & \_PAT & 46 & Black & Male & 1
-Immediate & EMS Ground & 63 & 210 & 164.783333 & am & Admit & Black &
-65.95745\tabularnewline
-00216728 & 90 & 2009-09-09 & 99200990 & \_PAT & 68 & Black & Female & 3
-Urgent & EMS Ground & 63 & 603 & 466.900000 & am & Discharge & Black &
-65.95745\tabularnewline
-0021672a & 91 & 2009-09-09 & 99200991 & \_PAT & 62 & White & Male & 2
-Emergent & Private Vehicle & 63 & 779 & 311.000000 & am & Admit & All
-Other & 65.95745\tabularnewline
-00216732 & 92 & 2009-09-09 & 99200992 & \_PAT & 30 & Black & Female & 4
-Stable & Private Vehicle & 63 & 203 & 46.616667 & am & Discharge & Black
-& 65.95745\tabularnewline
-00216733 & 93 & 2009-09-09 & 99200993 & \_PAT & 23 & Black & Female & 3
-Urgent & Private Vehicle & 63 & 381 & 371.916667 & am & Discharge &
-Black & 65.95745\tabularnewline
-00216735 & 94 & 2009-09-09 & 99200994 & \_PAT & 89 & Black & Male & 3
-Urgent & EMS Ground & 63 & 399 & 327.733333 & am & Discharge & Black &
-65.95745\tabularnewline
-00216736 & 95 & 2009-09-09 & 99200995 & \_PAT & 41 & White & Female & 2
-Emergent & Private Vehicle & 63 & 639 & 145.000000 & am & Admit & All
-Other & 65.95745\tabularnewline
-00216758 & 96 & 2009-09-09 & 99200996 & \_PAT & 45 & White & Male & 2
-Emergent & Walk & 63 & 370 & 258.000000 & am & Admit & All Other &
-65.95745\tabularnewline
-0021675b & 97 & 2009-09-09 & 99200997 & \_PAT & 30 & Black & Male & 4
-Stable & Walk & 63 & 349 & 134.133333 & am & Discharge & Black &
-65.95745\tabularnewline
-0021675e & 98 & 2009-09-09 & 99200998 & \_PAT & 41 & Black & Male & 1
-Immediate & Private Vehicle & 63 & 375 & 217.000000 & am & Admit & Black
-& 65.95745\tabularnewline
-00216762 & 99 & 2009-09-09 & 99200999 & \_PAT & 46 & Black & Male & 3
-Urgent & Private Vehicle & 63 & 303 & 251.000000 & am & Discharge &
-Black & 65.95745\tabularnewline
-0021689b & 100 & 2009-09-09 & 992009100 & \_PAT & 18 & Black & Female &
-3 Urgent & Private Vehicle & 63 & 375 & 178.000000 & am & AMA & Black &
-65.95745\tabularnewline
-00216965 & 101 & 2009-09-09 & 992009101 & \_PAT & 41 & Black & Female &
-3 Urgent & Private Vehicle & 63 & 478 & 188.000000 & am & Discharge &
-Black & 65.95745\tabularnewline
-0021699e & 102 & 2009-09-09 & 992009102 & \_PAT & 43 & Black & Female &
-3 Urgent & EMS Ground & 63 & 558 & 509.000000 & am & Not Recorded &
-Black & 65.95745\tabularnewline
-002183fc & 103 & 2009-09-09 & 992009103 & \_PAT & 18 & Black & Female &
-3 Urgent & EMS Ground & 63 & 426 & 407.483333 & am & Discharge & Black &
-65.95745\tabularnewline
-00218405 & 104 & 2009-09-09 & 992009104 & \_PAT & 52 & Black & Male & 2
-Emergent & EMS Ground & 63 & 160 & 63.600000 & am & Admit & Black &
-65.95745\tabularnewline
-00218408 & 105 & 2009-09-09 & 992009105 & \_PAT & 31 & Black & Female &
-3 Urgent & Private Vehicle & 63 & 420 & 348.133333 & am & Discharge &
-Black & 65.95745\tabularnewline
-00218409 & 106 & 2009-09-09 & 992009106 & \_PAT & 51 & Black & Female &
-Not Recorded & Not Recorded & 63 & 94 & 85.566667 & am & Left W/out
-Being Seen & Black & 65.95745\tabularnewline
-0021840f & 107 & 2009-09-09 & 992009107 & \_PAT & 82 & Black & Male & 4
-Stable & Private Vehicle & 63 & 209 & 91.000000 & am & Discharge & Black
-& 65.95745\tabularnewline
-00218413 & 108 & 2009-09-09 & 992009108 & \_PAT & 52 & Other & Male & 3
-Urgent & EMS Ground & 63 & 302 & 252.550000 & am & Discharge & All Other
-& 65.95745\tabularnewline
-0021843a & 109 & 2009-09-09 & 992009109 & \_PAT & 35 & Black & Female &
-3 Urgent & Private Vehicle & 63 & 202 & 116.416667 & am & Discharge &
-Black & 65.95745\tabularnewline
-00218440 & 110 & 2009-09-09 & 992009110 & \_PAT & 15 & Black & Male & 2
-Emergent & Private Vehicle & 63 & 308 & 87.000000 & am & Discharge &
-Black & 65.95745\tabularnewline
-00218443 & 111 & 2009-09-09 & 992009111 & \_PAT & 57 & Black & Male & 3
-Urgent & Private Vehicle & 63 & 1506 & 463.383333 & am & Discharge &
-Black & 65.95745\tabularnewline
-0021844e & 112 & 2009-09-09 & 992009112 & \_PAT & 69 & Black & Female &
-3 Urgent & Private Vehicle & 63 & 324 & 207.483333 & am & Discharge &
-Black & 65.95745\tabularnewline
-0021844f & 113 & 2009-09-09 & 992009113 & \_PAT & 51 & Black & Male & 4
-Stable & EMS Ground & 63 & 554 & 274.350000 & am & Discharge & Black &
-65.95745\tabularnewline
-00218455 & 114 & 2009-09-09 & 992009114 & \_PAT & 62 & White & Male & 3
-Urgent & Private Vehicle & 63 & 478 & 99.000000 & am & Admit & All Other
-& 65.95745\tabularnewline
-00218456 & 115 & 2009-09-09 & 992009115 & \_PAT & 62 & Black & Female &
-2 Emergent & Private Vehicle & 63 & 459 & 267.000000 & am & Admit &
-Black & 65.95745\tabularnewline
-00218459 & 116 & 2009-09-09 & 992009116 & \_PAT & 58 & Black & Female &
-3 Urgent & Private Vehicle & 63 & 170 & 115.100000 & am & Discharge &
-Black & 65.95745\tabularnewline
-0021845e & 117 & 2009-09-09 & 992009117 & \_PAT & 45 & Black & Female &
-1 Immediate & EMS Ground & 63 & 852 & 610.800000 & am & Discharge &
-Black & 65.95745\tabularnewline
-00218460 & 118 & 2009-09-09 & 992009118 & \_PAT & 42 & Black & Male & 3
-Urgent & EMS Ground & 63 & 667 & 523.000000 & am & Discharge & Black &
-65.95745\tabularnewline
-00218461 & 119 & 2009-09-09 & 992009119 & \_PAT & 50 & White & Male & 2
-Emergent & Private Vehicle & 63 & 1957 & 647.000000 & am & Discharge &
-All Other & 65.95745\tabularnewline
-00218462 & 120 & 2009-09-09 & 992009120 & \_PAT & 66 & Black & Female &
-3 Urgent & Private Vehicle & 63 & 200 & 54.983333 & am & Discharge &
-Black & 65.95745\tabularnewline
-00218464 & 121 & 2009-09-09 & 992009121 & \_PAT & 69 & Black & Male & 3
-Urgent & EMS Ground & 63 & 1664 & 587.900000 & am & Discharge & Black &
-65.95745\tabularnewline
-0021846b & 122 & 2009-09-09 & 992009122 & \_PAT & 31 & Black & Male & 3
-Urgent & Walk & 63 & 357 & 147.816667 & am & Discharge & Black &
-65.95745\tabularnewline
-00218470 & 123 & 2009-09-09 & 992009123 & \_PAT & 71 & White & Male & 2
-Emergent & Private Vehicle & 63 & 1812 & 42.000000 & am & Discharge &
-All Other & 65.95745\tabularnewline
-00218473 & 124 & 2009-09-09 & 992009124 & \_PAT & 21 & Black & Female &
-3 Urgent & Public Trans & 63 & 400 & 339.866667 & am & Discharge & Black
-& 65.95745\tabularnewline
-00218483 & 125 & 2009-09-09 & 992009125 & \_PAT & 43 & Black & Female &
-4 Stable & Private Vehicle & 63 & 231 & 186.833333 & am & Discharge &
-Black & 65.95745\tabularnewline
-00218484 & 126 & 2009-09-09 & 992009126 & \_PAT & 13 & Black & Male & 3
-Urgent & Private Vehicle & 63 & 347 & 195.183333 & am & Transfer & Black
-& 65.95745\tabularnewline
-00218487 & 127 & 2009-09-09 & 992009127 & \_PAT & 90 & Black & Female &
-3 Urgent & EMS Ground & 63 & 194 & 144.316667 & am & Discharge & Black &
-65.95745\includegraphics{Flynn_Project_files/figure-latex/shift13-1.pdf}\tabularnewline
-\bottomrule
-\end{longtable}
-
-\begin{verbatim}
-## [1] "layout_as_star"
-\end{verbatim}
-
-\begin{verbatim}
-## [1] "layout_components"
-\end{verbatim}
-
-\begin{verbatim}
-## [1] "layout_in_circle"
-\end{verbatim}
-
-\begin{verbatim}
-## [1] "layout_nicely"
-\end{verbatim}
-
-\begin{verbatim}
-## [1] "layout_on_grid"
-\end{verbatim}
-
-\begin{verbatim}
-## [1] "layout_on_sphere"
-\end{verbatim}
-
-\begin{verbatim}
-## [1] "layout_randomly"
-\end{verbatim}
-
-\begin{verbatim}
-## [1] "layout_with_dh"
-\end{verbatim}
-
-\begin{verbatim}
-## [1] "layout_with_drl"
-\end{verbatim}
-
-\includegraphics{Flynn_Project_files/figure-latex/unnamed-chunk-1-1.pdf}
-
-\begin{verbatim}
-## [1] "layout_with_fr"
-\end{verbatim}
-
-\begin{verbatim}
-## [1] "layout_with_gem"
-\end{verbatim}
-
-\begin{verbatim}
-## [1] "layout_with_graphopt"
-\end{verbatim}
-
-\begin{verbatim}
-## [1] "layout_with_kk"
-\end{verbatim}
-
-\begin{verbatim}
-## [1] "layout_with_lgl"
-\end{verbatim}
-
-\begin{verbatim}
-## [1] "layout_with_mds"
-\end{verbatim}
-
-\includegraphics{Flynn_Project_files/figure-latex/unnamed-chunk-1-2.pdf}
-
-\subsection{Variables available for final
-analysis:}\label{variables-available-for-final-analysis}
-
-\textbf{Network Variables} \textgreater{} - Network Centrality (based on
-the eigenvector up to, but not including, any other patient-staff
-interactions) \textgreater{} - Network density \textgreater{} - Network
-clustering coefficient
-
-\textbf{Staff title} \textgreater{} - Title (RN, MD, Other Staff)
-
-\textbf{Patient variables} \textgreater{} - \emph{Acuity} (ESI,
-independant variable of interest) \textgreater{} - Gender \textgreater{}
-- Age \textgreater{} - Race \textgreater{} - Arrival mode (ambulance v.
-walk-in) \textgreater{} - Disposition (admission v. discharge)
-\textgreater{} - Length of stay (common measure of quality in the
-literature used for comparison)
+are distributed normally across networks. The data were inconsitant in
+the way individual participants were tagged. There were 1102 unique
+nodes in the vertices data, 1023 unique nodes in the edges dataset, and
+1017 unique patients in the patient characteristics dataset.
+Furthermore, there were a number of extra dates of data collection in
+the nodes and patients data. After learning several new tricks, the data
+were finally subsetted into 35 data frames to be graphed with
+iGraph.(Csardi and Nepusz 2006)
 
 \subsection{Analysis}\label{analysis}
 
@@ -1352,30 +224,104 @@ menuscript itself, Markdown eliminates risk for errors in transferring
 statistical software output into foreign documents. The data were
 explored, cleaned, and assessed for statistical assumptions using the
 Tidyverse group of R packages.(Wickham 2017, Wickham (2016)) Data were
-prepared for network analysis with the iGraph package.(Csardi and Nepusz
-2006) Muliple linear regression will be used for the final analysis to
-assess the correlation between patient acuity and patient centrality.
-Relationships will be evaluated visually (see below) as well as
-statistically to an alpha of 0.05.
+prepared for network visualization and plotted with the network object
+package iGraph. (Csardi and Nepusz 2006).
 
-\section{Results}\label{results-1}
+\section{Results}\label{results}
 
-Results will be discussed with the visual supplementation of network
-graphs. This allows the reader to understand concepts that may be
-difficult to grasp through text alone.
+\begin{longtable}[]{@{}cccccc@{}}
+\caption{Overall Participation}\tabularnewline
+\toprule
+Participants (n) & Shifts & Participants/Shift & Participation Rate
+(mean\%) & Total Ties & Ties/Shift\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+Participants (n) & Shifts & Participants/Shift & Participation Rate
+(mean\%) & Total Ties & Ties/Shift\tabularnewline
+\midrule
+\endhead
+3635 & 35 & 103.8571 & 63.09335 & 21600 & 617.1429\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{Patient Acuity}\tabularnewline
+\toprule
+Acuity Level & Count\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+Acuity Level & Count\tabularnewline
+\midrule
+\endhead
+Immediate (1) & 14\tabularnewline
+Emergent (2) & 694\tabularnewline
+Urgent (3) & 1191\tabularnewline
+Stable (4) & 417\tabularnewline
+Non Urgent (5) & 27\tabularnewline
+\bottomrule
+\end{longtable}
+
+The bulk of this project ended up focussing on data exploration and
+wrangling. Although the data came in tables that had been
+\emph{cleaned}, there turned out to be a significant amount of wrangling
+and organizing to re-clean it for the purposes of this study.
+
+We selected 3 representative shifts for visualization and exploration.
+Although I was not able to analyze these networks to the extent I had
+hoped, there are a number of visualizations shown below. The first shift
+represented below shows an interesting cluster of highly acute (gray)
+patients, indicating that there may be something to the hypothesis that
+acuity will correlate to network position.
+\includegraphics{Flynn_Project_files/figure-latex/shift 10-1.pdf}
+
+The graph below is does not display the individual patient acuities, but
+it does give a slightly better overview of the various positions of
+patients, staff, RNs, \& MDs thoughout the network.
+
+\includegraphics{Flynn_Project_files/figure-latex/shift10 labels-1.pdf}
+
+The following network offers a unique perspective of the distribution of
+ties in the network by essentially \emph{getting the nodes out of the
+way}. What is particularly interesting is teh way the ties appear to be
+more dense where patients are scored at an acuity of level 1, or
+``Immediate''. A closer look at the distribution of edges may provide
+further insights in following analyses.
+\includegraphics{Flynn_Project_files/figure-latex/shift10 circle-1.pdf}
+
+The remaining graphs are generated from two other shifts. Although much
+of the overall visual characteristics appear similar, there are a number
+of interesting differences that have given me ideas for further inquiry.
+\includegraphics{Flynn_Project_files/figure-latex/shift 23-1.pdf} As I
+am able to code more complex data and create better network graphs, and
+analyze the structure of those graphs, this project will guide research
+questions.
+\includegraphics{Flynn_Project_files/figure-latex/shift23-1.pdf}
+\includegraphics{Flynn_Project_files/figure-latex/shift23-2.pdf}
+
+\includegraphics{Flynn_Project_files/figure-latex/shift13-1.pdf}
+
+\includegraphics{Flynn_Project_files/figure-latex/unnamed-chunk-1-1.pdf}
+\includegraphics{Flynn_Project_files/figure-latex/unnamed-chunk-1-2.pdf}
 
 \section{Discussion}\label{discussion}
 
 Allocating staff resources in an Emergency Department is an ongoing
-challenge. How can these results begin to offer solutions to ED staff
-and patient management?
-
-What were my primary limitation (both expected and unexpected)?
+challenge. It also has important implications for patient safety and
+health outcomes. The primary limitation to this study was the PI's lack
+of experience with programming, the R programming language, and
+statistical analysis. This project has been an important element in the
+PI's learning process.
 
 \section{Conclusion}\label{conclusion}
 
-Did I meet my learning objectives? How would I design a better study
-next time?
+I was not able to finish my analysis and had to remove my second aim
+which would have been interesting. However, as this is going to be the
+analysis I do for my dissertation, the project is far from over. I look
+forward to finding meaning in the real clinical interaction networks
+that is reflected in the patterns and variations that is seen in the
+graphs presented here.
 
 \section*{References}\label{references.unnumbered}
 \addcontentsline{toc}{section}{References}

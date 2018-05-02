@@ -29,14 +29,13 @@ options(na.action = na.warn)
 #Research Question & Specific Aims
 
 - Can network analysis of clinical interactions between patients and staff provide insight into the complex Emergency Department patient care process? [@RN602]
-Aim 1: Explore the network of clinical interactions in the ED between patients and staff to determine whether predictable patterns emerge in terms of centrality, density, and change over time. 
-Aim 2: Test the assocaition between patient acuity and network position measure of eigenvector centrality of patient composite network, compared to the centrality of teh dynamic patient network (measure TBD).
+Aim 1: Graph the network of clinical interactions in the ED between patients and staff to explore potential similarities, future research questions, and more robust applicationg of igraph in R studio.
 
 #Background & Objectives
 
  Intelligent clinical monitoring software is not a new idea, but advancements in the field of data science continue to yield powerful new tools that may make such software a reality in the near future.[@RN253, @RN794] Real-time location systems (RTLS) are increasingly common in hospitals across the nation, especially in clinical areas where patient care and flow are both complex and time-sensitive, such as the Emergency Department (ED).[@RN257] A bird's-eye view of a busy urban ED might resemble a hive of frenzied bees, but as we have learned of beehives, patterns of work and interactions within EDs are necessarily purposed and complexly adaptive to the various needs of the system (or hive) as a whole.[@BEES] By leveraging the technology of RTLS and analytical power of netowrk analysis, future ED monitoring systems will provide ED leadership with real-time resource allocation and patient condition information. 
  The Emergency Severity Index (ESI) is a validated metric used to triage patients in US Emergency Departments.[@RN251] That triage nurse may decide to involve the charge nurse or a physician given various concerns about the patient. These interactions, observed and measured by the Real Time Location System (RTLS), continue as more patients are triaged, moved into patient rooms, and so on toward a vast and complex network of interactions. This web of care is likely to correlate with the amount and quality of care delivered to individual patients. 
-- __The purpose of this study is to explore the network of clinical interactions that take place in the Emergency Department and describe the raltionship between those network variables and patient acuity.__ To study this relationship, received permission to analyse existing data that includes the following; the frequency and duration of all face-to-face interactions (patients, providers, nurses, technicians, & administrators) that occured in the ED for 81 12hr shifts, the location of those interactions, and individual patients' medical and demographic characteristics including acuity, chief complaint, gender, age, arrival mode, and disposition. The network structural characteristics will be assessed in relation to the industry standard acuity measure, the Emergency Severity Index (ESI), and potential confounding variables. Using this data will require specific knowledge of the R statistical packages, network analysis, and data science. See Tables 1-4 for my learning goals with respective action items, timeline, and outcomes. 
+- __The purpose of this study is to explore the network of clinical interactions that take place in the Emergency Department and present graphical representations of those networks.__ To meet this purpose, I received permission to analyse existing data that includes the following; the frequency and duration of all face-to-face interactions (patients, providers, nurses, technicians, & administrators) that occured in the ED for 81 12hr shifts, the location of those interactions, and individual patients' medical and demographic characteristics including acuity, chief complaint, gender, age, arrival mode, and disposition. The network structural characteristics will be assessed in relation to the industry standard acuity measure, the Emergency Severity Index (ESI), and potential confounding variables. Using this data will require specific knowledge of the R statistical packages, network analysis, and data science. See Tables 1-4 for my learning goals with respective action items, timeline, and outcomes. 
 
 ```{r read data}
 # read in the edges
@@ -279,7 +278,6 @@ patients_cc <- patients %>% mutate(CC_group = fct_collapse(Chief_Complaint,
 ```
 
 ```{r Tidy Data}
-
 # names(nodes)
 # Now clean the patients data to include: acuity recorded, race black or white, date in edges, chief complaint, MinutesInED, 
 patients35 <- patients_cc %>% filter(Acuity != "Not Recorded", !is.na(Acuity), Race != "2") %>% 
@@ -302,8 +300,6 @@ nodes35 <- nodes %>% filter(Race != "2") %>%
                             Race = as.factor(Race), Sex = as.factor(Sex)) %>%
   select(sid, i, d8, ID, participant_type, AGE, Race, Sex, Acuity, Arr_Mode, shift_num,
          MinutesInED,  duration_observed, shift_ampm, ED_Disposition, BLACKyn, participationrate)
-
-
 ```
 
 
@@ -311,110 +307,61 @@ nodes35 <- nodes %>% filter(Race != "2") %>%
 # patient demographics
 # Race stats
 racedf <- data_frame("Race" = c("Black", "Hispanic", "Other", "White"), "Count" = summary(patients35$Race))
-# race table
-knitr::kable(racedf, align = "l", caption = "Patient Race",
+race_table <- knitr::kable(racedf, align = "l", caption = "Patient Race",
              row.names = FALSE)
-# plot race
-ggplot(patients35, aes(x = AGE)) + geom_histogram() + 
+race_plot <- ggplot(patients35, aes(x = AGE)) + geom_histogram() + 
   scale_x_continuous("Patient Age Distribution") + 
   labs(title = "Distribution of Patient Age")
-
-
 # Acuity stats
 acuitydf <- data_frame("Acuity Level" = c("Immediate (1)", "Emergent (2)", "Urgent (3)", "Stable (4)", "Non Urgent (5)"),
                        "Count" = summary(patients35$Acuity))
-knitr::kable(acuitydf, align = "l", caption = "Patient Acuity",
+acuity_table <- knitr::kable(acuitydf, align = "l", caption = "Patient Acuity",
              row.names = FALSE)
-ggplot(patients35, aes(x = Acuity, fill = Acuity)) + geom_bar(position = "dodge") + 
+acuity_ploot <- ggplot(patients35, aes(x = Acuity, fill = Acuity)) + geom_bar(position = "dodge") + 
   scale_x_discrete("Patient Acuity") + labs(title = "Distribution of Patient Acuity")
-
-
 # Gender Stats
 gender <- data_frame("Sex" = c("Female", "Male"), "Count" = summary(patients35$Sex))
-knitr::kable(gender, align = "l", caption = "Patient Gender",
+gender_table <- knitr::kable(gender, align = "l", caption = "Patient Gender",
              row.names = FALSE)
-ggplot(patients35, aes(x = Acuity, fill = Acuity)) + geom_bar(position = "dodge") + 
-  scale_x_discrete("Patient Acuity") + labs(title = "Distribution of Patient Acuity")
-# gender
-
 # Age stats
 mean_age <- patients35 %>% summarise(Age_mean = mean(AGE, na.rm=TRUE), sd = sd(AGE, na.rm=TRUE))
-knitr::kable(mean_age, align = "l", caption = "Patient Age",
+mean_age <- knitr::kable(mean_age, align = "l", caption = "Patient Age",
              row.names = FALSE)
-ggplot(patients35, aes(x = AGE)) + geom_histogram(fill = "orange", alpha = .5) + 
+age_distribution <- ggplot(patients35, aes(x = AGE)) + geom_histogram(fill = "orange", alpha = .5) + 
   scale_x_continuous() + 
   labs(title = "Distribution of Patient Age", y = "Count", x = "Patient Age")
-
 # now let's see if this works... finally
-results <- nodes35 %>% summarise(n = n_distinct(ID), shifts = n_distinct(shift_num), meanparts = n/35,
+participants <- nodes35 %>% summarise(n = n_distinct(ID), shifts = n_distinct(shift_num), meanparts = n/35,
                                   participation = mean(participationrate), ties = length(edges35$sidi), 
                                  tieshifts = ties/35)
-# column headers
 headers <- c("Participants (n)", "Shifts", "Participants/Shift", "Participation Rate (mean%)", "Total Ties",
             "Ties/Shift")
-# table for paper
-knitr::kable(results, align = "c", caption = "Overall Participation", col.names = headers,
-             row.names = FALSE)
-
+participants <- knitr::kable(participants, align = "c", caption = "Overall Participation", 
+             col.names = headers, row.names = FALSE)
 # Chief Complaints
-ggplot(patients35, aes(x = Chief_Complaint, fct_reorder(CC_group, MinutesInED), color = Acuity)) +
-  geom_count() + theme(legend.position = "right")
-nodes %>% filter(participant_type == "_PAT", Acuity != "Not Recorded") %>%
-  ggplot(aes(x = LOG_WTDEGREE, y = MinutesInED)) + geom_point(shape = 1, alpha = 0.6)
-# 
-# names(nodes)
-# ptnodes <- nodes %>% filter(participant_type == "_PAT", Acuity != "Not Recorded") %>% 
-#   mutate(Acuity = as.numeric(Acuity), LOG_WTDEGREE = as.double(LOG_WTDEGREE))
-# model <- lm(Acuity ~ LOG_WTDEGREE, data = ptnodes)
-# summary(model)
-
-
-
+CC_graph <- ggplot(patients35, aes(x = Chief_Complaint, fct_reorder(CC_group, MinutesInED), 
+                                   color = Acuity)) + geom_count() + theme(legend.position = "right")
 ```
 
-
-
-```{r Chief Complaint}
-ggplot(patients35, aes(AGE, fct_reorder(CC_group, MinutesInED), color = Acuity)) +
+```{r Unused Plots, eval=FALSE, include=FALSE}
+ccgrou_plot <- ggplot(patients35, aes(AGE, fct_reorder(CC_group, MinutesInED), color = Acuity)) +
          geom_count(position = "jitter", alpha = 0.6, shape = 1, size = 4) +
          scale_x_continuous("Patient Age (yrs)", limits = c(1, 100)) + 
          scale_y_discrete(name = "Chief Complaint")
-
-ggplot(patients35, aes(ED_Disposition)) + geom_bar() + scale_x_discrete("ED Disposition")
+disposition_plot <- ggplot(patients35, aes(ED_Disposition)) + geom_bar() + 
+  scale_x_discrete("ED Disposition")
 ```
-
-
-```{r Race and time in ED against Acuity, tidy = TRUE}
-# ggplot(patients35, aes(AGE)) +
-    # geom_histogram() # Age is appropriately distributed. Sharp rise around 18 y/o because it's an adult ED.
-
-
-
-
-
-```
-
-
 
 #RTLS Data
 
 This study applies a secondary data analysis design due to the exploritory nature of the research aims. Data was made available with permissions from the originating research team. The purpose of the original study was to describe contact characteristics between patients and staff in the ED of a busy urban hospital to inform cross-infection control measures. Data were collected using a radio-frequency identification system that triangulated patient and staff (nurses, providers, and ancillary staff) locations within the ED at Emory University Hospital Midtwon. Data for this secondary analysis were collected using a prospective, longitudinal, observational design with a random sampling of one day shift and one night shift per week for one year, July 1, 2009 to June 30, 2010. This strategy was chosen to minimize sampling bias related to seasonal or weekly fluctuations in census, acuity, and ED staffing changes. Although a total of 104 shifts were observed, the original research team retained only 81 shifts for reasons related to issues with the RFID system and study staff sick leave.[@RN1X] 
 
-#Results
-
-
-
-
-
-
-
 Analysis Plan
 =============
 
 #Data Exploration & Cleaning
-Data will be maintained in private repositories in the GitHub version control platform. Patient characteristic data will be evaluated for missing or implausible data with discriptive analyses, and RFID generated networks will be included for statistical analysis if variables of network density, centrality, and a network diversity scale are distributed normally across networks. 
-
-Why do I find `r length(unique(nodes$sid))` unique nodes in the vertices data, `r length(unique(edges$sidi))` unique nodes in the edges dataset, and `r length(unique(patients$sid))` unique patients in the patient characteristics dataset? 
+Code for analyses were maintained in private repositories in the GitHub version control platform. Patient characteristic data was evaluated for missing or implausible data with discriptive analyses, and RFID generated networks will be included for statistical analysis if variables of network density, centrality, and a network diversity scale are distributed normally across networks. 
+The data were inconsitant in the way individual participants were tagged. There were `r length(unique(nodes$sid))` unique nodes in the vertices data, `r length(unique(edges$sidi))` unique nodes in the edges dataset, and `r length(unique(patients$sid))` unique patients in the patient characteristics dataset. Furthermore, there were a number of extra dates of data collection in the nodes and patients data. After learning several new tricks, the data were finally subsetted into 35 data frames to be graphed with iGraph.[@IGRAPH] 
 ```{r 35 igraphs}
 # Edges by shift... this could have been easier; but I spent too much time working my way through the data already; no time to learn how to write a function or loop... :(
 
@@ -491,7 +438,29 @@ Vshift34 <- nodes35 %>% filter(d8 == Edges_D8s[34])
 Vshift35 <- nodes35 %>% filter(d8 == Edges_D8s[35])
 ```
 
+##Analysis
+The open-source R statistical language and R-Studio user interface from the developers at CRAN were used for all data exploration, wrangling, cleaning, description, and analysis.[@CRAN] Pandoc's Markdown allows for seemless integration of code, results, visualizations, and author interpretation of the research into a single document.[@MARKDOWN] Running all code and calculating all results within the menuscript itself, Markdown eliminates risk for errors in transferring statistical software output into foreign documents. The data were explored, cleaned, and assessed for statistical assumptions using the Tidyverse group of R packages.[@TIDY, @GGPLOT2] Data were prepared for network visualization and plotted with the network object package iGraph. [@IGRAPH].
 
+
+Results
+=======
+`r  participants`  `r acuity_table`
+The bulk of this project ended up focussing on data exploration and wrangling. Although the data came in tables that had been _cleaned_, there turned out to be a significant amount of wrangling and organizing to re-clean it for the purposes of this study. 
+ 
+
+```{r relationships, message=FALSE}
+# Plot acuity by different degree measures
+acuityEIGEN <- nodes %>% filter(participant_type == "_PAT", Acuity != "Not Recorded") %>%
+  ggplot(aes(x = Acuity, y = Eigenvector_Centrality, color = Acuity)) + 
+  geom_boxplot(shape = 1)
+acuitybyWTDEG <- nodes %>% filter(participant_type == "_PAT", Acuity != "Not Recorded") %>%
+  ggplot(aes(x = LOG_WTDEGREE, y = Acuity, color = Acuity)) + 
+  geom_boxplot(shape = 1)
+
+```
+
+We selected 3 representative shifts for visualization and exploration. Although I was not able to analyze these networks to the extent I had hoped, there are a number of visualizations shown below.
+The first shift represented below shows an interesting cluster of highly acute (gray) patients, indicating that there may be something to the hypothesis that acuity will correlate to network position.
 ```{r shift 10, warning=FALSE, message=FALSE}
 # head(Eshift1)
 # head(Vshift1)
@@ -499,7 +468,7 @@ Vshift35 <- nodes35 %>% filter(d8 == Edges_D8s[35])
 # table(similar)
 # similar2 <- Eshift1$idi %in% Vshift1$ID
 # table(similar2)
-Vshift10 %>% mutate(Acuity = as.factor(Acuity))
+Vshift10 %>% mutate(Acuity = as.factor(Acuity)) -> Vshift10
 shift10 <- graph_from_data_frame(d = Eshift10, directed = FALSE, vertices = Vshift10)
 V(shift10)$label <- Vshift10$participant_type
 V(shift10)$gender <- Vshift10$Sex
@@ -511,34 +480,30 @@ colrs <- c("gray50", "blue", "gold", "tomato", "white")
 V(shift10)$color <- colrs[V(shift10)$acuity]
 # Vertex size [add when centrality is calculated]
 # V(shift10)$size <- V(shift10)$MinutesInED
-
-
 # EDge width
 E(shift10)$width <- E(shift10)$weight*2
-
 # Set edge color (optional)
 E(shift10)$edge.color <- "black"
-
-
-
 plot(shift10, vertex.label.dist=2)
 legend(x=-1.5, y=-1.1, c("Immediate(1)", "Emergent(2)", "Urgent(3)", "Stable(4)", "Non Urgent(5)"), pch=21,
        col="#777777", pt.bg=colrs, pt.cex=2, cex=.8, bty="n", ncol=1)
 ```
+
+The graph below is does not display the individual patient acuities, but it does give a slightly better overview of the various positions of patients, staff, RNs, & MDs thoughout the network. 
+
 ```{r shift10 labels}
 plot(shift10, vertex.shape="none", vertex.label=V(shift10)$label, 
      vertex.label.font=2, vertex.label.color="black", vertex.label.cex=.7, edge.color="gray85")
 ```
 
-
+The following network offers a unique perspective of the distribution of ties in the network by essentially _getting the nodes out of the way_. What is particularly interesting is teh way the ties appear to be more dense where patients are scored at an acuity of level 1, or "Immediate". A closer look at the distribution of edges may provide further insights in following analyses. 
 ```{r shift10 circle}
 l <- layout_in_circle(shift10)
 
 plot(shift10, layout=l, vertex.label.dist = 2)
 ```
 
-Descriptive statistics of the network data as well as patient demographic data will be evaluated for asssumptions of normality. The data will be skewed in certain predictable ways due to the observed patient populations. The distribution of study subject demographics will be described in tabular format, noting irregularities and potential sources of error.
-```{r Shift10 4x4}
+```{r Shift10 4x4, eval=FALSE}
 
 fr <- layout_with_fr(shift10)
 fr <- norm_coords(fr, ymin=-1, ymax=1, xmin=-1, xmax=1)
@@ -556,9 +521,9 @@ plot(shift10, rescale=F, layout=fr*1.0)
 # Eshift1$i=="_PAT"
 ```
 
-
+The remaining graphs are generated from two other shifts. Although much of the overall visual characteristics appear similar, there are a number of interesting differences that have given me ideas for further inquiry. 
 ```{r shift 23}
-Vshift23 %>% mutate(Acuity = as.factor(Acuity))
+Vshift23 %>% mutate(Acuity = as.factor(Acuity)) ->Vshift23
 shift23 <- graph_from_data_frame(d = Eshift23, directed = FALSE, vertices = Vshift23)
 V(shift23)$label <- Vshift23$participant_type
 V(shift23)$gender <- Vshift23$Sex
@@ -586,8 +551,8 @@ legend(x=-1.5, y=-1.1, c("Immediate(1)", "Emergent(2)", "Urgent(3)", "Stable(4)"
 
 
 ```
-
-```{r shift23 layouts}
+As I am able to code more complex data and create better network graphs, and analyze the structure of those graphs, this project will guide research questions.
+```{r shift23 }
 layouts <- grep("^layout_", ls("package:igraph"), value=TRUE)[-1] 
 
 # Remove layouts that do not apply to our graph.
@@ -598,8 +563,6 @@ par(mfrow=c(3,3), mar=c(1,1,1,1))
 
 for (layout in layouts) {
 
-  print(layout)
-
   l <- do.call(layout, list(shift23)) 
   
   plot(shift23, edge.arrow.mode=0, layout=l, main=layout) }
@@ -607,7 +570,7 @@ for (layout in layouts) {
 
 
 ```{r shift13}
-Vshift13 %>% mutate(Acuity = as.factor(Acuity))
+Vshift13 %>% mutate(Acuity = as.factor(Acuity)) -> Vshift13
 shift13 <- graph_from_data_frame(d = Eshift13, directed = FALSE, vertices = Vshift13)
 V(shift13)$label <- Vshift13$participant_type
 V(shift13)$gender <- Vshift13$Sex
@@ -619,18 +582,13 @@ colrs <- c("gray50", "blue", "gold", "tomato", "white")
 V(shift13)$color <- colrs[V(shift13)$acuity]
 # Vertex size [add when centrality is calculated]
 # V(shift10)$size <- V(shift10)$MinutesInED
-
-
 # EDge width
 E(shift13)$width <- E(shift13)$weight*2
-
 # Set edge color (optional)
 E(shift13)$edge.color <- "black"
-
-
-
-plot(shift13, vertex.label.dist=2)
-legend(x=-1.5, y=-1.1, c("Immediate(1)", "Emergent(2)", "Urgent(3)", "Stable(4)", "Non Urgent(5)"), pch=21,
+num13 <- plot(shift13, vertex.label.dist=2)
+  legend(x=-1.5, y=-1.1, c("Immediate(1)", "Emergent(2)", "Urgent(3)", "Stable(4)", 
+                           "Non Urgent(5)"), pch=21,
        col="#777777", pt.bg=colrs, pt.cex=2, cex=.8, bty="n", ncol=1)
 ```
 
@@ -646,73 +604,27 @@ par(mfrow=c(3,3), mar=c(1,1,1,1))
 
 for (layout in layouts) {
 
-  print(layout)
-
   l <- do.call(layout, list(shift13)) 
   
   plot(shift13, edge.arrow.mode=0, layout=l, main=layout) }
 ```
-
-
-##Variables available for final analysis:
-__Network Variables__
->  - Network Centrality (based on the eigenvector up to, but not including, any other patient-staff interactions)
->  - Network density
->  - Network clustering coefficient
-
-
-__Staff title__
->  - Title (RN, MD, Other Staff)
-
-__Patient variables__
->  - *Acuity* (ESI, independant variable of interest)
->  - Gender
->  - Age
->  - Race
->  - Arrival mode (ambulance v. walk-in)
->  - Disposition (admission v. discharge)
->  - Length of stay (common measure of quality in the literature used for comparison)
   
-##Analysis
-The open-source R statistical language and R-Studio user interface from the developers at CRAN were used for all data exploration, wrangling, cleaning, description, and analysis.[@CRAN] Pandoc's Markdown allows for seemless integration of code, results, visualizations, and author interpretation of the research into a single document.[@MARKDOWN] Running all code and calculating all results within the menuscript itself, Markdown eliminates risk for errors in transferring statistical software output into foreign documents. The data were explored, cleaned, and assessed for statistical assumptions using the Tidyverse group of R packages.[@TIDY, @GGPLOT2] Data were prepared for network analysis with the iGraph package.[@IGRAPH]
-Muliple linear regression will be used for the final analysis to assess the correlation between patient acuity and patient centrality. Relationships will be evaluated visually (see below) as well as statistically to an alpha of 0.05.
-
-
-```{r igraph object, eval=FALSE}
-# create an igraph object from the edges data frame (all 35 shifts)
-g <- graph_from_data_frame(d = edges35, vertices = nodes35, directed = FALSE)
-plot(g, 
-     vertex.label.color = "black", 
-     edge.color = 'gray77',
-     vertex.size = 0,
-     layout = layout_nicely(g))
-ggplot(patients35, aes(Race, fill = Race)) + geom_bar()
-#create an igraph object from each individual shift
-
-#shiftdf <- data_frame(shift, shifts)
-# str(shiftdf)
-```
 
 
 
-Results
-=======
-Results will be discussed with the visual supplementation of network graphs. This allows the reader to understand concepts that may be difficult to grasp through text alone. 
 
 
 
 Discussion
 ==========
-Allocating staff resources in an Emergency Department is an ongoing challenge. How can these results begin to offer solutions to ED staff and patient management? 
-
-What were my primary limitation (both expected and unexpected)?
+Allocating staff resources in an Emergency Department is an ongoing challenge. It also has important implications for patient safety and health outcomes.
+The primary limitation to this study was the PI's lack of experience with programming, the R programming language, and statistical analysis. This project has been an important element in the PI's learning process.
 
 
 
 Conclusion
 ==========
-Did I meet my learning objectives? How would I design a better study next time? 
-
+I was not able to finish my analysis and had to remove my second aim which would have been interesting. However, as this is going to be the analysis I do for my dissertation, the project is far from over. I look forward to finding meaning in the real clinical interaction networks that is reflected in the patterns and variations that is seen in the graphs presented here.
 
 
 
