@@ -345,6 +345,17 @@ ggplot(patients35, aes(x = AGE)) + geom_histogram(fill = "orange", alpha = .5) +
   scale_x_continuous() + 
   labs(title = "Distribution of Patient Age", y = "Count", x = "Patient Age")
 
+# now let's see if this works... finally
+results <- nodes35 %>% summarise(n = n_distinct(ID), shifts = n_distinct(shift_num), meanparts = n/35,
+                                  participation = mean(participationrate), ties = length(edges35), 
+                                 tieshifts = ties/35)
+# column headers
+headers <- c("Participants (n)", "Shifts", "Participants/Shift", "Participation Rate (mean%)", "Total Ties",
+            "Ties/Shift")
+# table for paper
+knitr::kable(results, align = "c", caption = "Overall Participation", col.names = headers,
+             row.names = FALSE)
+
 # Chief Complaints
 ggplot(patients35, aes(x = Chief_Complaint, y = CC_group, color = CC_group)) +
   geom_count() + theme(legend.position = "none")
@@ -675,7 +686,7 @@ plot(g,
      edge.color = 'gray77',
      vertex.size = 0,
      layout = layout_nicely(g))
-
+ggplot(patients35, aes(Race, fill = Race)) + geom_bar()
 #create an igraph object from each individual shift
 
 #shiftdf <- data_frame(shift, shifts)
