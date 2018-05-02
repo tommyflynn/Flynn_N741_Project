@@ -22,6 +22,8 @@ library(lubridate)
 library(pander)
 library(printr)
 library(forcats)
+library(modelr)
+options(na.action = na.warn)
 ```
 
 #Research Question & Specific Aims
@@ -43,11 +45,11 @@ edges <- haven::read_sas("tommy_edges_2009.sas7bdat")
 nodes <- haven::read_sas("tommy_nodes_2009.sas7bdat")
 # read in patient characteristics data: patients
 patients <- haven::read_sas("tommyflynn_patient_info_2009.sas7bdat")
-complaints <- levels(factor(patients$Chief_Complaint))
+
 ```
 #Methods
 
-```{r TidyTime}
+```{r Date Fix}
 # There is an issue with dates; each dataset has a different set of dates; figure out what dates to use with:
 PTS_d8s <- unique(patients$d8) 
 Nodes_d8s <-  unique(nodes$d8)
@@ -55,8 +57,11 @@ Edges_D8s <-  unique(edges$D8)
 alldates <- c(PTS_d8s, Nodes_d8s , Edges_D8s)
 # length(alldates) answer= 131
 alldates <- unique(alldates) # There are 49 total unique dates across all three tbls, but only 35 in edges!
+```
 
-# Now clean the patients data to include: acuity recorded, race black or white, date for which edges are available, chief complaint, MinutesInED, & CC group after re-leveling Chief Complaint.
+```{r Chief Complaint Levels}
+# Chief complaint is a string with more than 300 variables (mostly referring to the same short-list of complaints (i.e. many duplicates)). Re-level with fct_collapse() in a mutate() call.
+
 patients_cc <- patients %>% mutate(CC_group = fct_collapse(Chief_Complaint,
                                             Pain_Abd = c("Pain, Abd General", "Abdominal pain",
                                                          "Abdominal pain - pregnant", "Abdominal problem",
@@ -271,38 +276,112 @@ patients_cc <- patients %>% mutate(CC_group = fct_collapse(Chief_Complaint,
                                                        "Cardiac and/or respiratory arrest")
                                             
 ))
-patients35 <- patients_cc %>% filter(Acuity != "Not Recorded", (Race == "Black" | Race == "White" ), 
-                                  !is.na(Acuity), d8 %in% Edges_D8s) %>%
-  select(sid, d8, Acuity, Race, AGE, Sex, Chief_Complaint, CC_group, MinutesInED, ED_ARRIVAL, ed_departure, Arr_Mode) %>%
-  group_by(d8)
-
-# Group EDGES by DATE, select only the needed variables (idi, idj, participant type i-j, date, am, pm, weight)
-edges35 <- edges %>% filter(!is.na(i_participant_type), !is.na(j_participant_type), 
-                            (i_participant_type  != "_PAT" | j_participant_type != "_PAT" )) %>%
-  mutate(i = i_participant_type, j = j_participant_type, am = (shiftampm == 1), pm = (shiftampm == 2)) %>%
-  group_by(D8) %>%
-  select(sidi, sidj, i, j, edgeweight, am, pm, D8, idi, idj)
 ```
-```{r Race}
-patients35 %>% ungroup(d8) %>% count(Race)
+
+```{r Tidy Data}
+
+# names(nodes)
+# Now clean the patients data to include: acuity recorded, race black or white, date in edges, chief complaint, MinutesInED, 
+patients35 <- patients_cc %>% filter(Acuity != "Not Recorded", !is.na(Acuity), Race != "2") %>% 
+  mutate(Race = as.factor(Race), Acuity = as.factor(Acuity), Sex = as.factor(Sex)) %>%
+  select(sid, d8, Acuity, Race, AGE, Sex, Chief_Complaint, CC_group, MinutesInED, ED_ARRIVAL, 
+         ed_departure, Arr_Mode, ED_Disposition, numshift)
+# head(patients)
+# Now tidy Edges, select only the needed variables (sidi, sidj, participant type i-j, date, am, pm, 
+# weight); remove all edges between two patients
+
+edges35 <- edges %>% filter(!is.na(i_participant_type), !is.na(j_participant_type), !is.na(i), !is.na(j),
+                            (i_participant_type  != "_PAT" | j_participant_type != "_PAT" )) %>%
+  mutate(i = i_participant_type, j = j_participant_type, am = (shiftampm == 1), 
+         pm = (shiftampm == 2)) %>%
+  select(sidi, sidj, i, j, edgeweight, am, pm, D8, idi, idj, numshift)
+
+# Alright; lets get to the nodes.. need to have the ID come first...
+nodes35 <- nodes %>% filter(Race != "2") %>%
+  mutate(ID = as.character(ID), i = as.character(i), AGE = as.integer(AGE), Acuity = as.factor(Acuity), 
+                            Race = as.factor(Race), Sex = as.factor(Sex)) %>%
+  select(sid, i, d8, ID, participant_type, AGE, Race, Sex, Acuity, Arr_Mode, shift_num,
+         MinutesInED,  duration_observed, shift_ampm, ED_Disposition, BLACKyn, participationrate)
 
 
-# Plot race in a bar chart
-ggplot(patients35, aes(Race, d8, color = Race)) +
-  geom_point(position = "jitter", shape = 1, size = 2) + scale_x_discrete(drop = FALSE) # (drop = FALSE) will show NA values in the graph
+```
+
+
+```{r Participants}
+# patient demographics
+# Race stats
+racedf <- data_frame("Race" = c("Black", "Hispanic", "Other", "White"), "Count" = summary(patients35$Race))
+# race table
+knitr::kable(racedf, align = "l", caption = "Patient Race",
+             row.names = FALSE)
+# plot race
+ggplot(patients35, aes(x = AGE)) + geom_histogram() + 
+  scale_x_continuous("Patient Age Distribution") + 
+  labs(title = "Distribution of Patient Age")
+
+
+# Acuity stats
+acuitydf <- data_frame("Acuity Level" = c("Immediate (1)", "Emergent (2)", "Urgent (3)", "Stable (4)", "Non Urgent (5)"),
+                       "Count" = summary(patients35$Acuity))
+knitr::kable(acuitydf, align = "l", caption = "Patient Acuity",
+             row.names = FALSE)
+ggplot(patients35, aes(x = Acuity, fill = Acuity)) + geom_bar(position = "dodge") + 
+  scale_x_discrete("Patient Acuity") + labs(title = "Distribution of Patient Acuity")
+
+
+# Gender Stats
+gender <- data_frame("Sex" = c("Female", "Male"), "Count" = summary(patients35$Sex))
+knitr::kable(gender, align = "l", caption = "Patient Gender",
+             row.names = FALSE)
+ggplot(patients35, aes(x = Acuity, fill = Acuity)) + geom_bar(position = "dodge") + 
+  scale_x_discrete("Patient Acuity") + labs(title = "Distribution of Patient Acuity")
+# gender
+
+# Age stats
+mean_age <- patients35 %>% summarise(Age_mean = mean(AGE, na.rm=TRUE), sd = sd(AGE, na.rm=TRUE))
+knitr::kable(mean_age, align = "l", caption = "Patient Age",
+             row.names = FALSE)
+ggplot(patients35, aes(x = AGE)) + geom_histogram(fill = "orange", alpha = .5) + 
+  scale_x_continuous() + 
+  labs(title = "Distribution of Patient Age", y = "Count", x = "Patient Age")
+
+# Chief Complaints
+ggplot(patients35, aes(x = Chief_Complaint, y = CC_group, color = CC_group)) +
+  geom_count() + theme(legend.position = "none")
+nodes %>% filter(participant_type == "_PAT", Acuity != "Not Recorded") %>%
+  ggplot(aes(x = LOG_WTDEGREE, y = Acuity)) + geom_point()
+# 
+# names(nodes)
+# ptnodes <- nodes %>% filter(participant_type == "_PAT", Acuity != "Not Recorded") %>% 
+#   mutate(Acuity = as.numeric(Acuity), LOG_WTDEGREE = as.double(LOG_WTDEGREE))
+# model <- lm(Acuity ~ LOG_WTDEGREE, data = ptnodes)
+# summary(model)
+
+
+
 ```
 
 
 
 ```{r Chief Complaint}
-ggplot(patients, aes(AGE, fct_reorder(Chief_Complaint, AGE), color = Acuity)) +
-         geom_point(position = "jitter", alpha = 0.6, shape = 1, size = 4) +
+ggplot(patients35, aes(AGE, fct_reorder(CC_group, MinutesInED), color = Acuity)) +
+         geom_count(position = "jitter", alpha = 0.6, shape = 1, size = 4) +
          scale_x_continuous("Patient Age (yrs)", limits = c(1, 100)) + 
          scale_y_discrete(name = "Chief Complaint")
 
+ggplot(patients35, aes(ED_Disposition)) + geom_bar() + scale_x_discrete("ED Disposition")
 ```
 
 
+```{r Race and time in ED against Acuity, tidy = TRUE}
+# ggplot(patients35, aes(AGE)) +
+    # geom_histogram() # Age is appropriately distributed. Sharp rise around 18 y/o because it's an adult ED.
+
+
+
+
+
+```
 
 
 
@@ -325,13 +404,129 @@ Analysis Plan
 Data will be maintained in private repositories in the GitHub version control platform. Patient characteristic data will be evaluated for missing or implausible data with discriptive analyses, and RFID generated networks will be included for statistical analysis if variables of network density, centrality, and a network diversity scale are distributed normally across networks. 
 
 Why do I find `r length(unique(nodes$sid))` unique nodes in the vertices data, `r length(unique(edges$sidi))` unique nodes in the edges dataset, and `r length(unique(patients$sid))` unique patients in the patient characteristics dataset? 
-```{r}
+```{r 35 igraphs}
+# Edges by shift... this could have been easier; but I spent too much time working my way through the data already; no time to learn how to write a function or loop... :(
 
+# Edges by shift... this could have been easier; but I spent too much time working my way through the data already; no time to learn how to write a function or loop... :(
+Eshift1 <- edges35 %>% filter(D8 == Edges_D8s[1])
+Eshift2 <- edges35 %>% filter(D8 == Edges_D8s[2])
+Eshift3 <- edges35 %>% filter(D8 == Edges_D8s[3])
+Eshift4 <- edges35 %>% filter(D8 == Edges_D8s[4])
+Eshift5 <- edges35 %>% filter(D8 == Edges_D8s[5])
+Eshift6 <- edges35 %>% filter(D8 == Edges_D8s[6])
+Eshift7 <- edges35 %>% filter(D8 == Edges_D8s[7])
+Eshift8 <- edges35 %>% filter(D8 == Edges_D8s[8])
+Eshift9 <- edges35 %>% filter(D8 == Edges_D8s[9])
+Eshift10 <- edges35 %>% filter(D8 == Edges_D8s[10])
+Eshift11 <- edges35 %>% filter(D8 == Edges_D8s[11])
+Eshift12 <- edges35 %>% filter(D8 == Edges_D8s[12])
+Eshift13 <- edges35 %>% filter(D8 == Edges_D8s[13])
+Eshift14 <- edges35 %>% filter(D8 == Edges_D8s[14])
+Eshift15 <- edges35 %>% filter(D8 == Edges_D8s[15])
+Eshift16 <- edges35 %>% filter(D8 == Edges_D8s[16])
+Eshift17 <- edges35 %>% filter(D8 == Edges_D8s[17])
+Eshift18 <- edges35 %>% filter(D8 == Edges_D8s[18])
+Eshift19 <- edges35 %>% filter(D8 == Edges_D8s[19])
+Eshift20 <- edges35 %>% filter(D8 == Edges_D8s[20])
+Eshift21 <- edges35 %>% filter(D8 == Edges_D8s[21])
+Eshift22 <- edges35 %>% filter(D8 == Edges_D8s[22])
+Eshift23 <- edges35 %>% filter(D8 == Edges_D8s[23])
+Eshift24 <- edges35 %>% filter(D8 == Edges_D8s[24])
+Eshift25 <- edges35 %>% filter(D8 == Edges_D8s[25])
+Eshift26 <- edges35 %>% filter(D8 == Edges_D8s[26])
+Eshift27 <- edges35 %>% filter(D8 == Edges_D8s[27])
+Eshift28 <- edges35 %>% filter(D8 == Edges_D8s[28])
+Eshift29 <- edges35 %>% filter(D8 == Edges_D8s[29])
+Eshift30 <- edges35 %>% filter(D8 == Edges_D8s[30])
+Eshift31 <- edges35 %>% filter(D8 == Edges_D8s[31])
+Eshift32 <- edges35 %>% filter(D8 == Edges_D8s[32])
+Eshift33 <- edges35 %>% filter(D8 == Edges_D8s[33])
+Eshift34 <- edges35 %>% filter(D8 == Edges_D8s[34])
+Eshift35 <- edges35 %>% filter(D8 == Edges_D8s[35])
+# Nodes by shift
+Vshift1 <- nodes35 %>% filter(d8 == Edges_D8s[1])
+Vshift2 <- nodes35 %>% filter(d8 == Edges_D8s[2])
+Vshift3 <- nodes35 %>% filter(d8 == Edges_D8s[3])
+Vshift4 <- nodes35 %>% filter(d8 == Edges_D8s[4])
+Vshift5 <- nodes35 %>% filter(d8 == Edges_D8s[5])
+Vshift6 <- nodes35 %>% filter(d8 == Edges_D8s[6])
+Vshift7 <- nodes35 %>% filter(d8 == Edges_D8s[7])
+Vshift8 <- nodes35 %>% filter(d8 == Edges_D8s[8])
+Vshift9 <- nodes35 %>% filter(d8 == Edges_D8s[9])
+Vshift10 <- nodes35 %>% filter(d8 == Edges_D8s[10])
+Vshift11 <- nodes35 %>% filter(d8 == Edges_D8s[11])
+Vshift12 <- nodes35 %>% filter(d8 == Edges_D8s[12])
+Vshift13 <- nodes35 %>% filter(d8 == Edges_D8s[13])
+Vshift14 <- nodes35 %>% filter(d8 == Edges_D8s[14])
+Vshift15 <- nodes35 %>% filter(d8 == Edges_D8s[15])
+Vshift16 <- nodes35 %>% filter(d8 == Edges_D8s[16])
+Vshift17 <- nodes35 %>% filter(d8 == Edges_D8s[17])
+Vshift18 <- nodes35 %>% filter(d8 == Edges_D8s[18])
+Vshift19 <- nodes35 %>% filter(d8 == Edges_D8s[19])
+Vshift20 <- nodes35 %>% filter(d8 == Edges_D8s[20])
+Vshift21 <- nodes35 %>% filter(d8 == Edges_D8s[21])
+Vshift22 <- nodes35 %>% filter(d8 == Edges_D8s[22])
+Vshift23 <- nodes35 %>% filter(d8 == Edges_D8s[23])
+Vshift24 <- nodes35 %>% filter(d8 == Edges_D8s[24])
+Vshift25 <- nodes35 %>% filter(d8 == Edges_D8s[25])
+Vshift26 <- nodes35 %>% filter(d8 == Edges_D8s[26])
+Vshift27 <- nodes35 %>% filter(d8 == Edges_D8s[27])
+Vshift28 <- nodes35 %>% filter(d8 == Edges_D8s[28])
+Vshift29 <- nodes35 %>% filter(d8 == Edges_D8s[29])
+Vshift30 <- nodes35 %>% filter(d8 == Edges_D8s[30])
+Vshift31 <- nodes35 %>% filter(d8 == Edges_D8s[31])
+Vshift33 <- nodes35 %>% filter(d8 == Edges_D8s[33])
+Vshift34 <- nodes35 %>% filter(d8 == Edges_D8s[34])
+Vshift35 <- nodes35 %>% filter(d8 == Edges_D8s[35])
+```
+
+
+```{r network plots}
+# head(Eshift1)
+# head(Vshift1)
+# similar <- Eshift1$sidi %in% Vshift1$sid
+# table(similar)
+# similar2 <- Eshift1$idi %in% Vshift1$ID
+# table(similar2)
+Vshift10 %>% mutate(Acuity = as.factor(Acuity))
+shift10 <- graph_from_data_frame(d = Eshift10, directed = FALSE, vertices = Vshift10)
+V(shift10)$label <- Vshift10$participant_type
+V(shift10)$gender <- Vshift10$Sex
+E(shift10)$weight <- Eshift10$edgeweight
+V(shift10)$acuity <- Vshift10$Acuity
+# set vertex attributes(shift10)
+# vertex color
+colrs <- c("gray50", "tomato", "gold", "blue", "white")
+V(shift10)$color <- colrs[V(shift10)$acuity]
+# Vertex size [add when centrality is calculated]
+# V(shift10)$size <- V(shift10)$MinutesInED
+
+
+# EDge width
+E(shift10)$width <- E(shift10)$weight/6
+
+# Set edge color (optional)
+E(shift10)$edge.color <- "gray80"
+
+
+
+plot(shift10)
 ```
 
 Descriptive statistics of the network data as well as patient demographic data will be evaluated for asssumptions of normality. The data will be skewed in certain predictable ways due to the observed patient populations. The distribution of study subject demographics will be described in tabular format, noting irregularities and potential sources of error.
-```{r acuity histogram, eval=FALSE}
+```{r Shift 10}
 
+# head(Vshift10)
+shift10 <- graph_from_data_frame(d = Eshift1, directed = FALSE, vertices = Vshift1)
+colrs <- c("gray50", "tomato", "gold", "blue", "white")
+V(shift1)$label <- Eshift1$i
+E(shift1)$weight <- Eshift1$edgeweight
+V(shift1)$color <- colrs[V(shift1)$label]
+
+plot(shift1, vertex.label.dist = 2, layout = layout_with_lgl)
+legend(x=-1.5, y=-1.1, c("Imediate", "Emergent", "Urgent", "Stable", "Non Urgent"), pch=21,
+       col="#777777", pt.bg=colrs, pt.cex=2, cex=.8, bty="n", ncol=1)
+Eshift1$i=="_PAT"
 ```
 
 
@@ -363,7 +558,6 @@ __Patient variables__
 The open-source R statistical language and R-Studio user interface from the developers at CRAN were used for all data exploration, wrangling, cleaning, description, and analysis.[@CRAN] Pandoc's Markdown allows for seemless integration of code, results, visualizations, and author interpretation of the research into a single document.[@MARKDOWN] Running all code and calculating all results within the menuscript itself, Markdown eliminates risk for errors in transferring statistical software output into foreign documents. The data were explored, cleaned, and assessed for statistical assumptions using the Tidyverse group of R packages.[@TIDY, @GGPLOT2] Data were prepared for network analysis with the iGraph package.[@IGRAPH]
 Muliple linear regression will be used for the final analysis to assess the correlation between patient acuity and patient centrality. Relationships will be evaluated visually (see below) as well as statistically to an alpha of 0.05.
 ```{r igraph objects}
-net_viz <- graph_from_data_frame(d = edges, vertices = nodes, directed = FALSE)
 
 
 
@@ -371,7 +565,7 @@ net_viz <- graph_from_data_frame(d = edges, vertices = nodes, directed = FALSE)
 
 ```{r igraph object}
 # create an igraph object from the edges data frame (all 35 shifts)
-g <- graph_from_data_frame(edgesimple, directed = FALSE)
+g <- graph_from_data_frame(d = edges35, vertices = nodes35, directed = FALSE)
 plot(g, 
      vertex.label.color = "black", 
      edge.color = 'gray77',
@@ -379,7 +573,7 @@ plot(g,
      layout = layout_nicely(g))
 
 #create an igraph object from each individual shift
-shift <- c(1:35)
+
 #shiftdf <- data_frame(shift, shifts)
 # str(shiftdf)
 ```
