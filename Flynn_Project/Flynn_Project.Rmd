@@ -481,7 +481,7 @@ Vshift35 <- nodes35 %>% filter(d8 == Edges_D8s[35])
 ```
 
 
-```{r network plots}
+```{r shift 10}
 # head(Eshift1)
 # head(Vshift1)
 # similar <- Eshift1$sidi %in% Vshift1$sid
@@ -496,44 +496,152 @@ E(shift10)$weight <- Eshift10$edgeweight
 V(shift10)$acuity <- Vshift10$Acuity
 # set vertex attributes(shift10)
 # vertex color
-colrs <- c("gray50", "tomato", "gold", "blue", "white")
+colrs <- c("gray50", "blue", "gold", "tomato", "white")
 V(shift10)$color <- colrs[V(shift10)$acuity]
 # Vertex size [add when centrality is calculated]
 # V(shift10)$size <- V(shift10)$MinutesInED
 
 
 # EDge width
-E(shift10)$width <- E(shift10)$weight/6
+E(shift10)$width <- E(shift10)$weight*2
 
 # Set edge color (optional)
-E(shift10)$edge.color <- "gray80"
+E(shift10)$edge.color <- "black"
 
 
 
-plot(shift10)
+plot(shift10, vertex.label.dist=2, layout = )
+legend(x=-1.5, y=-1.1, c("Immediate(1)", "Emergent(2)", "Urgent(3)", "Stable(4)", "Non Urgent(5)"), pch=21,
+       col="#777777", pt.bg=colrs, pt.cex=2, cex=.8, bty="n", ncol=1)
+```
+```{r shift10 labels}
+plot(shift10, vertex.shape="none", vertex.label=V(shift10)$label, 
+     vertex.label.font=2, vertex.label.color="black", vertex.label.cex=.7, edge.color="gray85")
+```
+
+
+```{r shift10 circle}
+l <- layout_in_circle(shift10)
+
+plot(shift10, layout=l, vertex.label.dist = 2)
 ```
 
 Descriptive statistics of the network data as well as patient demographic data will be evaluated for asssumptions of normality. The data will be skewed in certain predictable ways due to the observed patient populations. The distribution of study subject demographics will be described in tabular format, noting irregularities and potential sources of error.
-```{r Shift 10}
+```{r Shift10 4x4}
 
-# head(Vshift10)
-shift10 <- graph_from_data_frame(d = Eshift1, directed = FALSE, vertices = Vshift1)
-colrs <- c("gray50", "tomato", "gold", "blue", "white")
-V(shift1)$label <- Eshift1$i
-E(shift1)$weight <- Eshift1$edgeweight
-V(shift1)$color <- colrs[V(shift1)$label]
+fr <- layout_with_fr(shift10)
+fr <- norm_coords(fr, ymin=-1, ymax=1, xmin=-1, xmax=1)
+par(mfrow=c(2,2), mar=c(0,0,0,0))
+plot(shift10, rescale=F, layout=fr*0.4)
+plot(shift10, rescale=F, layout=fr*0.6)
+plot(shift10, rescale=F, layout=fr*0.8)
+plot(shift10, rescale=F, layout=fr*1.0)
 
-plot(shift1, vertex.label.dist = 2, layout = layout_with_lgl)
-legend(x=-1.5, y=-1.1, c("Imediate", "Emergent", "Urgent", "Stable", "Non Urgent"), pch=21,
+
+
+# plot(shift10, vertex.label.dist = 2, layout = fr)
+# legend(x=-1.5, y=-1.1, c("Imediate", "Emergent", "Urgent", "Stable", "Non Urgent"), pch=21,
+       # col="#777777", pt.bg=colrs, pt.cex=2, cex=.8, bty="n", ncol=1)
+# Eshift1$i=="_PAT"
+```
+
+
+```{r shift 23}
+Vshift23 %>% mutate(Acuity = as.factor(Acuity))
+shift23 <- graph_from_data_frame(d = Eshift23, directed = FALSE, vertices = Vshift23)
+V(shift23)$label <- Vshift23$participant_type
+V(shift23)$gender <- Vshift23$Sex
+E(shift23)$weight <- Eshift23$edgeweight
+V(shift23)$acuity <- Vshift23$Acuity
+# set vertex attributes(shift10)
+# vertex color
+colrs <- c("gray50", "blue", "gold", "tomato", "white")
+V(shift23)$color <- colrs[V(shift23)$acuity]
+# Vertex size [add when centrality is calculated]
+# V(shift10)$size <- V(shift10)$MinutesInED
+
+
+# EDge width
+E(shift23)$width <- E(shift23)$weight*2
+
+# Set edge color (optional)
+E(shift23)$edge.color <- "black"
+
+
+
+plot(shift23, vertex.label.dist=2)
+legend(x=-1.5, y=-1.1, c("Immediate(1)", "Emergent(2)", "Urgent(3)", "Stable(4)", "Non Urgent(5)"), pch=21,
        col="#777777", pt.bg=colrs, pt.cex=2, cex=.8, bty="n", ncol=1)
-Eshift1$i=="_PAT"
-```
-
-
-```{r} 
 
 
 ```
+
+```{r shift23 layouts}
+layouts <- grep("^layout_", ls("package:igraph"), value=TRUE)[-1] 
+
+# Remove layouts that do not apply to our graph.
+
+layouts <- layouts[!grepl("bipartite|merge|norm|sugiyama|tree", layouts)]
+
+par(mfrow=c(3,3), mar=c(1,1,1,1))
+
+for (layout in layouts) {
+
+  print(layout)
+
+  l <- do.call(layout, list(shift23)) 
+  
+  plot(shift23, edge.arrow.mode=0, layout=l, main=layout) }
+```
+
+
+```{r shift13}
+Vshift13 %>% mutate(Acuity = as.factor(Acuity))
+shift13 <- graph_from_data_frame(d = Eshift13, directed = FALSE, vertices = Vshift13)
+V(shift13)$label <- Vshift13$participant_type
+V(shift13)$gender <- Vshift13$Sex
+E(shift13)$weight <- Eshift13$edgeweight
+V(shift13)$acuity <- Vshift13$Acuity
+# set vertex attributes(shift10)
+# vertex color
+colrs <- c("gray50", "blue", "gold", "tomato", "white")
+V(shift13)$color <- colrs[V(shift13)$acuity]
+# Vertex size [add when centrality is calculated]
+# V(shift10)$size <- V(shift10)$MinutesInED
+
+
+# EDge width
+E(shift13)$width <- E(shift13)$weight*2
+
+# Set edge color (optional)
+E(shift13)$edge.color <- "black"
+
+
+
+plot(shift13, vertex.label.dist=2)
+legend(x=-1.5, y=-1.1, c("Immediate(1)", "Emergent(2)", "Urgent(3)", "Stable(4)", "Non Urgent(5)"), pch=21,
+       col="#777777", pt.bg=colrs, pt.cex=2, cex=.8, bty="n", ncol=1)
+```
+
+```{r}
+layouts <- grep("^layout_", ls("package:igraph"), value=TRUE)[-1] 
+
+# Remove layouts that do not apply to our graph.
+
+layouts <- layouts[!grepl("bipartite|merge|norm|sugiyama|tree", layouts)]
+
+
+par(mfrow=c(3,3), mar=c(1,1,1,1))
+
+for (layout in layouts) {
+
+  print(layout)
+
+  l <- do.call(layout, list(shift13)) 
+  
+  plot(shift13, edge.arrow.mode=0, layout=l, main=layout) }
+```
+
 
 ##Variables available for final analysis:
 __Network Variables__
